@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #001 — 20.abr.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">piloto · radar #001</span>
+    <span>segunda · 20.abr.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · dado novo</div>
+    <h3>2 em cada 3 conteúdos políticos de IA circulam sem sinalização no Brasil</h3>
+    <div class="meta">Observatório IA nas Eleições (Data Privacy Brasil + Aláfia Lab) · monitor dez/2025 a fev/2026</div>
+    <p>100 de 137 conteúdos sintéticos identificados nas redes não trazem rótulo algum. Média de <strong>1,5 casos por dia</strong>, alta de 50% vs ano anterior. A maioria já circula em bolhas bolsonaristas.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Como se parece o deepfake brasileiro que circula hoje?"</strong> — pedir a lista completa dos 137 ao Observatório, fazer análise visual + perfilar quem compartilha. Ninguém mainstream dissecou o conteúdo bruto.</p>
+      <p><strong>Fonte essencial:</strong> coordenação do Observatório (Data Privacy Brasil + Aláfia Lab).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">mainstream replicou release · ninguém viu as peças</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ dataprivacybr.org · release Observatório</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · nova regulação</div>
+    <h3>TSE cria janela de "silêncio sintético" de 96 horas — mas não explicou como fiscalizar</h3>
+    <div class="meta">Resolução nº 23.755/2026 · TSE · 2 de março de 2026</div>
+    <p>A regra proíbe novos conteúdos gerados por IA nas <strong>72h antes e 24h depois</strong> da votação. Provedores devem remover imediatamente sob multa de R$ 5k a R$ 30k. CDR alerta: sem capacidade técnica, a regra vira letra morta — e conteúdo irregular migra para ambientes fechados.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O TSE pode bloquear conteúdo novo em 96h sem acesso ao WhatsApp?"</strong> Pressionar STI do TSE + liaisons eleitorais de Meta/Google/TikTok por SLA técnico documentado. Se não existe contrato de SLA, isso é manchete.</p>
+      <p><strong>Fonte essencial:</strong> Secretaria de Tecnologia da Informação do TSE; representantes eleitorais das plataformas.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">regra foi noticiada · exequibilidade técnica não</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA nas eleições 2026</a>
+      <a href="https://convergenciadigital.com.br/internet/coalizao-direitos-na-rede-tse-tera-que-fiscalizar-maior-laboratorio-eleitoral-da-inteligencia-artificial/" target="_blank">→ CDR · "TSE terá que fiscalizar maior laboratório eleitoral de IA"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · Congresso</div>
+    <h3>PL 212/26 avança: deepfake eleitoral vira crime com pena de até 6 anos</h3>
+    <div class="meta">Câmara dos Deputados · abril 2026 · altera Código Eleitoral + Marco Civil + LGPD</div>
+    <p>Reclusão de 2 a 6 anos para quem produzir ou veicular deepfake difamatório. A pena aumenta 1/3 entre registro das candidaturas e votação. <strong>Brechas:</strong> sátira, paródia e "pesquisa acadêmica" estão protegidas desde que identificadas — pode virar escudo para operadores se o texto não for apertado.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quem escreveu o PL 212 e por que agora?"</strong> + análise jurídica das brechas de "pesquisa acadêmica" e sátira. ABRAJI e Article 19 já sinalizaram risco à liberdade de expressão na decisão análoga do STF (junho/25) — boa ponte narrativa.</p>
+      <p><strong>Fonte essencial:</strong> autor do PL (ficha em camara.leg.br, proposição 2487262) + ABRAJI + Article 19.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo/médio</span>
+      <span class="badge neutral">agências noticiaram · brechas não analisadas</span>
+    </div>
+    <div class="links">
+      <a href="https://www.camara.leg.br/noticias/1260367-projeto-criminaliza-criacao-e-divulgacao-de-deepfakes-eleitorais/" target="_blank">→ camara.leg.br · PL 212/26 notícia</a>
+      <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2487262" target="_blank">→ camara.leg.br · ficha de tramitação</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>O pior ambiente de transparência do planeta + a maior concentração prevista de deepfake eleitoral = buraco preto</h3>
+    <p><strong>NetLab/Cambridge:</strong> WhatsApp pontuou <strong>zero</strong> em transparência em BR, EU e UK — único caso do tipo.<br>
+    <strong>CDR:</strong> com IA restrita em plataformas abertas, desinformação <em>migra</em> para ambientes fechados.<br>
+    <strong>Data Privacy Brasil:</strong> dos conteúdos sintéticos monitoráveis, só 24% são rotulados.</p>
+    <p><strong>Síntese:</strong> o principal vetor de deepfake de 2026 vai operar no único ambiente sem qualquer métrica pública. O TSE aprovou regras para um território que nem a Meta mapeia.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"TSE vai fiscalizar o invisível?"</strong> — reportagem ampla com engenheiros do TSE, liaisons da Meta, pesquisadores do NetLab e do Minderoo Centre (Cambridge — tua base). <strong>Potencial de co-reportagem com BBC World.</strong></p>
+      <p><strong>Frame original:</strong> "Brasil 2026 — laboratório de deepfake no ambiente mais opaco do planeta."</p>
+      <p><strong>Fontes essenciais:</strong> NetLab UFRJ (Rose Marie Santini) + Minderoo Centre · Cambridge (vizinho teu) + Meta policy BR + TSE STI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos existem separados · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://netlab.eco.ufrj.br/en/post/panorama-da-infodemia-socioambiental" target="_blank">→ NetLab · relatório transparência</a>
+      <a href="https://direitosnarede.org.br/2026/02/05/contribuicao-da-cdr-as-minutas-eleitorais/" target="_blank">→ CDR · contribuição às minutas eleitorais</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · follow the money</div>
+    <h3>Quais agências de marketing político brasileiro já oferecem IA generativa como serviço padrão — e quantas foram contratadas para 2026?</h3>
+    <p><strong>Metodologia:</strong> cruzar declarações de despesas da Justiça Eleitoral 2022 (fornecedores "marketing digital" / "comunicação estratégica") com CNPJs ativos em 2026 que ofereçam IA. Mapear LinkedIn dos marketeiros de 2022 — quem abriu divisão de IA desde 2024?</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· Alguma agência já tem deepfake na tabela de preços (ainda que camuflado como "produção audiovisual com IA")?<br>
+    · Existe subcontratação de estúdios offshore (Argentina, Portugal, Índia) para driblar a resolução do TSE?<br>
+    · Podcast de dono de agência ou entrevista antiga traz declaração explícita sobre uso de IA em campanha?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"A indústria invisível do deepfake político brasileiro"</strong> — matéria de mercado + investigação de CNPJs.</p>
+      <p><strong>Se você conseguir documentar UM único orçamento explícito</strong>, é furo com repercussão internacional e base para BBC Panorama.</p>
+      <p><strong>Fonte essencial:</strong> TSE Portal de Contas Eleitorais 2022 (API aberta) + plataforma Emendas/Despesas + LinkedIn Sales Navigator (tua conta Cambridge?).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pauta inexistente · nenhum veículo fez</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar piloto · gerado em 20.abr.2026 07h · fontes primárias · 10 consultas</p>
+    <p>se o sinal for bom, vira cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas · arquivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --ok: #4ade80;
+    --err: #ef4444;
+    --warn: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px;
+    line-height: 1.55;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* LOGIN */
+  #login-wrap {
+    max-width: 420px;
+    margin: 80px auto;
+    text-align: center;
+  }
+  #login-wrap .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+  }
+  #pin {
+    width: 220px;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 8px;
+    outline: none;
+  }
+  #pin:focus { border-color: var(--accent); }
+  #pin-hint {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--err);
+    min-height: 18px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .status-dot.ok {
+    background: var(--ok);
+    box-shadow: 0 0 10px var(--ok);
+    animation: pulse 2s infinite;
+  }
+  .status-dot.err { background: var(--err); }
+  .status-dot.warn { background: var(--warn); }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .status-bar .info { flex: 1; color: var(--muted); }
+  .status-bar .info strong { color: var(--text); margin-right: 8px; }
+  .status-bar .info .sep { color: var(--dim); margin: 0 8px; }
+
+  /* LIST */
+  .list-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 36px 0 16px;
+  }
+  .radar-item {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .radar-item:hover { border-color: var(--dim); transform: translateX(2px); }
+  .radar-item .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .radar-item .title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .radar-item .counts {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .radar-item .counts span { margin-right: 14px; }
+
+  .foot {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  #content { display: none; }
+</style>
+</head>
+<body>
+
+<div id="login-wrap">
+  <div class="label">radar de pautas · pin</div>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" autofocus>
+  <div id="pin-hint"></div>
+</div>
+
+<div id="content" class="container">
+  <div class="head-meta">arquivo · radar de pautas</div>
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Arquivo diário. Gerado às 07h Londres, publicado automaticamente.</div>
+
+  <div class="status-bar">
+    <div id="status-dot" class="status-dot ok"></div>
+    <div class="info">
+      <strong>status</strong><span id="status-text">carregando...</span>
+      <span class="sep">·</span>
+      <strong>última execução</strong><span id="last-run">—</span>
+      <span class="sep">·</span>
+      <strong>próxima</strong><span id="next-run">—</span>
+    </div>
+  </div>
+
+  <div class="list-title">Radares publicados</div>
+  <div id="radar-list"></div>
+
+  <div class="foot">
+    agendamento · <span id="schedule">—</span>
+  </div>
+</div>
+
+<script>
+  const EXPECTED_HASH = "596d0c702ba6d20835982c87a878f97d07a163285a0a3ee98c6e7a8e0459a8cb";
+
+  async function sha256(str) {
+    const bytes = new TextEncoder().encode(str);
+    const h = await crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function tryUnlock(pin) {
+    const hint = document.getElementById("pin-hint");
+    hint.textContent = "";
+    const hash = await sha256(pin);
+    if (hash === EXPECTED_HASH) {
+      sessionStorage.setItem("radar_unlocked", "1");
+      reveal();
+    } else {
+      hint.textContent = "pin incorreto";
+      document.getElementById("pin").value = "";
+    }
+  }
+
+  function reveal() {
+    document.getElementById("login-wrap").style.display = "none";
+    document.getElementById("content").style.display = "block";
+    loadStatus();
+  }
+
+  async function loadStatus() {
+    try {
+      const r = await fetch("status.json?_=" + Date.now());
+      const s = await r.json();
+
+      const dot = document.getElementById("status-dot");
+      const txt = document.getElementById("status-text");
+      if (s.last_run_status === "success") {
+        dot.className = "status-dot ok"; txt.textContent = "funcionando";
+      } else if (s.last_run_status === "warning") {
+        dot.className = "status-dot warn"; txt.textContent = "atenção";
+      } else {
+        dot.className = "status-dot err"; txt.textContent = "falha";
+      }
+
+      const fmt = (iso) => {
+        const d = new Date(iso);
+        return d.toLocaleString("pt-BR", { timeZone: "Europe/London", dateStyle: "short", timeStyle: "short" });
+      };
+      document.getElementById("last-run").textContent = fmt(s.last_run);
+      document.getElementById("next-run").textContent = fmt(s.next_run_approx);
+      document.getElementById("schedule").textContent = s.schedule;
+
+      const list = document.getElementById("radar-list");
+      list.innerHTML = "";
+      const sorted = [...s.radars].sort((a,b) => b.date.localeCompare(a.date));
+      for (const r of sorted) {
+        const a = document.createElement("a");
+        a.className = "radar-item";
+        a.href = r.file;
+        a.innerHTML = `
+          <div class="date">${r.date}</div>
+          <div class="title">${r.title}</div>
+          <div class="counts">
+            <span>● ${r.anomalies || 0} anomalias</span>
+            <span>● ${r.connection || 0} conexão</span>
+            <span>● ${r.question || 0} pergunta</span>
+          </div>`;
+        list.appendChild(a);
+      }
+    } catch (e) {
+      document.getElementById("status-text").textContent = "erro ao carregar status.json";
+      document.getElementById("status-dot").className = "status-dot err";
+    }
+  }
+
+  // Init
+  if (sessionStorage.getItem("radar_unlocked") === "1") {
+    reveal();
+  } else {
+    const pin = document.getElementById("pin");
+    pin.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") tryUnlock(pin.value);
+    });
+    pin.addEventListener("input", () => {
+      if (pin.value.length >= 4) tryUnlock(pin.value);
+    });
+  }
+</script>
+</body>
+</html>
