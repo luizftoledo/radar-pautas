@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #002 — 21.abr.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #002</span>
+    <span>terça · 21.abr.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · primeiro teste</div>
+    <h3>Federação PT/PV/PC do B abre a primeira grande representação pós-Resolução 23.755: "exorcismo sintético" de mulheres petistas no TikTok</h3>
+    <div class="meta">Representação protocolada no TSE · 12 de abril de 2026 · réu: plataforma TikTok</div>
+    <p>A peça aponta vídeos produzidos por IA mostrando mulheres com camisetas do PT sofrendo agressões num "simulacro de exorcismo". Os partidos enquadram como <strong>violência política de gênero sintética</strong> — e, crucialmente, escolheram processar a <em>plataforma</em>, não os criadores dos vídeos. É o primeiro caso relevante submetido ao TSE depois da Resolução 23.755 entrar em vigor.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quem decidiu processar a plataforma em vez do criador — e por quê?"</strong> — entrevistar advogados da Federação. A escolha testa diretamente a tese do STF de junho/25 (responsabilização direta das plataformas). Se a representação vingar, vira precedente; se fracassar, mostra limite da decisão do Supremo.</p>
+      <p><strong>Fonte essencial:</strong> departamento jurídico da Federação Brasil da Esperança; processualistas eleitorais (Diogo Rais, Estefânia Barboza).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">fato foi noticiado · estratégia jurídica não foi dissecada</span>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · dado histórico</div>
+    <h3>Em eleições anteriores, a Justiça Eleitoral condenou apenas 20% dos casos de deepfake denunciados</h3>
+    <div class="meta">Levantamento iPolítica · 25 de março de 2026 · base: TSE + TREs</div>
+    <p>Antes mesmo da janela de 96h da Resolução 23.755 entrar em teste, o histórico mostra que o sistema condena <strong>1 a cada 5</strong> casos denunciados. O novo marco depende dos mesmos magistrados e da mesma estrutura. A Abin também admitiu publicamente que "a velocidade de criação supera a de verificação".</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"A regra é do ano que vem, o gargalo é do ano passado."</strong> — cruzar os 20% com (i) tempo médio de tramitação das representações e (ii) prazo eleitoral efetivo (pós-candidaturas até o turno). Se o tempo médio de decisão ultrapassa o período regulado, a multa chega depois da urna. Possível visualização de dados forte.</p>
+      <p><strong>Fonte essencial:</strong> Sistema de Jurisprudência do TSE (API aberta) + corregedorias regionais + autores do levantamento iPolítica.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">iPolítica publicou · análise temporal não existe</span>
+    </div>
+    <div class="links">
+      <a href="https://m.imirante.com/noticias/brasil/2026/03/25/ipolitica-deepfake-nas-eleicoes-justica-eleitoral-condena-so-20-dos-casos" target="_blank">→ imirante.com · deepfake nas eleições: condenação em 20% dos casos</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · transparência retroativa</div>
+    <h3>Meta começa a remover anúncios políticos antigos da Biblioteca de Anúncios em plena pré-campanha</h3>
+    <div class="meta">Meta anuncia mudança no storage de anúncios políticos · 2026</div>
+    <p>A Biblioteca de Anúncios da Meta é a principal base de dados usada por pesquisadores brasileiros (NetLab, FGV, InternetLab) para reconstituir padrões de desinformação eleitoral. A remoção gradual dos anúncios históricos corta a <strong>linha de base comparativa</strong> entre 2018, 2022 e 2026 — justamente no ano em que a Resolução 23.755 exige rastreabilidade.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Meta apaga o espelho antes da prova."</strong> — confrontar a política com pesquisadores do NetLab/UFRJ e Minderoo Centre (Cambridge) que usam a biblioteca no dia a dia. Quantificar: quantos anúncios já foram removidos? Há janela pra arquivamento externo?</p>
+      <p><strong>Fonte essencial:</strong> NetLab UFRJ (Rose Marie Santini), Minderoo Centre, Meta policy BR.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">noticiado como update · impacto para 2026 não</span>
+    </div>
+    <div class="links">
+      <a href="https://www.poder360.com.br/brasil/meta-amplia-regras-de-anuncios-que-possam-impactar-eleicoes/" target="_blank">→ poder360.com.br · Meta amplia regras de anúncios</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · três vetores que convergem</div>
+    <h3>WhatsApp vira plataforma de anúncios em 2026 — e pontua zero em transparência bem quando o TSE precisa fiscalizar IA</h3>
+    <p><strong>Ponto 1 (abr/2026):</strong> Meta confirma que o WhatsApp ganha anúncios e modelo de assinatura em 2026.<br>
+    <strong>Ponto 2 (mar/2026):</strong> relatório NetLab/Minderoo aponta <em>zero</em> de transparência do WhatsApp em BR, EU e UK.<br>
+    <strong>Ponto 3 (mar/2026):</strong> Resolução 23.755 do TSE exige rotulagem e rastreabilidade de conteúdo sintético; histórico mostra apenas 20% de condenação.</p>
+    <p><strong>Síntese:</strong> em 2026 surge um novo mercado publicitário dentro do único ambiente brasileiro sem métricas públicas — exatamente no ano em que o TSE tenta regular IA. Nenhum veículo grande costurou os três fatos.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"O mercado publicitário invisível que o TSE vai ter que fiscalizar."</strong> — reportagem ampla com Meta policy BR, pesquisadores do NetLab, IAB Brasil e STI do TSE. Co-reportagem natural com BBC World.</p>
+      <p><strong>Frame original:</strong> "Brasil é o primeiro país a testar uma regulação de IA eleitoral <em>enquanto</em> o maior vetor de desinformação ganha um mercado de anúncios."</p>
+      <p><strong>Fontes essenciais:</strong> Meta policy BR, WhatsApp BR, NetLab UFRJ, Minderoo Centre · Cambridge, STI/TSE.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos existem separados · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.noticiasaominuto.com.br/tech/2353215/whatsapp-tera-anuncios-em-2026-e-assinatura-para-remover-publicidade" target="_blank">→ Notícias ao Minuto · WhatsApp terá anúncios em 2026</a>
+      <a href="https://desinformante.com.br/transparencia-dados-estudo" target="_blank">→ Desinformante · relatório NetLab/Minderoo</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA nas eleições 2026</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · auditoria ausente</div>
+    <h3>Qual é a taxa real de remoção de deepfake eleitoral pelas plataformas dentro do prazo exigido pelo TSE — e existe SLA público com Meta, Google e TikTok?</h3>
+    <p><strong>Contexto:</strong> a Resolução 23.755 obriga remoção imediata; o STF (jun/25) fixou que plataformas respondem por conteúdo ilegal sem ordem judicial em casos graves. Mas nem TSE nem plataformas publicaram até hoje <strong>métrica real</strong> de cumprimento em eleições anteriores.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· Existe cláusula de SLA nos Memorandos de Entendimento TSE × plataformas? Quais prazos?<br>
+    · Das representações de 2022 e 2024 municipais, quantas pediam remoção e quantas foram cumpridas <em>dentro do prazo</em> fixado pelo juiz?<br>
+    · A Secretaria de Tecnologia do TSE tem dashboard interno de tempo-de-resposta por plataforma? Pode ser pedido via LAI?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"O prazo do TSE é ficção? Uma auditoria de remoção."</strong> — cruzar processos do TSE (via API de jurisprudência) com dados das próprias plataformas (transparência parcial do YouTube e TikTok permite recorte). Complementar com pedido via LAI à STI do TSE e corregedorias regionais.</p>
+      <p><strong>Se existir um SLA confidencial</strong>, é manchete: o TSE terceirizou a fiscalização sem dar ao público o contrato. <strong>Se não existir</strong>, é manchete: a regra vale no papel mas ninguém mede.</p>
+      <p><strong>Fonte essencial:</strong> STI/TSE (LAI), corregedorias TRE-SP e TRE-RJ (maior volume), liaisons eleitorais de Meta/Google/TikTok, InternetLab (monitora SLAs).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">ninguém fez o pedido via LAI · dado é público por definição</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #002 · gerado em 21.abr.2026 07h · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
