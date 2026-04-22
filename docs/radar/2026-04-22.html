@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #003 — 22.abr.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #003</span>
+    <span>quarta · 22.abr.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · ameaça externa</div>
+    <h3>Consultoria global Control Risks trata a eleição brasileira como alvo prioritário de interferência estrangeira — primeira vez</h3>
+    <div class="meta">Control Risks · "Brazil: Election interference and disinformation incidents" · 7 de abril de 2026</div>
+    <p>O relatório da consultoria de risco político — usada por multinacionais, bancos e seguradoras para precificar risco país — classifica como <strong>"altamente provável"</strong> que a eleição de outubro/2026 sofra interferência estrangeira, seja por atores estatais sofisticados, seja por entidades privadas com motivação financeira. A IA generativa e o deepfake são apontados como multiplicadores. O debate público brasileiro até agora olha só para dentro (bolsonarismo, lulismo, plataformas); esse é o primeiro documento de grande circulação corporativa que enquadra o Brasil como <em>alvo</em>, não como origem.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quem está comprando esse relatório — e com que premissa sobre o Brasil?"</strong> — ouvir o analista-autor da Control Risks, cruzar com Abin, Ministério da Defesa (política cibernética) e cientistas políticos que estudam interferência externa (Maurício Santoro, Oliver Stuenkel/FGV). Pergunta central: existe atribuição concreta ou é inferência baseada em padrão russo/chinês de 2024?</p>
+      <p><strong>Fonte essencial:</strong> autor do relatório na Control Risks + Abin (ofício/LAI) + analistas de risco político.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">relatório corporativo · circula em salas de risco, não na redação</span>
+    </div>
+    <div class="links">
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks.com · relatório interferência BR 7.abr.26</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · benchmark ausente</div>
+    <h3>Canadá 2025 já tem métrica de deepfake eleitoral (5,86% dos posts) — Brasil vai entrar em 2026 sem nada equivalente</h3>
+    <div class="meta">Paper arXiv 2512.13915 · "Deepfakes in the 2025 Canadian Election" · análise de 187.778 posts em X, Bluesky e Reddit</div>
+    <p>Pesquisa recente aplicou um framework de detecção com alta acurácia em quase 188 mil publicações eleitorais canadenses e encontrou que <strong>5,86% das imagens relacionadas à campanha eram deepfake</strong>. Método reprodutível, código aberto. No Brasil, NetLab, Data Privacy Brasil, FGV DAPP e InternetLab monitoram casos <em>qualitativamente</em> (137 casos num recorte, 280 em outro) — mas nenhum publicou taxa relativa ao universo total de posts eleitorais. Sem baseline numérico, em outubro ninguém saberá se a Resolução 23.755 do TSE reduziu, manteve ou ampliou a presença sintética.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil vai votar sem régua: por que ninguém replicou o método canadense aqui?"</strong> — entrevistar coordenadores dos quatro laboratórios + autores do paper canadense. Pedir acesso ao framework; checar se há obstáculo de custo, API (X/Meta fecharam acesso) ou financiamento. A resposta provavelmente aponta pro colapso da infra acadêmica de pesquisa — ver C1.</p>
+      <p><strong>Fonte essencial:</strong> autores do arXiv 2512.13915 + Rose Marie Santini (NetLab) + Nina da Hora (Data Privacy Brasil) + Marcelo Träsel (FGV).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">paper circula só em comunidade técnica · nenhuma ponte com BR</span>
+    </div>
+    <div class="links">
+      <a href="https://arxiv.org/html/2512.13915" target="_blank">→ arxiv.org · deepfakes Canadá 2025</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · vácuo normativo</div>
+    <h3>Marco Geral de IA (PL 2338/23) é oficialmente empurrado para depois da eleição — TSE fica sozinho como única régua operacional</h3>
+    <div class="meta">Câmara dos Deputados · Comissão Especial PL 2338/23 · votação adiada para 2026 "sem data"</div>
+    <p>O projeto aprovado pelo Senado em dezembro/2024 ainda não tem cronograma de plenário na Câmara. A consequência prática: em 2026, o único instrumento normativo com força operacional sobre IA no debate eleitoral será a Resolução 23.755 do TSE — <strong>que só cobre propaganda formal e uma janela de 96h</strong>. Fora desse perímetro estreito (boletins em grupos fechados, influenciadores pagos não-cadastrados, conteúdo produzido por terceiros "orgânicos"), a IA opera num vácuo regulatório. A CDR e o InternetLab já alertam que o recorte é pequeno demais; o alerta não chegou ao mainstream.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Por que o Marco da IA foi adiado — e quem se beneficia do vácuo?"</strong> — mapear o histórico de votação da Comissão Especial, ouvir relator e relatora paralela, cruzar com o calendário de Moraes no TSE. Hipótese: o atraso é politicamente conveniente para operadores digitais de ambos os lados. Quem eram os maiores obstrutores nas audiências de 2025?</p>
+      <p><strong>Fonte essencial:</strong> Comissão Especial PL 2338 (Câmara) + CDR (Bia Barbosa) + InternetLab (Francisco Brito Cruz) + desinformante.com.br (cobertura contínua).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">desinformante cobriu · ângulo "vácuo eleitoral" não existe</span>
+    </div>
+    <div class="links">
+      <a href="https://desinformante.com.br/votacao-do-marco-da-ia-fica-para-2026-em-meio-a-impasses-politicos-e-criticas-ao-texto" target="_blank">→ desinformante · Marco da IA adiado</a>
+      <a href="https://direitosnarede.org.br/2025/12/10/regulacao-da-ia-protetiva-de-direitos-ja-e-maior-participacao-sociedade-civil-pl-2338/" target="_blank">→ CDR · urgência PL 2338</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · três vetores que convergem</div>
+    <h3>O principal observatório acadêmico americano morreu · a direita americana enquadra Brasil como "ameaça de censura" · o TSE estreia em 2026 a regra mais dura do planeta</h3>
+    <p><strong>Ponto 1 (jun/2024 → abr/2026):</strong> Stanford Internet Observatory — maior laboratório independente de desinformação eleitoral do mundo, referência para NetLab e InternetLab — foi desmontado após pressão política e processos. Renée DiResta e Alex Stamos saíram; o programa encerrou.<br>
+    <strong>Ponto 2 (out/2025 → 2026):</strong> relatório da House Judiciary GOP (partido Republicano dos EUA) cita explicitamente Stanford como aliada de um "regime de censura global" e nomeia o Brasil — com participação do vice-cônsul brasileiro em San Francisco numa mesa-redonda — como ameaça. Virou documento oficial do Congresso americano.<br>
+    <strong>Ponto 3 (mar/2026):</strong> Resolução 23.755 do TSE cria janela de 96h de silêncio sintético, a regra mais restritiva do mundo sobre IA em campanha.</p>
+    <p><strong>Síntese:</strong> exatamente no ano em que o Brasil aplica a regra mais dura, desaparece a instituição acadêmica americana que serviria de contrapeso externo — e o próprio Congresso americano agora enquadra a regulação brasileira como censura. Se uma plataforma americana desobedecer ao TSE invocando "pressão de censura", terá respaldo político do partido no Legislativo dos EUA. Essa é a mudança geopolítica silenciosa por trás das eleições de 2026, e ninguém no Brasil conectou.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"Brasil 2026: a nova regra de IA sem observadores externos — e com Washington como adversário."</strong> — reportagem ampla com Renée DiResta (ex-SIO, agora em Georgetown), Alex Stamos, sociedade civil brasileira, Itamaraty (vice-cônsul citado), Meta/Google policy BR. Potencial natural de co-reportagem BBC World/BBC Brasil.</p>
+      <p><strong>Frame original:</strong> "Brasil fiscaliza IA eleitoral no escuro — o olhar externo americano foi desmontado antes da urna."</p>
+      <p><strong>Fontes essenciais:</strong> Renée DiResta (Georgetown) · Alex Stamos (SentinelOne/Stanford) · Itamaraty (resposta ao relatório House Judiciary) · CDR · NetLab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos existem isolados · ninguém costurou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-disinformation-research-lawsuits-politics/" target="_blank">→ WaPo · colapso do Stanford Internet Observatory</a>
+      <a href="https://justthenews.com/government/congress/brazil-reasserts-itself-global-censorship-threat-stanfords-help-house-judiciary" target="_blank">→ House Judiciary · Brasil como "global censorship threat"</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA eleições 2026</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · cerco financeiro</div>
+    <h3>Quantos laboratórios brasileiros perderam financiamento, parceria ou acesso a dados de plataformas americanas desde o colapso do Stanford Internet Observatory (jun/2024)?</h3>
+    <p><strong>Contexto:</strong> NetLab/UFRJ, Data Privacy Brasil, FGV DAPP, InternetLab dependiam direta ou indiretamente de: (i) grants americanos (Knight Foundation, Omidyar, Ford), (ii) acesso a APIs de pesquisa da Meta/X/YouTube, (iii) colaborações com SIO e outras unidades de pesquisa dos EUA. Todos os três vetores contraíram entre 2024 e 2026 — SIO fechou, a Meta descontinuou CrowdTangle, o X cobrou pela API. Ninguém mediu a soma.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· Quais grants foram não-renovados desde janeiro de 2025? (cruzar 990-PF das fundações americanas com relatórios anuais dos laboratórios brasileiros)<br>
+    · Quantos pesquisadores seniores brasileiros do campo perderam bolsa ou migraram de área desde o fim do SIO?<br>
+    · Quais laboratórios ainda têm acesso efetivo a dados reais de circulação de conteúdo (não agregados públicos)? A resposta vai surpreender — provavelmente é zero.</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"A eleição sem observadores: como o Brasil entrou em 2026 sem a infraestrutura de pesquisa que tinha em 2022."</strong> — levantamento sistemático com os quatro laboratórios (pedir orçamento pré- e pós-2024) + fundações americanas (via 990-PF disponível em ProPublica Nonprofit Explorer) + Meta/Google (pedidos de FOIA/LAI por convênios de pesquisa).</p>
+      <p><strong>Se o número agregado for significativo</strong>, vira matéria de capa internacional: um país aplica a regra mais dura do mundo sobre IA eleitoral enquanto perde a capacidade de observar se ela funciona. Base para BBC Panorama.</p>
+      <p><strong>Fonte essencial:</strong> diretores financeiros/operacionais dos 4 labs + ProPublica Nonprofit Explorer + ex-pesquisadores do SIO (DiResta, Stamos) + Coalizão Direitos na Rede.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">dado é agregável e público · ninguém agregou</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #003 · gerado em 22.abr.2026 07h · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
