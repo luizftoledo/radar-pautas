@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #005 — 01.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #005</span>
+    <span>sexta · 01.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · primeiro precedente regional</div>
+    <h3>TRE-TO manda tirar deepfake + impulsionamento irregular + post incitando violência contra pré-candidato — primeiro "pacote" regional aplicando a Resolução 23.755</h3>
+    <div class="meta">Justiça Eleitoral do Tocantins · decisão noticiada em 28.abr.2026 · O Jornal (TO)</div>
+    <p>A Justiça Eleitoral do Tocantins determinou a remoção de conteúdos, suspensão de perfil no Instagram e interrupção de impulsionamento irregular envolvendo publicações contra o deputado federal Vicentinho Júnior, pré-candidato ao Governo do Estado. A decisão é descrita pela imprensa local como uma "cesta de ilegalidades" — <strong>deepfake + impulsionamento irregular + conteúdo negativo + incitação à violência num único caso</strong>. É o primeiro precedente regional de aplicação combinada do novo regime do TSE (Resolução 23.755/2026) num único processo, e desenha o template que outros 26 TREs vão seguir nos próximos meses. Cobertura nacional: zero.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O modelo Tocantins: como o primeiro caso completo de IA eleitoral desenha o roteiro dos outros 26 TREs"</strong> — pegar a peça processual completa (TRE-TO publica decisões); identificar o operador da peça sintética; mapear se o impulsionamento foi feito via Meta Ads ou plataforma alternativa; cruzar com o Termo de Cooperação que o TSE firmou com Meta/Google/TikTok. A pergunta-chave: a remoção foi cumprida em quanto tempo? Em segundos, horas ou dias? Esse SLA é a régua real do regime.</p>
+      <p><strong>Fonte essencial:</strong> assessoria do TRE-TO · advogados do Vicentinho Júnior · corregedoria-geral do TSE · Aláfia Lab (eles devem estar monitorando o caso).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">portal regional noticiou · ângulo "primeiro template regional" inexplorado</span>
+    </div>
+    <div class="links">
+      <a href="https://ojornal.net/2026/04/28/decisao-da-justica-eleitoral-do-tocantins-sobre-ia-e-deepfake-projeta-debate-eleitoral-tocantinense-para-alem-do-estado/" target="_blank">→ ojornal.net · decisão TRE-TO sobre IA e deepfake</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA 2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · dado novo (em inglês, escondido em relatório B2B)</div>
+    <h3>Brasil entra na pré-campanha com 26% da força de trabalho usando IA generativa diariamente — quase o dobro da média global</h3>
+    <div class="meta">Control Risks · "Brazil: Election interference and disinformation incidents" · 7.abr.2026 (boletim mensal)</div>
+    <p>Dado mencionado no boletim eleitoral da Control Risks: <strong>26% dos trabalhadores brasileiros declaram usar ferramentas de IA generativa diariamente, contra média global de 14%</strong>. A consultoria publica o número no contexto de risco para 2026 — mas o dado redefine o quadro. Não é um país onde IA gen é nicho técnico: é um país onde a tecnologia já entrou na rotina cotidiana antes do ciclo eleitoral. Implicação direta: o "atacante de desinformação" 2026 não precisa ser sofisticado nem comprado — pode ser qualquer trabalhador com Canva-com-IA, ChatGPT ou Suno aberto no celular. O regime regulatório do TSE (Resolução 23.755) parte de uma premissa antiga: que conteúdo sintético é raro e identificável. O dado da Control Risks sugere que essa premissa está furada antes mesmo da campanha começar.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil é o primeiro grande país a entrar em ano eleitoral com IA generativa já normalizada na rotina de trabalho — e ninguém parou pra pensar nisso."</strong> Pegar o relatório completo da Control Risks (free com cadastro corporativo) + checar a fonte primária do número (Microsoft Work Trend Index? Salesforce? IBM?). Cruzar com pesquisas brasileiras (Akamai? Gartner BR?). Pedir reação ao TSE — a Resolução 23.755 considera esse cenário?</p>
+      <p><strong>Fonte essencial:</strong> Control Risks (escritório SP) · Microsoft Work Lab BR · Yasodara Córdova · Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">relatório dirigido a clientes B2B · imprensa BR não traduziu o ângulo</span>
+    </div>
+    <div class="links">
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks.com · boletim eleitoral abr.2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · janela invisível</div>
+    <h3>Faltam 6 dias para o cadastro eleitoral fechar — e nenhum monitoramento público olha pra essa janela específica</h3>
+    <div class="meta">TSE · cadastro fecha em 7.mai.2026 · alerta da semana antes ainda não foi medido por nenhum laboratório</div>
+    <p>A partir de 7 de maio, o cadastro eleitoral fecha por 150 dias para a organização do pleito. <strong>A semana imediatamente anterior</strong> — exatamente onde estamos agora — concentra o maior fluxo do ano de pessoas tentando emitir, transferir ou regularizar título: presencial nos cartórios, Autoatendimento Eleitoral no portal, e canais oficiais do TSE em parceria com a Meta. Esse é o momento ideal para uma operação clássica de supressão de voto: deepfake de áudio do "TSE oficial" via WhatsApp dizendo que o prazo mudou, mensagem falsa sobre exigência de novo documento, perfil-clone do TRE local pedindo dado pessoal por DM. <strong>Nenhuma das fontes consultadas — Aláfia, Data Privacy, NetLab, InternetLab — tem um monitoramento público específico dessa janela de 6 dias.</strong> O risco é estrutural: o estado convoca o eleitor pela urgência do prazo, e o atacante usa exatamente a urgência como vetor.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"A semana cega: 6 dias antes do cadastro eleitoral, ninguém está olhando para o canal que o próprio TSE está usando."</strong> — pedir aos quatro laboratórios (Aláfia, Data Privacy, NetLab, InternetLab) se há monitoramento ativo da janela e se algum sinal de fake news sobre prazo já foi visto. Pedir ao TSE/STI o número de tickets de phishing reportados em 2024 e 2022 na semana antes do fechamento. Olhar o histórico de sites/posts no Aos Fatos e Lupa de 2024 nessa mesma janela.</p>
+      <p><strong>Fonte essencial:</strong> STI/TSE · Aos Fatos · Lupa · Aláfia Lab · NetLab UFRJ · TRE-MT (que estreou canal oficial via WhatsApp).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">noticiado como serviço · ângulo de risco de supressão sintética nunca olhado</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/eleitor-em-dia-prazo-para-tirar-o-titulo-antes-do-fechamento-do-cadastro-se-encerra-em-6-de-maio" target="_blank">→ tse.jus.br · prazo encerra em 6 de maio</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/tse-e-meta-reforcam-prazo-para-regularizacao-do-titulo-de-eleitor-1" target="_blank">→ tse.jus.br · TSE e Meta reforçam prazo</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · três dados públicos, ninguém somou</div>
+    <h3>A "tempestade perfeita" não é alegoria: três métricas públicas independentes apontam pra mesma conclusão — Brasil 2026 é o primeiro experimento mundial</h3>
+    <p><strong>Ponto 1 (Lupa, 29.abr.2026):</strong> a seis meses do 1º turno, o TSE ainda não detalhou como vai fiscalizar o uso de IA — sem clareza sobre infraestrutura técnica dedicada, dependendo majoritariamente das próprias plataformas.<br>
+    <strong>Ponto 2 (Aláfia Lab + Data Privacy Brasil, dez/2025–fev/2026):</strong> 73% (100 de 137) dos conteúdos sintéticos políticos identificados em redes circulam <em>sem nenhuma sinalização</em> de IA — e um terço já parte de agentes políticos com mandato.<br>
+    <strong>Ponto 3 (Control Risks, 7.abr.2026):</strong> 26% da força de trabalho brasileira usa IA generativa diariamente, contra 14% global — o Brasil é o país emergente com maior intensidade de adoção da tecnologia.</p>
+    <p><strong>Síntese:</strong> as três variáveis se compõem em algo inédito. O regulador chega na campanha sem capacidade de enforcement detalhada, a maioria do conteúdo já circula fora do regime, e a base populacional de criadores potenciais é a mais densa entre as grandes democracias. A Lupa olhou só pra parte 1; Aláfia/Data Privacy só pra parte 2; Control Risks só pra parte 3. <strong>Nenhum veículo costurou as três.</strong> A reportagem que somar é a definição mundialmente citável do que é o "Brasil 2026".</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"Brasil 2026: o primeiro experimento real de eleição com IA generativa normalizada — sem regulador pronto, sem rótulo padrão, em país de adoção máxima"</strong> — reportagem com Rose Marie Santini (NetLab), Bruna Santos (Data Privacy Brasil), Yasodara Córdova, e Sam Stockwell ou pesquisador equivalente do Alan Turing Institute (UK) ou Minderoo Centre · Cambridge. <strong>Frame original para BBC World</strong>: "What the world will learn from Brazil's October vote."</p>
+      <p><strong>Frame de manchete:</strong> "O Brasil entra em outubro fazendo, na vida real, o experimento que o resto do mundo vai estudar nos próximos cinco anos."</p>
+      <p><strong>Fontes essenciais:</strong> Aláfia Lab (Diogo Cortiz) · Data Privacy Brasil · NetLab UFRJ · Control Risks SP · Minderoo Centre · Alan Turing Institute.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos foram publicados em separado · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.agencialupa.org/reportagem/2026/04/29/a-seis-meses-do-1o-turno-tse-nao-detalha-como-fiscalizara-uso-de-ia-nas-eleicoes" target="_blank">→ lupa · TSE não detalha fiscalização (29.abr)</a>
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ data privacy · Observatório IA (73% sem rótulo)</a>
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ control risks · adoção 26% diária no Brasil</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · vácuo de monitoramento</div>
+    <h3>A Justiça Eleitoral está usando WhatsApp e Meta como canais oficiais para falar com o eleitor — quantos dos clones, golpes e contas-sósia desses canais já foram catalogados?</h3>
+    <p><strong>Contexto:</strong> em abril de 2026, três coisas aconteceram em paralelo. (1) o TSE assinou parceria com a Meta para reforçar o prazo do título de eleitor (canal oficial); (2) o TRE-MT estreou alertas via WhatsApp segmentado para grupos de eleitores; (3) o cadastro fecha em 7 de maio, gerando o pico anual de mensagens institucionais sobre situação eleitoral. Tudo isso roda no aplicativo que o NetLab/Cambridge documentou ter <strong>nota zero</strong> em transparência de pesquisa.</p>
+    <p><strong>A pergunta que ninguém fez:</strong> existe hoje um inventário público de contas falsas/clones que se passam por TSE, TREs, TRE-MT-oficial, "atendimento eleitoral" no WhatsApp, Telegram e Instagram? Se existe, quantos itens tem, em que ritmo cresce, e quem mantém? Se não existe, por que o estado está expandindo o uso oficial sem essa contramedida?</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· O Termo de Cooperação TSE–Meta inclui SLA de remoção para perfis-clone? Em quanto tempo um clone identificado é derrubado?<br>
+    · O Centro Integrado de Enfrentamento à Desinformação (CIEDDE/TSE) tem dashboard interno desses casos? Está aberto à imprensa via LAI?<br>
+    · Quantos casos de phishing eleitoral via WhatsApp foram reportados em 2024 e 2022 na semana de fechamento do cadastro? Aos Fatos e Lupa têm na base?<br>
+    · Há algum bot oficial verificado (selo verde) do TSE no WhatsApp? Quantos dos perfis aparentando "TSE oficial" hoje no app são, na verdade, fake?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"Quantos 'TSEs falsos' estão ativos no WhatsApp do brasileiro hoje?"</strong> — auditoria direta: criar 5 contas-isca, simular busca por "TSE", "Justiça Eleitoral", "Título de eleitor", documentar o que aparece. Cruzar com pedidos LAI ao TSE/STI sobre o número de contas-clone derrubadas em 2024 e em 2026. Resultado mensurável e replicável.</p>
+      <p><strong>Se o inventário público não existir</strong>, a manchete escreve sozinha: o estado adotou um canal oficial em 2026 sem mapeamento prévio das fraudes que se passam por ele. Em qualquer cenário, é furo institucional.</p>
+      <p><strong>Fonte essencial:</strong> CIEDDE/TSE · STI/TSE · Meta policy BR · NetLab UFRJ · Aos Fatos · Lupa · ProjetoCorporações (clones de marca em apps).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta inexistente · nenhum veículo formulou</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #005 · gerado em 01.mai.2026 07h · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
