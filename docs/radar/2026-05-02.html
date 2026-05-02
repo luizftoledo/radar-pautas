@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #006 — 02.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #006</span>
+    <span>sábado · 02.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TREs · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · risco virou caso</div>
+    <h3>A 5 dias do fechamento do cadastro, dois TREs já emitiram alertas oficiais de golpe — a "janela cega" de que ninguém estava cuidando virou operação ativa</h3>
+    <div class="meta">TRE-MG (abr.2026) + TRE-SP (mar.2026) · cadastro encerra em 6.mai · 4 dias úteis até o fim do prazo</div>
+    <p>O TRE-MG publicou alerta oficial sobre golpe em curso: criminosos cobram pagamento para "regularizar pendências eleitorais", se passando pela Justiça Eleitoral via WhatsApp, SMS, e-mail. O TRE-SP havia emitido alerta análogo em março, sobre falsa mensagem para quitação de multas em "sites de terceiros". <strong>Os dois alertas confirmam, na vida real, exatamente o cenário que o radar #005 descreveu como "janela cega" há 24 horas:</strong> existe operação transacional explorando o pico anual de mensagens institucionais sobre situação eleitoral. <strong>O que ninguém fez ainda:</strong> medir o volume. Quantos eleitores reportaram? Em quais regiões? Há uso de IA (deepfake de áudio do "TSE oficial", clone de site do TRE)? Nenhum dos quatro principais labs (Aláfia, Data Privacy, NetLab, InternetLab) tem dashboard público da janela.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O golpe estava no roteiro: como o TRE-MG e o TRE-SP confirmaram em 30 dias o que nenhum laboratório está medindo"</strong> — pegar as duas peças oficiais (assessorias TRE-MG e TRE-SP), pedir LAI a todos os 27 TREs sobre número de denúncias recebidas em abril/2026 vs abril/2024 e abril/2022 (mesma janela). Cruzar com a base de checagens da Aos Fatos e Lupa para identificar se algum dos golpes circulou com áudio sintético ou imagem clonada. <strong>Reportagem rápida</strong>: dá pra publicar antes do fechamento na quarta.</p>
+      <p><strong>Fonte essencial:</strong> assessorias TRE-MG / TRE-SP · ouvidoria TSE · CIEDDE · Aos Fatos · Lupa · Yasodara Córdova.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">alertas regionais publicados · ângulo "operação ativa, vácuo de medição" não feito</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tre-mg.jus.br/comunicacao/noticias/2026/Abril/justica-eleitoral-alerta-para-golpe-com-cobranca-para-regularizacao-de-pendencias-eleitorais" target="_blank">→ tre-mg · alerta golpe regularização (abr.2026)</a>
+      <a href="https://www.tre-sp.jus.br/comunicacao/noticias/2026/Marco/tre-sp-alerta-para-falsa-mensagem-sobre-quitacao-de-multas-eleitorais-em-sites-de-terceiros" target="_blank">→ tre-sp · alerta falsa mensagem multas (mar.2026)</a>
+      <a href="https://www.tre-mg.jus.br/comunicacao/noticias/2026/Abril/prazo-para-eleitor-buscar-atendimento-termina-no-dia-6-de-maio" target="_blank">→ tre-mg · prazo termina 6.mai</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · vácuo estrutural</div>
+    <h3>Stanford Internet Observatory está oficialmente fechado desde 2024 — Brasil 2026 será a primeira mega-eleição do era IA sem o principal observatório acadêmico independente do mundo</h3>
+    <div class="meta">SIO encerrou pesquisa eleitoral em jun.2024 (Washington Post + NPR + Platformer) · ainda não substituído por equivalente acadêmico</div>
+    <p>O Stanford Internet Observatory — referência global em monitoramento de desinformação eleitoral, responsável pelo Election Integrity Partnership de 2020 e 2022 — foi desmontado em junho de 2024 após pressão política e processos judiciais nos EUA. Alex Stamos saiu em nov.2023, Renée DiResta teve contrato encerrado em jun.2024, o laboratório <strong>declarou explicitamente que não vai mais fazer pesquisa eleitoral</strong>, nos EUA ou em qualquer país. <strong>Implicação ignorada na imprensa brasileira:</strong> Brasil 2026 é a primeira mega-eleição do ciclo global de IA generativa em que o principal observatório acadêmico independente americano não vai produzir pesquisa de campo, dataset público nem análise pós-eleição. Quem assume o vácuo? Aláfia Lab e Data Privacy Brasil (capacidade BR), Minderoo Centre · Cambridge (escopo limitado), Alan Turing Institute (UK, foco britânico). Control Risks publica boletim — mas é consultoria privada B2B, não é dado público nem auditável. <strong>Ninguém na imprensa brasileira mainstream conectou esse buraco com o calendário de outubro.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil vai votar em outubro com o principal microscópio global apagado"</strong> — reportagem de bastidor: entrevistar Renée DiResta diretamente (ela está na UC Berkeley agora, acessível) sobre o que o SIO faria se ainda existisse, e o que ela acha que vai faltar para o Brasil 2026. Pareá-la com Rose Marie Santini (NetLab UFRJ), Bruna Santos (Data Privacy Brasil) e Sam Stockwell (Alan Turing Institute). Pergunta-chave: existe Election Integrity Partnership 2026 para o Brasil — formal ou informal? Quem é a "rede de fallback"?</p>
+      <p><strong>Frame para BBC World:</strong> "What it looks like to run the world's first AI-saturated election after the global watchdog was dismantled."</p>
+      <p><strong>Fonte essencial:</strong> Renée DiResta (UC Berkeley) · Alex Stamos (SentinelOne / Stanford CISAC) · Aláfia Lab · Minderoo Centre · Alan Turing Institute · Mozilla Insights.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">o fato é antigo · a conexão com Brasil 2026 nunca foi feita</span>
+    </div>
+    <div class="links">
+      <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-disinformation-research-lawsuits-politics/" target="_blank">→ Washington Post · colapso do SIO sob pressão (jun.2024)</a>
+      <a href="https://www.platformer.news/stanford-internet-observatory-shutdown-stamos-diresta-sio/" target="_blank">→ Platformer · desmontagem do SIO</a>
+      <a href="https://cyber.fsi.stanford.edu/io/publications" target="_blank">→ Stanford FSI · página de publicações (sem nada novo desde 2024)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · assimetria legislativa</div>
+    <h3>O Marco da IA (PL 2338) está parado em impasse político na Câmara — enquanto o PL 212 (deepfake eleitoral) avança rápido. Brasil entra na campanha sem framework geral, mas com framework setorial</h3>
+    <div class="meta">PL 2338/2023 · votação adiada para 2026 (Desinformante · Coalizão Direitos na Rede, dez.2025) · PL 212/26 · em tramitação acelerada</div>
+    <p>Em dezembro de 2025, a Coalizão Direitos na Rede pediu publicamente <em>"urgência de transparência e maior participação da sociedade civil nos debates do PL 2338"</em>; a votação do Marco da IA foi adiada novamente para 2026, em meio a impasses políticos e críticas ao texto. Enquanto isso, o PL 212/26 — que criminaliza deepfake eleitoral, autoria do dep. Rubens Pereira Júnior (PT-MA) — segue tramitação com pena de 2 a 6 anos e brechas para "sátira, paródia e pesquisa acadêmica". <strong>O resultado é uma anomalia regulatória: o Brasil chega a outubro de 2026 sem o framework geral de IA, mas com a regra setorial (eleitoral) operando — o que cria um regime onde "IA política" tem restrição mais clara que "IA em saúde, crédito, RH ou justiça criminal".</strong> Implicação: nenhum dos quatro labs e nenhum jornal mainstream comparou o ritmo dos dois PLs, e ninguém perguntou ao MCTI / Senado se essa assimetria é intencional ou colateral.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil vai regular IA primeiro nas urnas e depois no resto"</strong> — comparativo dos ritmos do PL 2338 e PL 212; entrevistar relator do 2338 (Eduardo Gomes) e autor do 212 (Pereira Júnior); contrastar com o AI Act europeu (que fez o caminho oposto: framework geral em 2024, regras setoriais depois). Conversar com CDR, IRIS-BH, ITS-Rio sobre se essa assimetria é estrutural — e o que ela significa pra direitos.</p>
+      <p><strong>Frame:</strong> "O regime brasileiro de IA chega à vida pública pela porta da urna — não pela porta do hospital, do banco ou do tribunal."</p>
+      <p><strong>Fonte essencial:</strong> Sen. Eduardo Gomes (relator PL 2338) · Dep. Rubens Pereira Jr (autor PL 212) · CDR · IRIS-BH · ITS-Rio · Bia Barbosa · Yasmin Curzi.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">os dois PLs cobertos em separado · ritmo comparado · nunca</span>
+    </div>
+    <div class="links">
+      <a href="https://desinformante.com.br/votacao-do-marco-da-ia-fica-para-2026-em-meio-a-impasses-politicos-e-criticas-ao-texto" target="_blank">→ desinformante · votação Marco da IA adiada</a>
+      <a href="https://direitosnarede.org.br/2025/12/10/regulacao-da-ia-protetiva-de-direitos-ja-e-maior-participacao-sociedade-civil-pl-2338/" target="_blank">→ CDR · urgência PL 2338 (dez.2025)</a>
+      <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2487262" target="_blank">→ camara.leg.br · ficha PL 212/26 (deepfake)</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · três métricas, um eixo</div>
+    <h3>O eixo da desinformação no Brasil 2026 já não é mais o WhatsApp — e nenhum framework regulatório foi recalibrado pra isso</h3>
+    <p><strong>Ponto 1 (Lupa, fev.2026):</strong> em 2025, <strong>47% das fakes virais identificadas circularam no WhatsApp — contra 90% em 2024</strong>. Queda de 43 pontos em um ano. A diferença foi pra Instagram, TikTok, X e Telegram.<br>
+    <strong>Ponto 2 (Aláfia Lab + Data Privacy Brasil, fev.2026):</strong> <strong>34% dos posts sintéticos políticos partem de agentes com mandato</strong> — deputados federais, senadores, vereadores. E o conteúdo deles vive nas <em>timelines abertas</em>, não em grupo fechado.<br>
+    <strong>Ponto 3 (TRE-MG, abr.2026):</strong> o golpe transacional do cadastro eleitoral — esse, sim, ainda usa WhatsApp/SMS/e-mail (canal fechado), mas o vetor é <em>fraude direta ao eleitor</em>, não viralização ideológica.</p>
+    <p><strong>Síntese:</strong> a desinformação política BR migrou de "boato em rede fechada" para <em>dois eixos paralelos</em> — (a) <strong>deepfake aberto, em timeline pública, autoria de mandato</strong>, e (b) <strong>fraude transacional via DM, autoria criminal-anônima</strong>. <strong>Os dois mapas pedem políticas opostas:</strong> o primeiro precisa de moderação em rede aberta + regime parlamentar; o segundo precisa de inventário de clones + SLA de derrubada via Meta/Telegram. <strong>Toda a Resolução 23.755 do TSE foi desenhada para o eixo antigo (boato fechado).</strong> A Lupa olhou só o ponto 1; Data Privacy só o ponto 2; o TRE-MG só o ponto 3. <strong>Ninguém costurou os três.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"O WhatsApp deixou de ser a guerra. A guerra agora tem dois mapas — e o TSE só desenhou um"</strong> — reportagem de fundo com Beatriz Farrugia (Lupa), Bruna Santos (Data Privacy Brasil), Diogo Cortiz (Aláfia Lab), Rose Marie Santini (NetLab UFRJ) e fonte interna do CIEDDE/TSE. <strong>Frame original:</strong> "A regra eleitoral de IA do Brasil foi escrita para a desinformação de 2018. Em 2026, a desinformação tem dois donos novos — e o regulador não conhece nenhum dos dois."</p>
+      <p><strong>Frame alternativo (BBC World):</strong> "Brazil regulated yesterday's information war, just as the new front opened on its own ruling-class timelines."</p>
+      <p><strong>Fontes essenciais:</strong> Lupa · Aláfia Lab · Data Privacy Brasil · NetLab UFRJ · CIEDDE/TSE · Yasodara Córdova · Sergio Amadeu (UFABC).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos são públicos · a costura "duas guerras paralelas" é inédita</span>
+    </div>
+    <div class="links">
+      <a href="https://www.agencialupa.org/noticias/2026/02/05/fakes-com-ia-crescem-308-em-um-ano-revela-estudo-inedito-da-lupa/" target="_blank">→ lupa · fakes com IA crescem 308% (queda WhatsApp)</a>
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ data privacy · 34% partem de agentes com mandato</a>
+      <a href="https://www.tre-mg.jus.br/comunicacao/noticias/2026/Abril/justica-eleitoral-alerta-para-golpe-com-cobranca-para-regularizacao-de-pendencias-eleitorais" target="_blank">→ tre-mg · golpe transacional via WhatsApp/SMS</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · pergunta na fonte, não no canal</div>
+    <h3>O TSE assinou Termo de Cooperação com Meta, Google e TikTok — mas existe acordo análogo com os provedores que <em>fabricam</em> a IA generativa que vai gerar o conteúdo? OpenAI, Anthropic, ElevenLabs, Suno, Runway, Synthesia foram chamados à mesa?</h3>
+    <p><strong>Contexto:</strong> todo o desenho institucional do TSE para 2026 — Resolução 23.755, Termos de Cooperação, CIEDDE — está focado nas <em>plataformas de distribuição</em> (Meta, Google, TikTok, X). Mas o conteúdo sintético <strong>não nasce</strong> nessas plataformas: ele nasce em provedores de IA generativa específicos (texto: OpenAI, Anthropic, Mistral; imagem: Midjourney, Stability, DALL-E; áudio: ElevenLabs, Suno; vídeo: Runway, Pika, Synthesia, HeyGen). Esses provedores têm políticas próprias de uso — alguns proíbem geração de imagem de figura pública, outros permitem com consentimento, outros têm watermark embutido (C2PA, SynthID). <strong>Pergunta inédita:</strong> o TSE conversou com algum desses provedores antes de outubro? Tem lista pública das APIs monitoradas? Tem canal de notificação direto pra exigir bloqueio de prompt antes que o conteúdo seja distribuído?</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· O CIEDDE tem capacidade técnica para identificar a "assinatura" de cada modelo (ex: detectar se um deepfake foi gerado por Sora, Veo ou Runway)? Existe protocolo de forense ativo?<br>
+    · Os watermarks invisíveis (C2PA da Adobe/Microsoft, SynthID do Google, marca d'água do OpenAI) estão sendo usados na cadeia de prova judicial brasileira? Algum TRE já citou metadado de IA em decisão?<br>
+    · A política de uso da OpenAI proíbe geração de conteúdo "to influence elections" — a empresa tem time dedicado a denúncias do TSE? Tem SLA?<br>
+    · O TSE pode pedir LAI sobre log de prompts à OpenAI/Anthropic via cooperação internacional? Existe MLAT relevante?<br>
+    · Quantos dos 137 deepfakes do Observatório IA nas Eleições foram <em>atribuídos</em> a um modelo específico? Em quantos a fonte ficou anônima?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"Brasil regulou as redes. Não regulou as fábricas. — Os provedores de IA generativa que vão decidir outubro de 2026 e ninguém perguntou nada"</strong> — investigação documental: pedir LAI ao TSE sobre lista de provedores de IA generativa contatados oficialmente nos últimos 12 meses. Cruzar com os contatos de policy BR de OpenAI, Anthropic, Google DeepMind, ElevenLabs, Suno, Runway. Entrevistar pesquisadores de proveniência (C2PA): Hany Farid (Berkeley), Sam Gregory (WITNESS), Claire Leibowicz (PAI). <strong>Se nenhum dos provedores tiver sido contatado formalmente</strong>, é furo institucional grande — a regulação está só na ponta da distribuição, não na ponta da produção.</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's electoral court is policing the social networks. The companies that actually make the deepfakes are still unsupervised."</p>
+      <p><strong>Fonte essencial:</strong> CIEDDE/TSE (LAI) · STI/TSE · OpenAI Policy LATAM · Anthropic Policy · Google DeepMind Trust&Safety · ElevenLabs Safety · Hany Farid (UC Berkeley) · Sam Gregory (WITNESS) · Claire Leibowicz (Partnership on AI) · Yasodara Córdova.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta deslocada do eixo plataforma → provedor · ninguém formulou</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #006 · gerado em 02.mai.2026 07h · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
