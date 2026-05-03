@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #007 — 03.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #007</span>
+    <span>domingo · 03.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TREs · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · arquivo apagando</div>
+    <h3>A 5 meses do 1º turno, a Meta começou a deletar a Biblioteca de Anúncios — a única fonte aberta para auditar campanha digital política no Brasil está sendo apagada em silêncio</h3>
+    <div class="meta">Meta · política de retenção de 7 anos vence em 2026 · anúncios de 2018 e 2019 começam a sair do ar agora · cobertura: LeFil + Congresso em Foco</div>
+    <p>A Meta confirmou que <strong>vai começar a remover gradualmente da Biblioteca de Anúncios</strong> as peças antigas de política, eleições e temas sociais — porque o limite de retenção de 7 anos, fixado em 2018, está vencendo agora, justamente no ciclo eleitoral de 2026. <strong>O que isso quer dizer na prática:</strong> os anúncios da eleição em que Cambridge Analytica entrou na conversa global (2018) e a primeira campanha pós-pandemia com microtargeting maduro (2020 municipal) começam a desaparecer do registro público <em>antes</em> de 4 de outubro. NetLab UFRJ, Aláfia Lab, Lupa, Aos Fatos, ITS-Rio e o próprio CIEDDE/TSE usam essa biblioteca como base para qualquer série histórica comparável. <strong>Sem ela, "publicidade política em 2026" não é comparável a 2018 nem a 2022.</strong> A regra é antiga, mas a aplicação é nova — e ninguém auditou o ritmo de exclusão.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O arquivo da democracia digital está sumindo — e ninguém está medindo"</strong> — script automatizado para baixar, semanalmente, o volume de anúncios políticos brasileiros disponíveis na Ad Library da Meta por ano de criação (2018, 2019, 2020, 2022). Comparar agora vs. janeiro/2026. Confirmar com pesquisadores do NetLab e ITS-Rio quanto material já saiu do ar e o impacto disso pra estudos comparativos. Pedir à Meta Brasil: existe lista de anúncios políticos prestes a expirar? Há canal pra pesquisador "freezar" o material antes da exclusão?</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil enters its first AI-saturated election as Meta begins erasing the only public archive of political advertising — by the rulebook it wrote itself in 2018."</p>
+      <p><strong>Fonte essencial:</strong> Meta Policy BR · NetLab UFRJ · Aláfia Lab · ITS-Rio · Mozilla Insights (já fez auditoria similar Ad Library na UE) · Daniel Bramatti (Abraji).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">anúncio reverberou em mídia setorial · ninguém mediu volume real apagado</span>
+    </div>
+    <div class="links">
+      <a href="https://www.lefil.com.br/meta-anuncia-mudanca-na-forma-de-armazenamento-dos-anuncios-politicos/" target="_blank">→ lefil · Meta muda armazenamento de anúncios políticos</a>
+      <a href="https://www.congressoemfoco.com.br/artigo/109808/afetos-artificiais-e-publicidade-opaca-nas-eleicoes-2026" target="_blank">→ congresso em foco · publicidade opaca em 2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · gap de jurisdição</div>
+    <h3>A AGU lançou a 11ª cartilha eleitoral com IA como "grande novidade" — mas ela só vincula 800 mil servidores federais. A maior parte da desinformação com mandato vem do plano municipal e estadual, fora do alcance</h3>
+    <div class="meta">AGU/CGU · 11ª edição da Cartilha Eleitoral, lançada em 17.abr.2026 · Observatório IA nas Eleições: 1/3 dos posts sintéticos vem de agentes com mandato</div>
+    <p>A 11ª edição da <em>Cartilha Eleitoral: Condutas Vedadas aos Agentes Públicos Federais</em>, publicada em 17 de abril, traz pela primeira vez capítulo dedicado ao uso de IA e ao combate à desinformação, alinhado às resoluções do TSE. <strong>Detalhe que a cobertura ignorou:</strong> o nome diz tudo — "agentes públicos <em>federais</em>". A cartilha vincula servidores do Executivo federal, autarquias, fundações, empresas estatais. <strong>Não vincula:</strong> deputados estaduais, vereadores, prefeitos, governadores, secretários estaduais, servidores estaduais e municipais. O dado do Observatório IA nas Eleições (Aláfia Lab + Data Privacy Brasil) mostra que <strong>1/3 dos conteúdos sintéticos políticos identificados vem de agentes com mandato</strong> — e a maioria desses mandatos é municipal/estadual. <strong>Resultado:</strong> a peça regulatória mais didática que o Brasil tem para 2026 não fala com 90% dos cargos eletivos ativos no país. AGUs estaduais (PGEs) e Ministérios Públicos estaduais teriam que produzir cartilhas equivalentes — quantos fizeram? Ninguém auditou.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"A cartilha que pega 800 mil servidores e deixa de fora 5.500 prefeitos"</strong> — pedir LAI/contato a todas as 27 PGEs, ao CONAMP (procuradores estaduais) e ao CNMP: existe cartilha equivalente para servidores estaduais e municipais? Quantos estados publicaram orientação sobre IA nas eleições 2026? Cruzar com o mapa do Observatório IA nas Eleições por estado de origem do conteúdo. <strong>O furo provável:</strong> a maior parte das unidades federativas não tem nada equivalente, e a fiscalização de mandato municipal vai depender só de denúncia ao TSE — sem prevenção institucional.</p>
+      <p><strong>Frame:</strong> "O Brasil escreveu o manual da campanha sem IA — mas só pra quem trabalha em Brasília."</p>
+      <p><strong>Fonte essencial:</strong> AGU (autores da cartilha) · Procurador-Geral Federal · CONAMP · CNMP · CGE de SP / RJ / MG / BA · Bruna Santos (Data Privacy) · Diogo Cortiz (Aláfia Lab) · Sergio Amadeu (UFABC).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">cartilha foi noticiada como "novidade IA" · jurisdição estreita · ninguém comparou com mapa do Observatório</span>
+    </div>
+    <div class="links">
+      <a href="https://www.gov.br/agu/pt-br/comunicacao/noticias/cartilha-orienta-conduta-de-agentes-publicos-nas-eleicoes" target="_blank">→ agu · cartilha 11ª edição (abr.2026)</a>
+      <a href="https://agenciabrasil.ebc.com.br/politica/noticia/2026-04/eleicoes-2026-agu-orienta-agentes-publicos-sobre-condutas-proibidas" target="_blank">→ agência brasil · resumo da cartilha</a>
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ data privacy · 1/3 dos sintéticos vem de mandato</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · obrigação sem destinatário</div>
+    <h3>Cinco meses depois do acórdão do STF, plataformas têm obrigação de publicar relatório anual de moderação — mas o tribunal não definiu prazo, formato nem para quem entregar. Brasil 2026 começa com lei nova de transparência sem destinatário institucional</h3>
+    <div class="meta">RE 1.037.396 · STF · acórdão publicado em 5.nov.2025 · obriga relatório anual de transparência sobre moderação, anúncios e impulsionamento</div>
+    <p>O acórdão do STF que declarou inconstitucionalidade parcial do art. 19 do Marco Civil obrigou as plataformas a (a) ter representação legal no Brasil, (b) publicar <strong>relatório anual de transparência</strong> com volume de notificações extrajudiciais, conteúdo removido e decisões sobre anúncios e impulsionamentos, e (c) implementar autorregulação com devido processo. <strong>O que o acórdão não definiu:</strong> prazo de publicação, formato padronizado, nem qual autoridade pública recebe e audita. CGI.br? ANPD? CGU? CNJ? Ministério da Justiça? <strong>Nenhuma.</strong> O resultado é que cada plataforma vai publicar (ou não) seu próprio relatório, no seu calendário, no seu formato — e <em>justamente no ano da primeira eleição em que esse dado importaria</em>. Lupa documentou na semana passada (29.abr) que o TSE também não detalhou como vai fiscalizar IA. <strong>Soma: a infraestrutura jurídica de transparência existe — a infraestrutura institucional de auditoria, não.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O STF mandou as plataformas publicarem o que escondem — sem dizer onde nem como"</strong> — investigar o status de cumprimento: já foi publicado relatório por Meta, Google, TikTok, X, Kwai, Telegram em 2026? Pedir LAI ao Ministério da Justiça, CGI.br, ANPD, CNJ e CGU sobre quem assumiu (formal ou informalmente) o papel de destinatário e auditor desses relatórios. Conversar com IRIS-BH, ITS-Rio, IDEC e CDR sobre o que era esperado tecnicamente vs. o que está saindo. <strong>O furo provável:</strong> nenhum órgão público se considera destinatário formal — a obrigação está pendurada no ar.</p>
+      <p><strong>Frame:</strong> "A maior decisão de transparência digital da história brasileira foi proferida sem dizer para quem entregar a transparência."</p>
+      <p><strong>Fonte essencial:</strong> Min. Luís Roberto Barroso (relator) · ANPD · CGI.br · CNJ Inteligência Artificial · MJ Secretaria dos Direitos Digitais · Bia Barbosa (CDR) · Yasmin Curzi (FGV) · Lucas Lago (Hashtag positivo).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">acórdão amplamente coberto em jun-nov.2025 · gap "destinatário" não foi feito</span>
+    </div>
+    <div class="links">
+      <a href="https://www.conjur.com.br/2025-jun-26/supremo-fixa-tese-sobre-responsabilizacao-de-plataformas-por-conteudo-de-usuarios/" target="_blank">→ conjur · tese fixada pelo STF</a>
+      <a href="https://www.observatoriodaimprensa.com.br/internet/como-o-acordao-do-stf-sobre-o-artigo-19-do-marco-civil-da-internet-inaugura-uma-virada-institucional-na-regulacao-das-plataformas-digitais/" target="_blank">→ observatório da imprensa · análise do acórdão</a>
+      <a href="https://www.agencialupa.org/reportagem/2026/04/29/a-seis-meses-do-1o-turno-tse-nao-detalha-como-fiscalizara-uso-de-ia-nas-eleicoes" target="_blank">→ lupa · TSE não detalha fiscalização (29.abr.2026)</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · apagão triplo</div>
+    <h3>Em 30 dias, três pilares simultâneos da prova pública sobre IA eleitoral começaram a ruir — Brasil 2026 vai entrar em campanha com menos dado disponível do que em 2022</h3>
+    <p><strong>Pilar 1 — arquivo histórico (Meta, abr.2026):</strong> a Biblioteca de Anúncios começa a apagar o material de 2018 e 2019 por vencimento de 7 anos. Sem ela, "publicidade política em 2026" não é comparável às eleições anteriores.<br>
+    <strong>Pilar 2 — relatório do presente (STF, nov.2025):</strong> plataformas foram obrigadas a publicar relatório anual de moderação. Sem prazo, sem formato, sem destinatário institucional. Cinco meses depois, ninguém auditou se está saindo — e ninguém é responsável por receber.<br>
+    <strong>Pilar 3 — fiscalização ativa (Lupa, 29.abr.2026):</strong> "A seis meses do 1º turno, TSE não detalha como fiscalizará uso de IA nas eleições." Sem SLA com plataformas, sem dashboard público, sem capacidade técnica auditada de derrubada em 96h.</p>
+    <p><strong>Síntese:</strong> os três tipos de evidência sobre IA política — <em>passado</em> (Ad Library), <em>presente contínuo</em> (relatórios STF) e <em>fiscalização ativa</em> (TSE) — estão simultaneamente em colapso, sem que nenhum dos três fenômenos seja consequência dos outros. <strong>Cada um vem de um motor institucional diferente</strong> (regra interna da Meta de 2018; acórdão do STF de 2025; resolução do TSE de mar.2026), mas o efeito agregado é <strong>uma campanha eleitoral nacional iniciada com menos visibilidade pública do que tinha em 2022</strong> — e isso ninguém somou.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"Em 30 dias, o Brasil perdeu o passado, o presente e o futuro da prova de IA política — e ninguém se deu conta"</strong> — reportagem de profundidade combinando: (1) script medindo volume da Ad Library; (2) inventário de quem (entre Meta, Google, TikTok, X, Kwai, Telegram) já cumpriu, parcialmente cumpriu ou não cumpriu o relatório STF; (3) status fiscalização TSE conforme Lupa. Costurar os três como "três janelas que se fecharam ao mesmo tempo".</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's pre-electoral data infrastructure is collapsing on three separate fronts. The election is in five months."</p>
+      <p><strong>Fontes essenciais:</strong> NetLab UFRJ (Rose Marie Santini) · Aláfia Lab (Diogo Cortiz) · Data Privacy Brasil (Bruna Santos) · Lupa (Natália Leal) · Mozilla Insights · IRIS-BH · ITS-Rio · CGI.br · ANPD · CIEDDE/TSE.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos são públicos · a costura "apagão triplo simultâneo" é inédita</span>
+    </div>
+    <div class="links">
+      <a href="https://www.lefil.com.br/meta-anuncia-mudanca-na-forma-de-armazenamento-dos-anuncios-politicos/" target="_blank">→ lefil · Meta apaga histórico Ad Library</a>
+      <a href="https://www.conjur.com.br/2025-jun-26/supremo-fixa-tese-sobre-responsabilizacao-de-plataformas-por-conteudo-de-usuarios/" target="_blank">→ conjur · tese STF · relatório anual obrigatório</a>
+      <a href="https://www.agencialupa.org/reportagem/2026/04/29/a-seis-meses-do-1o-turno-tse-nao-detalha-como-fiscalizara-uso-de-ia-nas-eleicoes" target="_blank">→ lupa · TSE não detalha fiscalização (29.abr.2026)</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · benchmark ausente</div>
+    <h3>O desafio acadêmico mundial de detecção de deepfake (NTIRE 2026, CVPR) recebeu 14 métodos submetidos — nenhum testado em corpus brasileiro/português. Por que o Brasil não tem um benchmark público de deepfake eleitoral em PT-BR a 5 meses do 1º turno?</h3>
+    <p><strong>Contexto:</strong> o NTIRE 2026 Robust Deepfake Detection Challenge, conferência CVPR (principal evento mundial de visão computacional), publicou em abril de 2026 o relatório com 14 métodos finalistas — todos treinados e avaliados sobre datasets em inglês, com rosto majoritariamente caucasiano e voz inglesa. <strong>O Observatório IA nas Eleições já catalogou 137 casos sintéticos políticos brasileiros</strong>; nada disso virou dataset público acadêmico. <strong>Resultado:</strong> as ferramentas de detecção que o CIEDDE/TSE, a Polícia Federal e jornalistas brasileiros vão usar em outubro foram calibradas em vozes estrangeiras, sotaques estrangeiros, fenótipos não-brasileiros. Fones brasileiros (sotaque nordestino, paulista, gaúcho), português falado e tons de pele majoritários no país <em>não estão</em> no conjunto de validação dos modelos top do mundo. Pesquisa BR existe (RITA/UFRGS publicou paper em 2026 sobre generalização frequência+CNN), mas <em>não publicou benchmark</em> compartilhável.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· Existe iniciativa pública (CGI.br, RNP, MCTI, Lab CSI) para liberar um corpus brasileiro de deepfake eleitoral 2024 + 137 casos do Observatório como "BR-DeepFake-Bench" antes de outubro?<br>
+    · Os 137 casos do Observatório IA nas Eleições estão custodiados, etiquetados e disponíveis? Sob que licença? O Aláfia Lab e o Data Privacy Brasil cogitam liberar?<br>
+    · A RNP, que já hospeda repositórios como o Lattes-Plataforma Brasil, poderia hospedar um dataset acadêmico restrito-pesquisador?<br>
+    · Empresas BR de detecção (Idwall, Unico, AllowMe) treinam em quê? Auditaram performance em PT-BR? Há paper público?<br>
+    · Quem vira a "âncora científica" desse benchmark — UFRJ (NetLab), USP (NIC), UFRGS (Informática Teórica), Unicamp, IFSP? Existe consórcio?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"O Brasil vai detectar deepfake eleitoral com algoritmo treinado pra rosto e voz que não são brasileiros"</strong> — entrevistar autores do paper RITA/UFRGS (Farinha Rodrigues, Akabane, Carbonezi de Souza, Macarini), organizadores do NTIRE 2026, Aláfia Lab e CIEDDE/TSE. <strong>Se ninguém estiver liderando a criação de benchmark BR público antes de outubro</strong>, isso é manchete: "O país que mais sofre desinformação política do hemisfério ocidental vai pra urna em 2026 com tecnologia de detecção calibrada para outro continente."</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's deepfake-detection toolkit was tuned for English-speaking white faces. Its election is in October."</p>
+      <p><strong>Fonte essencial:</strong> Farinha Rodrigues / Antonio Buschetto Macarini (UFRGS) · organizadores NTIRE 2026 (CVPR) · Aláfia Lab · NetLab UFRJ · CIEDDE/TSE · Hany Farid (UC Berkeley) · Sam Gregory (WITNESS) · RNP · CGI.br.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">discussão técnica · nenhum veículo brasileiro mainstream foi nesse ângulo</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #007 · gerado em 03.mai.2026 07h · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
