@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #008 — 04.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #008</span>
+    <span>segunda · 04.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TREs · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · troca de comando</div>
+    <h3>A oito dias da posse, o presidente do TSE que vai comandar a fiscalização de IA na primeira eleição geral pós-resolução é o ministro indicado por Bolsonaro — e nenhuma redação fez o levantamento de seus votos sobre desinformação</h3>
+    <div class="meta">TSE · posse de Nunes Marques marcada para 12.mai.2026, 19h · Cármen Lúcia antecipou em 9.abr a saída prevista para 3.jun · André Mendonça vice</div>
+    <p>O ministro <strong>Kassio Nunes Marques</strong> toma posse na presidência do TSE em <strong>12 de maio</strong>, oito dias antes do encerramento do prazo de alistamento eleitoral (6.mai) e a cinco meses do 1º turno (4.out). Nunes Marques foi o primeiro indicado de Jair Bolsonaro ao STF, em 2020, e vai presidir a Justiça Eleitoral durante todo o ciclo de fiscalização das novas regras de IA — Resolução 23.755/2026, com janela de 96h, multa de R$ 5 mil a R$ 30 mil e poder de remoção sob ordem do tribunal. <strong>O que ninguém fez ainda:</strong> levantar a posição de Nunes Marques nos julgamentos-chave sobre desinformação que o STF e o TSE decidiram entre 2021 e 2025 — Inquérito das Fake News (INQ 4.781), AP 1.044 (8 de janeiro), RE 1.037.396 (responsabilização de plataformas), inelegibilidade de Bolsonaro pelas reuniões com embaixadores. <strong>Em vários desses, Nunes Marques foi voto vencido pela posição mais permissiva.</strong> A presidência do TSE define a pauta, decide pedidos liminares de remoção, e despacha as representações eleitorais com tutela de urgência. A pessoa que vai pilotar a engrenagem que a Resolução 23.755 desenhou é a única, entre os 7 ministros, com perfil de voto reiteradamente alinhado à minoria sobre o tema. A imprensa cobriu a posse como "antiguidade prevista" — e nenhuma redação publicou a tabela de votos.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O presidente do TSE da primeira eleição com IA: o que Nunes Marques votou nos últimos cinco julgamentos sobre desinformação"</strong> — montar a tabela de voto: Inquérito 4.781 (questões processuais), tese da AP 1.044 sobre 8 de janeiro, RE 1.037.396 (Marco Civil), Aijes da inelegibilidade de Bolsonaro, casos de remoção sob art. 9º-B/Resolução 23.610. Comparar com perfil de voto da maioria. Falar com Yasmin Curzi (FGV), Conrado Hübner Mendes (USP), Diego Werneck (Insper) e ABRAJI. <strong>Pedir entrevista a Nunes Marques sobre fiscalização da resolução de IA</strong> — ele dá entrevista pré-posse, é janela rara.</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's first AI-regulated election will be supervised by the Bolsonaro-appointed justice — and nobody has tallied his votes on the rules he is now in charge of enforcing."</p>
+      <p><strong>Fonte essencial:</strong> assessoria de comunicação do TSE · Conrado Hübner Mendes · Yasmin Curzi (FGV) · Diego Werneck (Insper) · Eloísa Machado (FGV) · ABRAJI · Article 19.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">posse foi noticiada · nenhum veículo fez tabela de voto sobre desinformação</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/ministro-nunes-marques-assume-presidencia-do-tse-em-12-de-maio" target="_blank">→ tse.jus.br · posse marcada para 12.mai</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/ministros-nunes-marques-e-andre-mendonca-sao-eleitos-presidente-e-vice-do-tse-1" target="_blank">→ tse.jus.br · eleição interna (14.abr)</a>
+      <a href="https://agenciabrasil.ebc.com.br/justica/noticia/2026-04/nunes-marques-assume-presidencia-do-tse-dia-12-de-maio" target="_blank">→ agência brasil · sucessão</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · autoridade sem quadro</div>
+    <h3>A ANPD, definida como secretaria-executiva do Sistema Nacional de IA e fiscal residual de IA na eleição, ainda tem 48 vagas técnicas pendentes — solicitação de concurso só precisa ser registrada até 31 de maio</h3>
+    <div class="meta">LOA 2026 · 48 vagas previstas para a ANPD · prazo de registro do concurso: 31.mai.2026 · MP 1.317/2025 transformou ANPD em autarquia de natureza especial · posse dos novos quadros prevista para 1º semestre 2026</div>
+    <p>O texto do PL do Sistema Nacional para Desenvolvimento, Regulação e Governança de IA — enviado ao Congresso pelo presidente Lula em 8.dez.2025 (Mensagem nº 1845) — atribui à <strong>ANPD a função de secretaria-executiva</strong> do futuro Conselho Brasileiro de IA. A Resolução 23.755/2026 do TSE, somada às propostas trazidas pela Data Privacy Brasil em audiência pública (5.fev.2026), constrói uma arquitetura em que <strong>o TSE e a ANPD passam a analisar relatórios de impacto de IA</strong> em propaganda eleitoral. Em paralelo, a Agenda Regulatória 2025-2026 da própria ANPD (Resolução CD/ANPD 31/2025, 24.dez.2025) coloca <strong>IA, dados biométricos e dados de grupos vulneráveis</strong> como temas prioritários para 2026-2027. <strong>O detalhe estrutural que ninguém somou:</strong> a LOA 2026 prevê 48 novas vagas para a ANPD, com prazo final para registro da solicitação do concurso público em <strong>31 de maio de 2026</strong> (art. 14 da Instrução Normativa nº 2/2019). Mesmo se o concurso sair imediatamente, prova → homologação → posse não acontece em 90 dias. <strong>A autoridade fiscal-chave de IA na eleição entra na campanha (16.ago) com quadro técnico ainda em formação.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"A ANPD vai fiscalizar IA na primeira eleição com 48 servidores que ainda não existem"</strong> — pedir LAI à ANPD: número atual de servidores efetivos vs. o autorizado pela MP 1.317/2025; status do concurso (edital publicado? autorização concedida?); cronograma de posse projetado vs. data do 1º turno; quantos servidores estão dedicados especificamente a casos relacionados à eleição. Cruzar com a Agenda Regulatória 2025-2026 para mostrar quantos temas da agenda dependem de equipe que ainda não existe. <strong>Conversar com:</strong> Waldemar Gonçalves Ortunho Junior (presidente ANPD) · Bruno Bioni (Data Privacy Brasil) · Rafael Zanatta · Conselho Diretor da ANPD.</p>
+      <p><strong>Frame:</strong> "A ANPD foi alçada a peça central da fiscalização de IA na eleição — e ainda está esperando autorização para fazer concurso."</p>
+      <p><strong>Fonte essencial:</strong> ANPD (assessoria + presidente + DPO institucional) · Bruno Bioni · Estela Aranha (ex-secretária dos Direitos Digitais MJ) · CTI Renato Archer · CGI.br.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">vagas, MP e agenda foram noticiados separados · ninguém somou contra o calendário eleitoral</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/a-transformacao-da-anpd-de-autoridade-a-agencia-nacional-de-protecao-de-dados/" target="_blank">→ data privacy · transformação da ANPD (autarquia)</a>
+      <a href="https://www.martinelli.adv.br/anpd-publica-mapa-de-temas-prioritarios-2026-2027-e-atualiza-a-agenda-regulatoria-2025-2026/" target="_blank">→ ANPD · Mapa de Temas Prioritários 2026-2027 (24.dez.2025)</a>
+      <a href="https://convergenciadigital.com.br/governo/na-regulacao-do-governo-para-inteligencia-artificial-anpd-e-a-autoridade-reguladora-residual/" target="_blank">→ convergência digital · ANPD como reguladora residual de IA</a>
+      <a href="https://www.estrategiaconcursos.com.br/blog/concurso-anpd/" target="_blank">→ concurso ANPD · prazo de registro 31.mai.2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · ofensiva externa</div>
+    <h3>O Comitê Judiciário da Câmara dos EUA publicou em abril o "Brazil Part III" com 57 ordens de Moraes mapeadas — 23 delas a partir de set/2025 mirando Eduardo Bolsonaro, irmão de pré-candidato presidencial. Nenhum mainstream brasileiro leu o relatório como dossiê eleitoral</h3>
+    <div class="meta">House Judiciary Committee Republicans · "The Attack on Free Speech Abroad: The Case of Brazil Part III" · publicado em abril/2026 · 57 ordens de Moraes (2020-2026) · 21 condicionalmente revogando bloqueios · 20 subpoenas a plataformas, 5 só ao X</div>
+    <p>O Comitê de Judiciário (republicano) da Câmara dos EUA publicou em abril a terceira parte do dossiê sobre Brasil. <strong>Núcleo do material:</strong> 57 ordens de remoção/bloqueio do ministro Alexandre de Moraes, das quais <em>21 condicionalmente revogaram bloqueios mediante adequação</em> e <em>23 exigiram bloqueio total de contas</em>. Plus: 20 subpoenas pedindo dados de usuários, 5 só contra a X Corp. <strong>O ângulo que mainstream brasileiro tratou como "polêmica diplomática":</strong> várias dessas ordens, entre setembro de 2025 e fevereiro de 2026, tiveram como alvo Eduardo Bolsonaro — <em>residente nos EUA, lobista contra Moraes, e irmão de Flávio Bolsonaro, hoje em pesquisa simulando 2º turno com Lula</em>. O ângulo que <em>ninguém</em> fez no Brasil: ler o documento como <strong>dossiê de pré-campanha</strong>. O comitê propõe ao Departamento de Estado considerar sanções via Magnitsky a Moraes; um Stanford Cyber Policy Center é citado como articulador (set.2025) entre Brasil, UE, UK, Austrália. <strong>Resultado prático:</strong> uma instituição estatal estrangeira (Câmara dos EUA controlada pelo partido do presidente americano) está produzindo material que <em>tematicamente coincide</em> com o discurso de uma das alas presidenciáveis no Brasil — e <em>nenhum mainstream</em> Folha, UOL, G1, Estadão ou Veja leu o documento integralmente para mapear sobreposição com narrativa de campanha doméstica.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Como o relatório do Congresso americano vira munição de pré-campanha em Brasília"</strong> — análise documental do "Brazil Part III" (PDF da House Judiciary): mapear cada uma das 57 ordens citadas, verificar quais Eduardo Bolsonaro já tornou pública, comparar timing das ordens com aparições dele em CPAC, Twitter Spaces e podcasts trumpistas. Cruzar com falas de pré-candidatos brasileiros (Flávio Bolsonaro, Tarcísio, Ratinho Jr) sobre Moraes nos últimos 60 dias. <strong>Onde o ângulo BBC pode atravessar:</strong> Trump-aligned Magnitsky push contra Moraes pode (a) fragilizar o STF brasileiro a 5 meses da eleição, (b) ser explorado eleitoralmente, (c) ser tema de retaliação Itamaraty/AGU. Falar com Oliver Stuenkel (FGV), Maurício Santoro, Matias Spektor, Conrado Hübner.</p>
+      <p><strong>Frame para BBC World:</strong> "A US Congress committee just published a 200-page dossier on Brazil's top justice — five months before the election. Here is who in Brasília is reading it, and how."</p>
+      <p><strong>Fonte essencial:</strong> Oliver Stuenkel · Matias Spektor · Maurício Santoro · Conrado Hübner Mendes · Eloísa Machado · departamento internacional do STF · Itamaraty (assessoria + DPO digital) · Casa Civil.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">noticiado como "EUA atacam STF" · ângulo de pré-campanha não foi feito</span>
+    </div>
+    <div class="links">
+      <a href="https://judiciary.house.gov/media/press-releases/new-report-reveals-extent-brazilian-censorship-regimes-threat-american-free" target="_blank">→ judiciary.house.gov · release "Brazil Part III"</a>
+      <a href="https://judiciary.house.gov/sites/evo-subsites/republicans-judiciary.house.gov/files/evo-media-document/brazil-part-iii-report-final.pdf" target="_blank">→ pdf · brazil-part-iii-report-final.pdf</a>
+      <a href="https://reclaimthenet.org/moraes-ordered-global-takedowns-of-american-users-speech" target="_blank">→ reclaimthenet · resumo das 57 ordens</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · maio em pinça</div>
+    <h3>No mesmo mês em que o Brasil troca o presidente do TSE para o ministro indicado por Bolsonaro, o Congresso americano publica dossiê de 57 ordens contra outro ministro. A janela é coincidência de calendário — o efeito agregado, não</h3>
+    <p><strong>Ponto interno (12.mai.2026):</strong> Nunes Marques — voto vencido reiterado em julgamentos sobre desinformação eleitoral — assume a presidência do TSE oito dias antes do encerramento do alistamento (6.mai) e do Teste de Confirmação dos sistemas eleitorais (13-15.mai). É a primeira presidência do TSE durante uma eleição geral com regras vinculantes sobre IA (Resolução 23.755).<br>
+    <strong>Ponto externo (abril.2026):</strong> Comitê Judiciário da Câmara dos EUA publica "Brazil Part III" com 57 ordens de Moraes mapeadas, propõe ao Departamento de Estado considerar sanções Magnitsky, e cita um roundtable de set/2025 que reuniu autoridades de censura de Brasil, UE, UK e Austrália. Várias das ordens citadas, entre set/2025 e fev/2026, miraram Eduardo Bolsonaro.<br>
+    <strong>Ponto institucional (até 31.mai.2026):</strong> a ANPD precisa registrar até essa data a solicitação do concurso para 48 novas vagas — autoridade que vira secretaria-executiva do Sistema Nacional de IA e fiscal-chave de campanha eleitoral.</p>
+    <p><strong>Síntese:</strong> em <em>menos de 30 dias</em> três peças se movem em direções aparentemente independentes — uma transição interna programada de presidência (TSE), uma ofensiva externa coordenada (House Judiciary), e uma autoridade reguladora ainda em formação (ANPD) — mas <em>todas</em> redesenham, no mês que precede a campanha (16.ago), o equilíbrio de quem vai mandar no enforcement de IA na eleição. <strong>Nunca houve cobertura olhando esses três como um único quadro temporal.</strong> Mainstream cobriu a posse como "antiguidade", o relatório como "polêmica diplomática" e a ANPD como "agenda regulatória" — três pautas, três editorias, três pisos da redação. A foto inteira é uma só: o Brasil entra em maio com a fiscalização de IA da primeira eleição geral redesenhada por dentro e por fora, ao mesmo tempo, e nenhuma redação juntou.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"A campanha eleitoral começa em agosto. O comando da fiscalização de IA mudou em maio. E ninguém olhou os dois fenômenos como o mesmo fenômeno."</strong> — reportagem de profundidade que costure (1) tabela de voto Nunes Marques em desinformação; (2) leitura crítica do dossiê House Judiciary com timing eleitoral; (3) status quadro da ANPD até a véspera de 16.ago. Eixo único: <strong>quem decide o que é deepfake punível em outubro de 2026?</strong></p>
+      <p><strong>Frame para BBC World:</strong> "In less than 30 days, three institutional shifts redrew who polices AI in Brazil's election — the press covered each one separately. The composite picture has never been published."</p>
+      <p><strong>Co-reportagem possível:</strong> BBC Brasil + BBC World + BBC Panorama. Tema natural de mini-doc.</p>
+      <p><strong>Fontes essenciais:</strong> Conrado Hübner Mendes · Yasmin Curzi · Diego Werneck · Eloísa Machado · Oliver Stuenkel · Bruno Bioni (Data Privacy) · Rafael Zanatta · Daniel Bramatti (Abraji) · STI/TSE · ANPD presidência.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos foram cobertos em silos · ninguém viu o quadro</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/ministro-nunes-marques-assume-presidencia-do-tse-em-12-de-maio" target="_blank">→ tse · posse Nunes Marques 12.mai</a>
+      <a href="https://judiciary.house.gov/media/press-releases/new-report-reveals-extent-brazilian-censorship-regimes-threat-american-free" target="_blank">→ house judiciary · brazil part iii (abril)</a>
+      <a href="https://www.dataprivacybr.org/a-transformacao-da-anpd-de-autoridade-a-agencia-nacional-de-protecao-de-dados/" target="_blank">→ data privacy · ANPD em transformação</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · janela cinza pré-candidato</div>
+    <h3>A Resolução 23.755/2026 vincula candidatos a partir do registro (5.ago). Mas 137 conteúdos sintéticos políticos já circularam no Brasil entre dez/2025 e fev/2026 — e 1/3 vinha de agentes com mandato. Quem fiscaliza pré-candidato e mandato em maio, junho e julho?</h3>
+    <p><strong>O que a regra diz:</strong> a Resolução 23.755/2026, que altera o art. 9º-B da Resolução 23.610/2019, define obrigações de rotulagem, restrições de conteúdo sintético, prazos de remoção e multas de R$ 5 mil a R$ 30 mil para <strong>propaganda eleitoral</strong>. A definição legal de propaganda eleitoral só passa a valer a partir de <strong>16 de agosto</strong> (campanha) e o registro de candidaturas é em <strong>5 de agosto</strong>. <strong>O que existe entre hoje (4.mai) e 5 de agosto:</strong> 93 dias de "pré-campanha" em que pré-candidatos, agentes públicos com mandato e simpatizantes operam sem que a Resolução 23.755 pegue diretamente. <strong>O que o Observatório IA nas Eleições mostrou:</strong> em só três meses (dez/2025 a fev/2026), <em>antes</em> do início desse período cinza, foram 137 casos sintéticos com conotação política, sendo 1/3 vindos de agentes com mandato — deputados federais, senadores. Lula apareceu em 46 desses 137 casos. <strong>Lula não é candidato hoje.</strong> Bolsonaro é inelegível. A maior parte do tráfego sintético já está acontecendo <em>fora</em> do escopo direto da resolução do TSE.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· O Conselho de Comunicação Social do Congresso, a CCJ, ou os Conselhos de Ética da Câmara/Senado têm hoje <strong>algum protocolo aplicável a deepfake produzido por parlamentar</strong> em mandato, fora da campanha?<br>
+    · A Procuradoria Parlamentar (Câmara) e a Advocacia do Senado já receberam alguma representação sobre conteúdo sintético entre janeiro e abril de 2026? Quantas foram arquivadas, e por que motivo?<br>
+    · O TSE já admite representação eleitoral por conduta de pré-candidato fora do período de propaganda — sob abuso de poder político (LC 64/90 art. 22). Quantas representações pós-IA generativa já foram protocoladas em 2025-2026 com tese de "abuso de poder político por conteúdo sintético"? Quantas tiveram liminar concedida?<br>
+    · Há jurisprudência específica do TSE sobre <strong>Aije/AIME por deepfake em pré-campanha</strong>? Em caso negativo, quem é o "primeiro processo-piloto" possível em 2026?<br>
+    · No plano municipal/estadual, existe alguma resolução de TRE complementar à 23.755 que cubra explicitamente o período pré-candidato?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"O território cinza de 93 dias: quem fiscaliza desinformação política antes de a campanha existir?"</strong> — investigação cruzando: (1) banco de dados do Observatório IA nas Eleições por mês e por origem (mandato vs. terceiros); (2) representações eleitorais protocoladas no TSE entre nov.2025 e abr.2026 com tese de IA; (3) pareceres da Procuradoria Parlamentar; (4) jurisprudência do TSE no julgamento de Aije/AIME com tese de IA.</p>
+      <p><strong>O furo provável:</strong> até 5 de agosto, ninguém tem mandato direto para reprimir conteúdo sintético político no Brasil — e os 137 casos já documentados mostram que esse é justamente o ambiente em que a desinformação está crescendo.</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's AI-election rulebook starts on August 5. The synthetic political content has been circulating since December. Nobody is officially in charge of the gap."</p>
+      <p><strong>Fonte essencial:</strong> Diogo Cortiz (Aláfia Lab) · Bruna Santos (Data Privacy) · Bia Barbosa (CDR) · Procuradoria Eleitoral / PGE · STI/TSE · Procuradoria Parlamentar Câmara · Conselho de Ética Senado · Heloisa Massaroli (TSE Corregedoria).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">discussão técnico-jurídica · nenhum veículo brasileiro entrou no recorte temporal</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ data privacy · 137 casos · 1/3 vem de mandato</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse · texto da Resolução 23.755/2026</a>
+      <a href="https://www.tse.jus.br/eleicoes/eleicoes-2026" target="_blank">→ tse · cronograma eleições 2026 (registro 5.ago)</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #008 · gerado em 04.mai.2026 06h utc · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>

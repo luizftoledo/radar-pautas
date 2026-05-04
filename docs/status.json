@@ -1,8 +1,8 @@
 {
-  "last_run": "2026-05-03T06:16:33Z",
+  "last_run": "2026-05-04T06:14:27Z",
   "last_run_status": "success",
-  "last_run_note": "radar #007 gerado",
-  "next_run_approx": "2026-05-04T07:00:00+01:00",
+  "last_run_note": "radar #008 gerado",
+  "next_run_approx": "2026-05-05T07:00:00+01:00",
   "schedule": "daily 07:00 Europe/London (06:00 UTC / 03:00 BRT)",
   "timezone_runner": "UTC",
   "radars": [
@@ -58,6 +58,14 @@
       "date": "2026-05-03",
       "file": "radar/2026-05-03.html",
       "title": "Radar #007",
+      "anomalies": 3,
+      "connection": 1,
+      "question": 1
+    },
+    {
+      "date": "2026-05-04",
+      "file": "radar/2026-05-04.html",
+      "title": "Radar #008",
       "anomalies": 3,
       "connection": 1,
       "question": 1
