@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #009 — 05.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #009</span>
+    <span>terça · 05.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TREs · Câmara/PLs · STF · Stanford IO · arXiv · Control Risks
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · prática nova</div>
+    <h3>"Eleitores sintéticos" viram ferramenta padrão de campanha em 2026 — e a Resolução 23.755 do TSE não cobre uma única linha disso</h3>
+    <div class="meta">Olhar Digital · 4.mai.2026 · "IA cria 'eleitores sintéticos' e faz em horas o trabalho de dias" · matéria publicada ontem</div>
+    <p>Olhar Digital publicou anteontem (4.mai) reportagem mostrando que marqueteiros já usam IA generativa para <strong>simular grupos focais artificiais</strong> — "eleitores sintéticos" alimentados com perfil socioeconômico, religião, hábitos de mídia — e testam reação a peças de campanha sem precisar de pesquisa qualitativa. Vídeo que levava um dia e meio sai em horas; mensagens segmentadas vão a cada subgrupo. <strong>O ponto regulatório que ninguém fez:</strong> a Resolução 23.755/2026 do TSE regula <em>propaganda eleitoral</em> (peça veiculada). Não regula a etapa de <em>produção e teste</em> de mensagem. Eleitor sintético é insumo de produção — fica num limbo entre "pesquisa de marketing" (Conar/Sebrae) e "tratamento de dados pessoais" (LGPD/ANPD). Quando a peça final é exibida, ela respeita rotulagem e janela de 96h. Mas a engrenagem que <em>otimizou</em> a peça para gatilho emocional máximo, perfilada num "eleitor sintético", é invisível para o TSE — e nenhum mainstream brasileiro fez essa pergunta.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O grupo focal que não existe: como 'eleitores sintéticos' viraram a etapa zero da campanha de 2026"</strong> — entrevistar 3-4 agências de marketing político (Spalla, FSB, Calia/Albuquerque, MultiAds) e perguntar diretamente: usam eleitor sintético? Qual modelo? Quem treina? Cruzar com a definição de "tratamento de dados sensíveis" da LGPD (art. 11, II, "g", processo eleitoral). Ouvir Bruno Bioni (Data Privacy) e Diogo Cortiz (Aláfia Lab/PUC-SP) sobre se há base legal — consentimento? Interesse legítimo? Quem é titular dos dados que treinaram o "eleitor sintético"?</p>
+      <p><strong>Frame para BBC World:</strong> "Brazilian campaigns now A/B-test ads on AI-generated voters before showing them to humans. Brazil's election rulebook never mentioned it."</p>
+      <p><strong>Fonte essencial:</strong> Diogo Cortiz · Bruno Bioni · Rafael Zanatta (Data Privacy) · Maria Cecília Oliveira Gomes (LGPD) · ABRADi · presidente ANPD (Waldemar Gonçalves) · Pedro Henrique Ramos (Article 19).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">olhar digital noticiou prática · ângulo regulatório/lgpd zero</span>
+    </div>
+    <div class="links">
+      <a href="https://olhardigital.com.br/2026/05/04/pro/eleicoes-2026-ia-cria-eleitores-sinteticos-e-faz-em-horas-o-trabalho-de-dias" target="_blank">→ olhardigital.com.br · IA cria 'eleitores sintéticos' (4.mai)</a>
+      <a href="https://www.acessa.com/politica/2026/05/322918-inteligencia-artificial-provoca-terremoto-em-campanhas-eleitorais-de-2026.html" target="_blank">→ acessa.com · IA provoca terremoto em campanhas (mai/2026)</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026 (texto integral)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · prazo crítico</div>
+    <h3>Em menos de 24h o eleitorado de 2026 estará congelado — e nenhum veículo cruzou esse marco com o calendário das máquinas de IA das campanhas</h3>
+    <div class="meta">TSE · cadastro eleitoral fecha em 6.mai.2026 (amanhã, quarta) · permanece fechado até nov.2026 · próxima janela aberta: já no pós-eleição</div>
+    <p>O cadastro eleitoral fecha amanhã, <strong>6 de maio</strong>. A partir de 7.mai, nenhum brasileiro entra ou sai do universo de votantes de 2026 — o eleitorado fica congelado por seis meses. O TSE noticia isso como serviço (tirar título, regularizar biometria); o que ninguém juntou é o efeito sobre a engrenagem de IA das campanhas. <strong>O cruzamento que falta:</strong> com o universo definido em ~157 milhões de eleitores, agências e comitês passam a operar sobre uma base <em>fixa</em> — e é justamente nessa janela (7.mai a 4.out) que entra em cena a otimização de mensagem com IA generativa em volume industrial. <strong>Combinado com o dado da Control Risks (publicado em 7.abr.2026):</strong> 26% dos trabalhadores brasileiros usam IA generativa diariamente — quase o dobro da média global de 14%. O Brasil entra na primeira eleição geral com IA regulada (a) com a maior taxa de adoção de IA generativa do mundo entre trabalhadores, e (b) com o universo eleitoral fechado a partir de amanhã. <strong>Nenhuma redação cruzou esses dois fatos no mesmo texto.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"6.mai: a meia-noite em que o eleitorado de 2026 vai dormir fechado — e as máquinas de IA da campanha vão acordar"</strong> — texto-marco para o dia 7.mai. Pedir ao TSE o número final do eleitorado por unidade da federação às 23h59 de 6.mai. Casar com mapa de cobertura mínima TSE/TRE de fiscalização de IA por estado (existe?). Falar com Aguinaldo Ribeiro (relator PL 2338) sobre se o marco geral de IA chega a tempo da janela. Ouvir cientistas políticos sobre micro-targeting com universo congelado: Felipe Nunes (Quaest), Camila Rocha (CEBRAP), Rosario Aires (TIC Brasil/CGI).</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil locks its 2026 voter roll on May 6. The next day, the most AI-saturated electorate in the world becomes a closed dataset for political campaigns."</p>
+      <p><strong>Fonte essencial:</strong> assessoria de comunicação TSE · Felipe Nunes · Camila Rocha · Rafael Zanatta · Aguinaldo Ribeiro · presidência da ANPD · Estela Aranha.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">prazo é noticiado como serviço · cruzamento com IA = zero</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Maio/eleicoes-2026-prazo-para-tirar-ou-regularizar-o-titulo-eleitoral-termina-nesta-quarta-feira-6" target="_blank">→ tse.jus.br · cadastro fecha 6.mai</a>
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks.com · Brazil election incidents 7.abr.2026 (26% IA diário)</a>
+      <a href="https://www.tse.jus.br/eleicoes/eleicoes-2026" target="_blank">→ tse.jus.br · calendário eleitoral 2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · marco geral em rota de colisão</div>
+    <h3>Marco regulatório da IA (PL 2338) entra na previsão de votação na Câmara este mês — e ninguém mapeou quais artigos podem entrar em conflito direto com a Resolução 23.755 do TSE, já em vigor</h3>
+    <div class="meta">PL 2338/2023 · relator Aguinaldo Ribeiro (PP-PB) · 90% do texto pronto · presidente da Câmara Hugo Motta sinalizou votação ainda em maio · Senado já aprovou em dez/2024</div>
+    <p>O relator do marco geral de IA na Câmara, Aguinaldo Ribeiro, declarou em março/26 que o texto está com 90% pronto e a previsão é votar até o início de maio. Hugo Motta sinalizou agenda. <strong>O ponto institucional que ninguém analisou:</strong> a Resolução 23.755 do TSE (2.mar.2026) <em>já está em vigor</em> e estabeleceu obrigações específicas para conteúdo sintético em propaganda eleitoral — rotulagem, janela de 96h, multas, dever de remoção pelo provedor. O PL 2338 traz definições genéricas (sistemas de alto risco, transparência algorítmica, governança) que <em>podem</em> sobrepor-se ou contradizer dispositivos específicos da resolução do TSE. <strong>Especificamente:</strong> (1) o conceito de "sistema de alto risco" do PL 2338 inclui IA usada em "processos democráticos"? Se sim, isso muda o que o TSE classificou como infração; (2) a ANPD vira "secretaria-executiva" do Sistema Nacional de IA — mas o TSE já é autoridade primária no enforcement eleitoral. Há disputa de competência institucional latente; (3) o PL 2338 prevê <em>obrigações de auditoria</em> que a Resolução 23.755 não exige. Se o PL passar em maio, candidatos terão duas camadas regulatórias com obrigações diferentes — <strong>e nenhum veículo brasileiro publicou comparativo artigo-a-artigo.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil pode terminar maio com duas leis sobre IA na eleição — e ninguém disse qual prevalece"</strong> — comparativo técnico-jurídico artigo-a-artigo entre PL 2338 (texto do relator Aguinaldo Ribeiro) e Resolução 23.755/2026 do TSE. Ângulos: hierarquia normativa (lei vs. resolução), competência (ANPD vs. TSE), dever de auditoria, definição de "alto risco". Falar com Bruno Bioni, Estela Aranha, Eloísa Machado, Ricardo Campos (Goethe Frankfurt), Yasmin Curzi (FGV).</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil may end May with two AI rulebooks for the same election — written by different bodies, with overlapping definitions and no clarity on which prevails."</p>
+      <p><strong>Fonte essencial:</strong> Aguinaldo Ribeiro (gabinete) · Eduardo Gomes (relator no Senado em 2024) · Bruno Bioni · Estela Aranha · Ricardo Campos · presidência ANPD · STI/TSE · Comissão Especial PL 2338 (Câmara).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">votação foi noticiada · sobreposição com Res 23.755 não foi feita</span>
+    </div>
+    <div class="links">
+      <a href="https://www.mobiletime.com.br/noticias/25/03/2026/marco-de-ia-relator/" target="_blank">→ mobiletime · relator prevê votação em maio (25.mar.2026)</a>
+      <a href="https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-temporarias/especiais/57a-legislatura/comissao-especial-sobre-inteligencia-artificial-pl-2338-23" target="_blank">→ camara.leg.br · Comissão Especial PL 2338</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Brasil entra na primeira eleição-IA com a maior taxa global de adoção, sem o principal observatório do mundo, e com técnicas (eleitor sintético) que estão fora de toda regra publicada</h3>
+    <p><strong>Ponto 1 — adoção (Control Risks, 7.abr.2026):</strong> 26% dos trabalhadores brasileiros usam IA generativa diariamente — quase 2x a média global de 14%. O eleitor médio brasileiro <em>já mora dentro</em> de fluxos de conteúdo gerado/intermediado por IA todo dia.<br>
+    <strong>Ponto 2 — observatório (Stanford Internet Observatory):</strong> o SIO foi desmontado em 2024 após pressão política nos EUA. A primeira eleição geral brasileira com regras vinculantes de IA acontece <em>sem</em> o principal centro internacional independente de monitoramento de operações de influência — o que existia em 2022 (e produziu material crítico sobre o ciclo brasileiro) já não existe em 2026.<br>
+    <strong>Ponto 3 — prática (Olhar Digital, 4.mai.2026):</strong> "eleitores sintéticos" para A/B testing de mensagens viraram ferramenta padrão de marqueteiros — e essa etapa fica <em>antes</em> do escopo da Resolução 23.755 do TSE.</p>
+    <p><strong>Síntese:</strong> os três pontos juntos compõem um quadro que ninguém viu inteiro. <em>Adoção</em> + <em>vácuo de observação independente</em> + <em>prática regulatoriamente invisível</em> = a eleição mais-IA do mundo está acontecendo <strong>com menos infraestrutura de escrutínio do que qualquer pleito comparável da década</strong>. Os EUA tinham SIO em 2020 e 2024 (até o desmonte). A UE tem o DSA com auditorias obrigatórias. O Reino Unido tem Ofcom + Online Safety Act + Alan Turing Institute. O Brasil entra em 2026 com TSE + ANPD em formação + iniciativas civis (Data Privacy, NetLab, Aláfia, *desinformante) — sem nenhum equivalente ao SIO funcionando, e com uma Resolução 23.755 que regula só a peça final, não a engrenagem.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"O laboratório que ninguém vai mais observar: Brasil 2026 é a eleição-IA com a maior adoção e a menor estrutura de escrutínio do mundo desenvolvido"</strong> — reportagem ampla. Mapear: (1) quem ainda monitora Brasil em 2026 do exterior — DFRLab/Atlantic Council, Reuters Institute (Oxford), Minderoo Centre (Cambridge), Mozilla Foundation, AI Forensics; (2) dimensionar pessoal/orçamento desses esforços vs. o que SIO + Election Integrity Partnership tinham em 2020 (~50 pesquisadores); (3) quanto consegue cobrir cada iniciativa civil brasileira (head count Data Privacy + NetLab + Aláfia + InternetLab + DAPP + *desinformante).</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's 2026 vote will be the most AI-exposed election on Earth — and the global monitoring infrastructure that watched the previous cycles no longer exists. The composite picture has never been published."</p>
+      <p><strong>Co-reportagem possível:</strong> BBC Brasil + BBC World + parceria com Reuters Institute (Oxford) ou Minderoo Centre (Cambridge — tua base).</p>
+      <p><strong>Fontes essenciais:</strong> Renee DiResta (ex-SIO, hoje Georgetown) · Alex Stamos (ex-SIO) · Rasmus Kleis Nielsen (Reuters Institute) · Rose Marie Santini (NetLab) · Bruno Bioni (Data Privacy) · Diogo Cortiz (Aláfia) · Cristina Tardáguila (*desinformante / fundadora Lupa) · DFRLab (Esteban Ponce de León cobre BR).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos circularam separados · ninguém somou como infraestrutura</span>
+    </div>
+    <div class="links">
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks · 26% trabalhadores BR usam IA diário (7.abr.2026)</a>
+      <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-disinformation-research-lawsuits-politics/" target="_blank">→ washington post · desmonte do Stanford Internet Observatory (jun/2024)</a>
+      <a href="https://olhardigital.com.br/2026/05/04/pro/eleicoes-2026-ia-cria-eleitores-sinteticos-e-faz-em-horas-o-trabalho-de-dias" target="_blank">→ olhar digital · eleitores sintéticos (4.mai.2026)</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · interferência estrangeira</div>
+    <h3>A Eslovênia confirmou interferência estrangeira em sua eleição parlamentar de março/26. Onde está o SOVA brasileiro? A Abin tem mandato, quadro e protocolo público para detectar interferência estrangeira em outubro?</h3>
+    <p><strong>O fato de comparação:</strong> em <strong>26 de março de 2026</strong>, a Slovenian Intelligence and Security Agency (SOVA) emitiu nota oficial confirmando "inequivocamente" que houve influências estrangeiras nas eleições parlamentares do fim de semana anterior — inclusive nomeando categorias de atores e canais. O Reino Unido tem o Joint Election Security Preparedness Unit; os EUA têm o Foreign Malign Influence Center (FMIC) na ODNI; a UE coordena via EEAS Stratcom Task Force; a Alemanha publicou em janeiro/26 lista de atores estatais identificados como ativos em redes sociais durante a campanha estadual.</p>
+    <p><strong>O caso brasileiro:</strong> a Abin (Lei 9.883/1999) tem competência para "produzir conhecimentos e identificar ameaças aos interesses da sociedade e do Estado". Mas <em>não há nota pública</em>, <em>não há protocolo divulgado</em>, e <em>não há comunicação institucional</em> sobre como a Abin atuará para detectar e atribuir interferência estrangeira nas eleições de 2026. O que existe publicamente é o GSI/Comitê Nacional de Cibersegurança, a Estratégia Nacional de Cibersegurança (E-Ciber), e o convênio TSE-ABIN para avaliação de ameaças cibernéticas <em>aos sistemas eleitorais</em> (urna, totalização). <strong>Operação de influência via redes sociais é outra coisa.</strong> Não há órgão brasileiro com mandato declarado, equipe identificada e cadência pública de relatórios para o tipo de evento que a SOVA reportou em março.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· A Abin tem unidade dedicada a operações de influência estrangeira em mídias sociais? Quantos agentes, qual orçamento, qual cadência de relatórios?<br>
+    · O TSE recebe da Abin briefings periódicos sobre influência estrangeira nas eleições 2026? Há previsão de relatórios públicos pré e pós-eleição, como o U.S. Intelligence Community Assessment?<br>
+    · O Itamaraty tem canal formal com EEAS/UE Stratcom, FMIC/EUA, e SOVA-equivalentes para troca de indicadores? Já houve compartilhamento bilateral em 2025-2026?<br>
+    · Em fev/26 a Polícia Federal abriu inquérito sobre suposta operação russa contra checadores brasileiros (caso "Doppelganger" / Storm-1516). Onde está o relatório?<br>
+    · Caso uma plataforma (Meta, Google, TikTok) detecte CIB — Coordinated Inauthentic Behavior — atribuível a ator estrangeiro durante a campanha brasileira, há protocolo de notificação obrigatória ao TSE/Abin?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"Quem é o SOVA do Brasil em outubro? A pergunta que ninguém fez a 5 meses do voto"</strong> — pedidos de LAI à Abin, ao GSI, ao Itamaraty (DENU/DDH) e à PF (DELEAQ); levantar quantas operações de CIB atribuídas a atores estrangeiros foram divulgadas pela Meta/Google/TikTok envolvendo Brasil entre 2024-2026; mapear ausência institucional comparada com Eslovênia, EUA, UK, UE, Alemanha. <strong>O furo provável:</strong> o Brasil é o único entre as 10 maiores democracias eleitorais sem unidade pública dedicada à atribuição de influência estrangeira — e isso a 5 meses do voto.</p>
+      <p><strong>Frame para BBC World:</strong> "Slovenia named foreign election interference within hours of the vote. Brazil — five months out — has no agency publicly mandated to do the same."</p>
+      <p><strong>Fonte essencial:</strong> assessoria Abin · GSI/CTIR Gov · Itamaraty (Departamento de Defesa, Departamento de Temas de Segurança Internacional) · PF (DELEAQ) · Maurício Santoro · Rafael Antunes (CEBRI) · Ana Paula Camelo (FGV ECMI) · Luca Belli (FGV Direito Rio) · contato Meta Influence Operations (Ben Nimmo / Mike Dvilyanski) · Atlantic Council DFRLab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">tema fora do radar editorial brasileiro · inquérito Doppelganger virou nota</span>
+    </div>
+    <div class="links">
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks · SOVA confirma interferência na Eslovênia (26.mar.2026)</a>
+      <a href="https://www.gov.br/abin/pt-br" target="_blank">→ gov.br/abin · página institucional</a>
+      <a href="https://www.tse.jus.br/eleicoes/eleicoes-2026" target="_blank">→ tse · eleições 2026</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #009 · gerado em 05.mai.2026 06h utc · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
