@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #010 — 06.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">diário · radar #010</span>
+    <span>quarta · 06.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TREs · Câmara/PLs · STF · Stanford IO · arXiv · Control Risks · Brasil de Fato
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · agenda firme</div>
+    <h3>Hugo Motta deu data: PL 2338 (Marco da IA) tem relatório dia 19 e plenário dia 27 de maio — a 4 meses do voto, Brasil pode acordar com duas leis sobre IA na eleição</h3>
+    <div class="meta">Câmara dos Deputados · presidente Hugo Motta confirmou agenda em 28.abr.2026 · relator Aguinaldo Ribeiro (PP-PB) · Senado aprovou versão prévia em dez/2024</div>
+    <p>O radar #009 (ontem) tratou o PL 2338 como "previsão maio". <strong>Hoje a previsão virou cronograma:</strong> Hugo Motta declarou no Poder360 que o relatório do Aguinaldo Ribeiro entra dia <strong>19 de maio</strong> e a votação em plenário está marcada para <strong>27 de maio</strong>. Se passar, e se o Senado aprovar a versão da Câmara em junho ou julho, o Brasil entra em outubro com <em>duas camadas regulatórias</em> sobre IA na eleição: a Resolução 23.755 do TSE (em vigor desde 2.mar.2026) e a nova Lei Geral de IA. <strong>O ponto que ninguém analisou na imprensa econômica nem na política:</strong> o PL 2338 cria o Sistema Nacional de Regulação e Governança de IA (SIA) com a ANPD como secretaria-executiva — mas a Resolução 23.755 entregou ao TSE a prerrogativa de remover conteúdo, multar candidato, cassar registro. Se um deputado deepfake-fizer adversário em setembro, quem aplica a sanção: TSE (lex specialis eleitoral) ou ANPD/SIA (lex generalis sobre IA)? E se as duas autoridades discordarem na classificação de "alto risco"? <em>Nenhum veículo brasileiro publicou o mapa de competência sobreposta entre os dois marcos.</em></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"19 e 27 de maio: as duas datas que vão definir se o Brasil chega à eleição com uma ou duas leis de IA"</strong> — chamar Aguinaldo Ribeiro (gabinete) para a pergunta direta: o texto do relator define que a Resolução 23.755 do TSE prevalece como lex specialis durante o período eleitoral? Há cláusula de não-conflito? Cruzar com Estela Aranha, Bruno Bioni, Yasmin Curzi (FGV), Ricardo Campos (Goethe Frankfurt). Pedir ao TSE (Procuradoria-Geral Eleitoral) parecer técnico — já existe?</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's Lower House votes its general AI Act on May 27. Brazil's electoral court already has its own AI rules in force. Five months from the vote, no one has mapped which law wins when they collide."</p>
+      <p><strong>Fonte essencial:</strong> Aguinaldo Ribeiro · Hugo Motta (presidência Câmara) · Procuradoria-Geral Eleitoral · presidência ANPD (Waldemar Gonçalves) · Estela Aranha · Bruno Bioni · Ricardo Campos · Eduardo Gomes (relator no Senado).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">datas foram noticiadas · sobreposição com TSE não foi mapeada</span>
+    </div>
+    <div class="links">
+      <a href="https://www.poder360.com.br/poder-congresso/camara-deve-votar-pls-de-ia-e-de-terras-raras-em-maio-diz-motta/" target="_blank">→ poder360 · Motta confirma 19 e 27 de maio (28.abr.2026)</a>
+      <a href="https://www.alobrasilia.com.br/2026/05/camara-agenda-votacao-do-marco-legal-da.html" target="_blank">→ alô brasília · agenda 27 de maio</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026 (texto integral)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · ângulo novo (econômico)</div>
+    <h3>Brasil de Fato põe em texto, em 5.mai, a tese que a imprensa mainstream evita: desinformação de 2026 é produto de assimetria de financiamento de mídia digital — não de "polarização"</h3>
+    <div class="meta">Brasil de Fato · 5.mai.2026 · "Mídia, desinformação e poder: quem define o que é a realidade no Brasil de 2026"</div>
+    <p>O texto publicado anteontem desloca o eixo do debate sobre desinformação — em vez de tratar como fenômeno de "polarização" ou de "redes sociais", argumenta que "investimentos em larga escala em publicidade digital permitem a construção de ambientes informacionais relativamente fechados, em que narrativas são reiteradas, reforçadas e blindadas da contradição e do debate". <strong>O dado que a peça destaca:</strong> só 46-47% dos brasileiros confiam na mídia como fonte de informação, mas 92% dizem se preocupar com a disseminação de fake news. Mais de 60-70% relatam dificuldade ou preocupação em distinguir o verdadeiro do falso no ambiente digital. <strong>O ponto da pauta:</strong> a imprensa mainstream brasileira (Folha, UOL, G1, Estadão, Veja) trata desinformação como problema técnico/regulatório/comportamental — quase nunca como produto de uma economia política do investimento publicitário programático. O <em>Brasil de Fato</em> abriu essa frente em 5.mai. A pergunta jornalística é: quem está pagando, em 2026, para construir esses "ambientes fechados"? Quem são os anunciantes, os intermediários (DSPs/SSPs como Google, Meta, TikTok Ads, X), e qual o volume?</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O dinheiro dos ambientes fechados: quem está financiando a publicidade programática que sustenta as bolhas de 2026"</strong> — apurar os top 50 anunciantes do mercado de Connected TV + display programático segmentado por afinidade política em 2026 (Kantar Ibope, Comscore, IAB Brasil têm parte desses dados; a parte fechada está nos relatórios trimestrais de Meta/Alphabet/TikTok). Cruzar com pré-candidaturas e comitês — qual fração já tem cabide de marketing digital pré-eleitoral em CNPJ não-eleitoral, evitando a janela do TSE? Falar com Daniela Goya-Tocchetto (FGV ECMI), Fabro Steibel (ITS Rio), Carlos Affonso de Souza (ITS Rio), Bia Barbosa (CDR), Sérgio Amadeu (UFABC).</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's 2026 disinformation isn't 'polarization' — it's an ad-tech market. Independent newsroom Brasil de Fato just put the economic thesis on paper. The mainstream hasn't followed."</p>
+      <p><strong>Fonte essencial:</strong> autoria do texto Brasil de Fato (Marina Lassen, jornalista; checar) · Daniela Goya-Tocchetto · Sérgio Amadeu · Fabro Steibel · Bia Barbosa · IAB Brasil (Cris Camargo, presidência) · diretoria Kantar Ibope Mídia Brasil.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">tese existe em mídia alternativa · mainstream evita o ângulo econômico</span>
+    </div>
+    <div class="links">
+      <a href="https://www.brasildefato.com.br/2026/05/05/midia-desinformacao-e-poder-quem-define-o-que-e-a-realidade-no-brasil-de-2026/" target="_blank">→ brasildefato.com.br · Mídia, desinformação e poder (5.mai.2026)</a>
+      <a href="https://www.brasildefato.com.br/podcast/tres-por-quatro/2026/05/05/eleicoes-2026-o-que-vai-ficar-de-fora-mas-deveria-ser-incluido/" target="_blank">→ brasildefato · podcast "o que vai ficar de fora" (5.mai.2026)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · gap tecnológico</div>
+    <h3>NTIRE 2026 (CVPR) divulgou os 14 melhores detectores de deepfake do mundo este ano — nenhum brasileiro. O TSE vai fiscalizar com tecnologia importada, fornecida pelas próprias plataformas que precisa fiscalizar</h3>
+    <div class="meta">arXiv 2604.24163 · "Robust Deepfake Detection, NTIRE 2026 Challenge: Report" · CVPR 2026 (workshop NTIRE) · 14 métodos finalistas · top-5 dominado por equipes USTC, Alibaba, Tencent, Microsoft Research Asia</div>
+    <p>O <em>New Trends in Image Restoration and Enhancement</em> (NTIRE), workshop oficial do CVPR (Computer Vision and Pattern Recognition — a maior conferência de visão computacional do mundo), publicou no arXiv em abril o relatório do desafio 2026 de detecção robusta de deepfake. <strong>Resultado:</strong> 14 métodos chegaram à etapa final; nenhuma equipe brasileira entre os finalistas. As soluções top vêm de USTC (China), Alibaba DAMO Academy, Tencent, Microsoft Research Asia, com participação europeia (KAIST, Sapienza). <strong>O ponto que conecta com a Resolução 23.755 do TSE:</strong> a regra obriga rotulagem e remoção de conteúdo sintético em propaganda. Quem detecta na prática? Não é o TSE, que não tem laboratório de visão computacional próprio. É (a) a própria plataforma (Meta/Google/TikTok) — que tem conflito de interesse, é a fiscalizada e a fornecedora do detector ao mesmo tempo; ou (b) iniciativa civil (Aláfia Lab, NetLab, AI Forensics, Lupa) — que opera com fração do orçamento e do compute das plataformas. <strong>Não há método nacional de ponta entre os submetidos ao benchmark internacional.</strong> A 5 meses da eleição, Brasil regula deepfake sem dispor da tecnologia para detectá-lo de forma independente.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Brasil regulou o deepfake mas terceirizou quem o detecta — e o detector é o regulado"</strong> — investigar quem é o fornecedor técnico da capacidade de detecção do TSE em 2026: existe contrato com Meta/Google/TikTok para pipeline automatizado? Existe convênio com universidade brasileira (USP, UFRJ, Unicamp, UFMG, ITA) com capacidade de detecção comparável ao estado da arte? Pedir LAI à STI/TSE: quais ferramentas de detecção de IA o Tribunal usa em 2026, com quais fornecedores, sob qual contrato. Cruzar com NTIRE 2026 e mapear: das equipes universitárias brasileiras que fazem CV/multimídia (Anderson Rocha — Unicamp, Sandra Avila — Unicamp, Esther Colombini — Unicamp, Lin Tzy Li — IBM/USP), quem está submetendo a benchmarks internacionais de deepfake?</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's electoral court must police AI-generated content in 2026 — but Brazil has no detection lab among the world's top-14. The detectors come from the very platforms the court needs to regulate."</p>
+      <p><strong>Fonte essencial:</strong> Anderson Rocha (Unicamp Recod.ai) · Sandra Avila (Unicamp) · STI/TSE (Secretaria de TI) · Aláfia Lab (Diogo Cortiz) · NetLab UFRJ · Reverso Online · CertiHub/RNP · Yasodara Córdova.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">benchmark é técnico-acadêmico · imprensa BR não monitora arXiv/CVPR</span>
+    </div>
+    <div class="links">
+      <a href="https://arxiv.org/html/2604.24163v1" target="_blank">→ arxiv.org · NTIRE 2026 Robust Deepfake Detection Report</a>
+      <a href="https://arxiv.org/abs/2604.25889" target="_blank">→ arxiv.org · 4º colocado (Calibrated Complementary Ensembles)</a>
+      <a href="https://seer.ufrgs.br/index.php/rita/article/view/150900" target="_blank">→ RITA/UFRGS · "Generalization in Deepfake Detection" (BR · 2026)</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese de 72h</div>
+    <h3>4 → 5 → 6 de maio: em três dias o Brasil ganhou descrição da técnica, descrição da economia e congelamento do alvo. Sequência completa virou pública e nenhum mainstream amarrou</h3>
+    <p><strong>Ponto 1 — 4.mai (Olhar Digital):</strong> "eleitores sintéticos" virou ferramenta padrão de marqueteiros. A <em>técnica</em> de produção e teste de mensagem está descrita publicamente, com nome e modelo de operação.<br>
+    <strong>Ponto 2 — 5.mai (Brasil de Fato):</strong> ambientes informacionais fechados são <em>produto de financiamento</em> de publicidade digital programática, não de "polarização espontânea". A <em>economia</em> que sustenta a operação está descrita em texto.<br>
+    <strong>Ponto 3 — 6.mai (TSE):</strong> cadastro eleitoral fecha hoje (quarta). A partir de amanhã o universo de votantes — estimado em ~157 milhões — fica congelado por seis meses. O <em>alvo</em> da operação foi fixado oficialmente.</p>
+    <p><strong>Síntese:</strong> em 72 horas, três publicações independentes documentaram, em sequência, os três elementos que compõem a engrenagem de campanha digital de IA em 2026 — <em>como</em> se fabrica a mensagem, <em>quem paga</em> para que circule no ambiente certo, e <em>sobre quem</em> ela vai operar a partir de amanhã. Nenhum dos três fatos é segredo: estão todos publicados e em fontes acessíveis. Mas <strong>nenhuma redação mainstream brasileira amarrou os três no mesmo texto</strong> — porque cada um foi tratado como uma editoria diferente (tecnologia, opinião, serviço eleitoral). O quadro só aparece quando se aceita que desinformação eleitoral em 2026 é uma <em>cadeia produtiva</em>, não um evento isolado de "fake news".</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"A cadeia produtiva da desinformação em 2026: três publicações em três dias mostraram a fábrica inteira, e ninguém a montou"</strong> — reportagem de síntese para BBC Brasil + BBC World. Estrutura em três blocos correspondentes à sequência 4-5-6.mai: produção (eleitor sintético), distribuição (publicidade programática segmentada por afinidade), alvo (eleitorado congelado a partir de 7.mai). Cada bloco com pelo menos uma fonte primária no próprio texto e uma fonte regulatória dizendo o que cobre e o que não cobre. <strong>Sugestão de abertura:</strong> "Em três dias de maio, três publicações em três veículos diferentes descreveram, sem combinar, as três engrenagens da campanha de 2026. Juntas, elas formam a fábrica que o TSE não regula."</p>
+      <p><strong>Frame para BBC World:</strong> "Three publications in three days described the three gears of Brazil's 2026 election machine — production, financing, and target. Each was treated as a separate news beat. Put together, they form a supply chain that no Brazilian regulator currently watches end-to-end."</p>
+      <p><strong>Co-reportagem possível:</strong> BBC Brasil + BBC World. Eventual parceria com Minderoo Centre (Cambridge — tua base) ou Reuters Institute (Oxford) para framing comparativo internacional.</p>
+      <p><strong>Fontes essenciais:</strong> autoria texto Olhar Digital (Bruno Capozzi) · autoria Brasil de Fato (5.mai) · STI/TSE · Diogo Cortiz (Aláfia) · Sérgio Amadeu (UFABC) · Bruno Bioni (Data Privacy) · Rose Marie Santini (NetLab UFRJ).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 fatos são públicos · ninguém os tratou como cadeia única</span>
+    </div>
+    <div class="links">
+      <a href="https://olhardigital.com.br/2026/05/04/pro/eleicoes-2026-ia-cria-eleitores-sinteticos-e-faz-em-horas-o-trabalho-de-dias" target="_blank">→ olhar digital · eleitores sintéticos (4.mai.2026)</a>
+      <a href="https://www.brasildefato.com.br/2026/05/05/midia-desinformacao-e-poder-quem-define-o-que-e-a-realidade-no-brasil-de-2026/" target="_blank">→ brasil de fato · ambientes fechados (5.mai.2026)</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Maio/eleicoes-2026-prazo-para-tirar-ou-regularizar-o-titulo-eleitoral-termina-nesta-quarta-feira-6" target="_blank">→ tse.jus.br · cadastro fecha 6.mai.2026</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · capilaridade</div>
+    <h3>A Resolução 23.755 do TSE não é aplicada pelo TSE: é aplicada por ~3.000 juízes eleitorais nas zonas. Quantos receberam treinamento específico em IA generativa e deepfake pela Escola Judiciária Eleitoral em 2025-2026?</h3>
+    <p><strong>O ponto institucional que ninguém formulou:</strong> a Resolução 23.755 dá ao Poder Judiciário Eleitoral o dever de aplicar sanções rápidas — multa, ordem de remoção, processo por uso indevido de IA — contra propaganda sintética irregular. Mas o TSE não decide caso-a-caso de propaganda local: isso é da competência das <strong>Zonas Eleitorais</strong>, espalhadas pelos 5.570 municípios brasileiros, comandadas por <em>juízes eleitorais</em> (juízes estaduais ou federais designados pelo respectivo TRE). São cerca de 3.000 juízes eleitorais ativos no país. <strong>O dever técnico que recai sobre eles em 2026 é inédito:</strong> identificar deepfake em propaganda em 24-48h, decidir liminarmente sobre remoção, fundamentar sentença com base em material que pode exigir análise forense. O TSE mantém a Escola Judiciária Eleitoral (EJE) — antiga ENVIDA — que oferece formação continuada. <strong>Mas não existe dado público sobre:</strong></p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· Quantos juízes eleitorais brasileiros (% sobre o total) concluíram em 2025-2026 algum curso da EJE/TSE sobre detecção de IA, deepfake ou conteúdo sintético?<br>
+    · Existe protocolo interno padronizado distribuído aos cartórios eleitorais de todas as zonas para o fluxo "denúncia → triagem → análise técnica → decisão"? Quantas zonas têm esse protocolo escrito?<br>
+    · O TSE criou em 2024-2025 alguma figura técnica (perito em IA / câmara técnica / núcleo de assessoria) acessível em horário comercial e em plantão noturno por juízes eleitorais que precisarem de parecer urgente sobre deepfake durante o período de propaganda?<br>
+    · Convênios firmados pelos TREs com universidades estaduais (UFMG, UFRGS, UFPE, USP, Unicamp, UFBA) para apoio pericial em deepfake — existem? Quais e em quais estados?<br>
+    · Em 2024 (eleições municipais), houve algum caso documentado de juiz eleitoral municipal que negou ordem de remoção por <em>incapacidade técnica</em> de avaliar a denúncia? (LAI ao TSE/TREs).</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"Os 3.000 juízes que vão aplicar a regra de IA do TSE em outubro — quantos foram treinados? A pergunta que ninguém fez à Escola Judiciária Eleitoral"</strong> — pedido de LAI ao TSE (Secretaria-Geral da Presidência + EJE) e a todos os 27 TREs com pergunta padronizada: número absoluto e percentual de juízes eleitorais com formação concluída em IA/deepfake nos últimos 24 meses; existência de protocolo escrito distribuído às zonas; convênios técnicos vigentes; tempo médio de decisão liminar em casos de propaganda sintética em 2024. <strong>O ângulo é o gargalo de capilaridade — exatamente o ponto cego de toda regulação eleitoral brasileira historicamente.</strong> Reportagem rende mapa por estado mostrando TREs com cobertura alta, média, zero.</p>
+      <p><strong>Frame para BBC World:</strong> "Brazil's AI election rule will be enforced by 3,000 local electoral judges — not by the central court. No public data shows how many were trained on deepfake detection. With five months to go, this is the country's silent capacity gap."</p>
+      <p><strong>Fonte essencial:</strong> Escola Judiciária Eleitoral (EJE/TSE — Min. Cármen Lúcia presidiu a EJE; checar gestão atual) · Corregedoria-Geral Eleitoral · Associação dos Magistrados Brasileiros (AMB) · ABRAMPE (Associação Brasileira de Magistrados, Procuradores e Promotores Eleitorais) · ouvidoria-geral TSE · presidências dos 27 TREs (LAI padronizada).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">capilaridade do enforcement nunca foi pautada</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/o-tse/escola-judiciaria-eleitoral" target="_blank">→ tse.jus.br · Escola Judiciária Eleitoral</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026 (texto integral)</a>
+      <a href="https://www.tse.jus.br/eleicoes/eleicoes-2026" target="_blank">→ tse.jus.br · calendário eleições 2026</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #010 · gerado em 06.mai.2026 06h utc · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
