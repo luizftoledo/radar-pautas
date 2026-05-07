@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #011 — 07.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #011</span>
+    <span>quinta · 07.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE/TRE-SE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · jurisprudência inédita</div>
+    <h3>TRE-SE fecha primeiro caso regional aplicando a Resolução 23.755 — multa de R$ 5 mil mantida por unanimidade</h3>
+    <div class="meta">TRE-Sergipe · maio 2026 · primeira aplicação consolidada das novas regras de IA do TSE</div>
+    <p>O Tribunal Regional Eleitoral de Sergipe manteve por unanimidade a exclusão de conteúdo com uso de IA não identificado e confirmou multa de <strong>R$ 5 mil</strong>. É a primeira jurisprudência regional efetivamente aplicando a Resolução 23.755/2026 (que altera a 23.610) — antes mesmo do registro oficial das candidaturas em 15 de agosto.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O primeiro réu da era do deepfake eleitoral brasileiro"</strong> — pegar o acórdão completo no TRE-SE, perfilar o multado, reconstituir cronologia: data da publicação, data da denúncia, data da remoção, data do trânsito. SLA real vs SLA prometido na resolução.</p>
+      <p><strong>Fonte essencial:</strong> Secretaria Judiciária do TRE-SE (acórdão público); advogados das partes; relator do caso.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">release replicado · acórdão não foi lido</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tre-se.jus.br/comunicacao/noticias/2026/Maio/tre-se-mantem-exclusao-de-conteudo-com-ia-nao-identificado-e-confirma-a-multa" target="_blank">→ tre-se.jus.br · TRE-SE mantém exclusão e multa</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras de IA 2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · vácuo de monitoramento</div>
+    <h3>Brasil entra nas eleições mais críticas de IA sem o observador externo que monitorou 2018, 2020 e 2022</h3>
+    <div class="meta">Stanford Internet Observatory · desmantelado em 2024 · sem sucessor declarado para BR-2026</div>
+    <p>O Stanford Internet Observatory — que cobriu Brasil em 2018 (Election Integrity Partnership), 2020 e o 8 de janeiro — foi desmontado em 2024 sob pressão política do Congresso americano. A 5 meses da eleição, <strong>nenhum centro internacional equivalente assumiu o vácuo</strong>: nem Oxford Internet Institute, nem DFRLab/Atlantic Council declararam programa específico para Brasil 2026 em escala comparável.</p>
+    <p>Implicação: detecção de operações coordenadas estrangeiras passa a depender quase exclusivamente de NetLab UFRJ, FGV DAPP e InternetLab — sem a triangulação externa que validava achados em ciclos anteriores.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quem está olhando para o Brasil de fora?"</strong> — mapear o que sobrou do ecossistema externo de monitoramento (DFRLab, Oxford OII, Reuters Institute, Internews, IFTF, Mozilla). Perguntar a cada centro: vocês têm projeto ativo para BR-2026? Quem financia? Quem publica?</p>
+      <p><strong>Fonte essencial:</strong> Renée DiResta (ex-SIO, hoje Georgetown); Emerson Brooking (DFRLab); Philip Howard (Oxford). Vizinhança de Cambridge ajuda — Minderoo Centre é a única ponte UK-BR ativa via NetLab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">desmonte do SIO foi noticiado em 2024 · efeito sobre BR-2026 nunca</span>
+    </div>
+    <div class="links">
+      <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-disinformation-research-lawsuits-politics/" target="_blank">→ Washington Post · "Stanford's top disinformation research group collapses"</a>
+      <a href="https://www.platformer.news/stanford-internet-observatory-shutdown-stamos-diresta-sio/" target="_blank">→ Platformer · "The Stanford Internet Observatory is being dismantled"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · dado novo</div>
+    <h3>Pinça inédita de confiança: 92% temem fake news, mas só 46% confiam na imprensa — vácuo que IA generativa preenche</h3>
+    <div class="meta">síntese FGV DAPP + pesquisas nacionais e internacionais · publicada 5 mai 2026 · Brasil de Fato</div>
+    <p>Cruzamento publicado anteontem mostra a pior combinação possível antes de uma eleição: <strong>92% dos brasileiros se dizem preocupados com a disseminação de fake news</strong>, enquanto <strong>apenas 46-47% confiam na mídia</strong>. Mais de 60-70% relatam dificuldade em distinguir verdadeiro de falso no ambiente digital.</p>
+    <p>O dado, citando FGV DAPP, sugere que o eleitor de 2026 chega ao pleito <em>simultaneamente</em> hipervigilante contra fake news e descrente da fonte que historicamente as desmente — terreno ideal para conteúdo sintético "alternativo" alimentado por IA.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O eleitor que desconfia de tudo: o vácuo onde o deepfake prospera"</strong> — reportagem de campo + dados. Cruzar índice de confiança por região (sul vs nordeste) com mapa de circulação de IA não rotulada do Observatório IA nas Eleições. Hipótese: regiões com menor confiança = maior propagação de sintético.</p>
+      <p><strong>Fonte essencial:</strong> FGV DAPP (Marco Aurélio Ruediger); Reuters Institute Digital News Report 2025; Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">números soltos circulam · ninguém ligou ao deepfake</span>
+    </div>
+    <div class="links">
+      <a href="https://www.brasildefato.com.br/2026/05/05/midia-desinformacao-e-poder-quem-define-o-que-e-a-realidade-no-brasil-de-2026/" target="_blank">→ Brasil de Fato · "Mídia, desinformação e poder · 2026"</a>
+      <a href="https://democraciadigital.dapp.fgv.br/en/studies/online-disinformation-and-questioning-of-election-results/" target="_blank">→ FGV DAPP · disinformation studies</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>O PL 212/26 cria salvaguarda para "pesquisa acadêmica" no exato momento em que a pesquisa global de desinformação é dizimada</h3>
+    <p><strong>PL 212/26 (Câmara, abril 2026):</strong> exclui de criminalização deepfakes feitos para "pesquisa acadêmica", desde que identificados.<br>
+    <strong>Stanford Internet Observatory (2024):</strong> dissolvido sob pressão política — pesquisadores de desinformação espalhados, sem instituição-escudo.<br>
+    <strong>NetLab UFRJ (2024-2026):</strong> alvo de ataques judiciais e administrativos de plataformas e advocacia opositora.<br>
+    <strong>SIO substituto para BR-2026:</strong> não existe (ver A2).</p>
+    <p><strong>Síntese:</strong> a lei brasileira está prestes a abrir uma janela legal para "pesquisa acadêmica" produzir conteúdo sintético — exatamente quando o ecossistema acadêmico que daria credibilidade a essa pesquisa está sendo desmontado lá fora e atacado aqui dentro. Quem vai certificar o que é "pesquisa legítima"? E quem decide se o material vazou?</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"A brecha acadêmica do deepfake brasileiro"</strong> — investigação cruzando texto do PL 212/26 com estado real da pesquisa de desinformação no Brasil e no mundo. Há, hoje, uma definição operacional de "pesquisa acadêmica" que sirva ao Ministério Público Eleitoral?</p>
+      <p><strong>Frame original:</strong> Brasil legaliza um instrumento (deepfake didático) cuja governança institucional já está em ruínas — equivalente a permitir uso de explosivo "para fins de mineração" sem que exista mais autoridade reguladora de mineração.</p>
+      <p><strong>Fontes essenciais:</strong> autor do PL 212/26 (consulta camara.leg.br); Procuradoria Geral Eleitoral; ABRAJI; Article 19; reitoria UFRJ (NetLab); Renée DiResta.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 4 pontos existem separados · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.camara.leg.br/noticias/1260367-projeto-criminaliza-criacao-e-divulgacao-de-deepfakes-eleitorais/" target="_blank">→ camara.leg.br · PL 212/26</a>
+      <a href="https://www.techpolicy.press/what-the-fate-of-the-stanford-internet-observatory-means-for-disinformation-research/" target="_blank">→ TechPolicy.Press · fate of SIO</a>
+      <a href="https://netlab.eco.ufrj.br/en/post/panorama-da-infodemia-socioambiental" target="_blank">→ NetLab UFRJ · transparência de plataformas</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · cadeia produtiva</div>
+    <h3>Na multa de R$ 5 mil do TRE-SE, quem foi o fornecedor da peça? A Justiça Eleitoral está rastreando produtor — ou só publicador?</h3>
+    <p><strong>Lacuna metodológica:</strong> a Resolução 23.755 obriga rotulagem e remoção, mas não exige que candidato/partido declare <em>quem produziu</em> o conteúdo sintético — agência, freelancer, modelo de IA usado, prompt. A multa cai sobre o publicador. O ator econômico que vendeu o serviço continua invisível.</p>
+    <p><strong>Perguntas secundárias:</strong></p>
+    <p>· O acórdão do TRE-SE menciona ou intima o fornecedor da peça?<br>
+    · O TSE pode exigir declaração obrigatória de fornecedor de IA na prestação de contas eleitorais 2026 — e por que ainda não exige?<br>
+    · Algum candidato em 2024 já declarou voluntariamente "fornecedor de IA generativa" no Portal de Contas?<br>
+    · Quem é o equivalente brasileiro às empresas de "synthetic media for politics" que apareceram nos EUA, Argentina e Índia?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"O fornecedor invisível: por que o deepfake eleitoral brasileiro só penaliza quem publica"</strong> — análise jurídica + investigação de mercado. Combina A1 (caso TRE-SE concreto) com Q1 da edição #001 (mapeamento de agências). Existe agora um caso real para ancorar a pergunta.</p>
+      <p><strong>Furo possível:</strong> se um único acórdão do TRE-SE não nomear o fornecedor, isso é manchete — pois mostra que o sistema brasileiro pune o sintoma e não a fonte.</p>
+      <p><strong>Fonte essencial:</strong> acórdão TRE-SE (íntegra); Portal de Contas Eleitorais (TSE); Procuradoria Regional Eleitoral de SE; ABRAJI / Aláfia Lab para checagem de fornecedores.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta inexistente · nenhum veículo formulou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tre-se.jus.br/comunicacao/noticias/2026/Maio/tre-se-mantem-exclusao-de-conteudo-com-ia-nao-identificado-e-confirma-a-multa" target="_blank">→ tre-se.jus.br · acórdão de referência</a>
+      <a href="https://www.dataprivacybr.org/ia-nas-eleicoes-as-novas-regras-do-tse-para-propagandas-eleitorais-e-plataformas/" target="_blank">→ Data Privacy Brasil · análise das regras do TSE</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #011 · gerado em 07.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã</p>
+  </div>
+
+</div>
+</body>
+</html>
