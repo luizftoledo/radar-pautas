@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #013 — 09.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #013</span>
+    <span>sábado · 09.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO (FSI) · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · vácuo institucional</div>
+    <h3>2026 será a primeira eleição presidencial brasileira desde 2014 sem o Stanford Internet Observatory — e ninguém em Brasília percebeu</h3>
+    <div class="meta">Stanford Internet Observatory · encerrado em meados de 2024 (saídas de Alex Stamos e Renée DiResta) · FSI/Stanford</div>
+    <p>O SIO foi peça externa central no monitoramento das eleições brasileiras de 2018, 2020 e 2022 — relatórios em parceria com Aláfia/UFRJ, análises de redes coordenadas, alertas a plataformas. Foi <strong>desmontado em 2024</strong> sob pressão política da bancada republicana americana (House Judiciary chegou a citar Brasil como "ameaça global de censura com ajuda de Stanford"). Resultado prático: <strong>2026 é o primeiro grande ciclo eleitoral brasileiro sem watchdog acadêmico externo</strong>. NetLab, IRIS-BH, Aláfia e Data Privacy Brasil herdam a função sem orçamento equivalente, sem acesso de API que o SIO tinha, e sem o trunfo diplomático de "olho de fora".</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil entra em 2026 sem o Stanford"</strong> — reportagem mapeando a função que o SIO cumpria (DSAR, alertas a plataformas, papers conjuntos com Aláfia) e quem está absorvendo o quê. Entrevistar Stamos e DiResta (ambos saíram, falam) sobre o que perderam de monitoramento Brasil entre 2024 e hoje. Ângulo BBC: a destruição de instituição de pesquisa americana por motivação política tem efeito colateral concreto em país democrático no Sul Global.</p>
+      <p><strong>Fonte essencial:</strong> Alex Stamos (SIO ex-diretor) · Renée DiResta (ex-research manager, agora em Georgetown CSET) · NetLab UFRJ (Rose Marie Santini) · Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">desmonte do SIO foi noticiado em 2024 · efeito-Brasil 2026 nunca foi conectado</span>
+    </div>
+    <div class="links">
+      <a href="https://www.washingtonpost.com/technology/2024/06/14/stanford-internet-observatory-disinformation-research-lawsuits-politics/" target="_blank">→ washingtonpost.com · "Stanford's top disinformation research group collapses"</a>
+      <a href="https://www.techpolicy.press/what-the-fate-of-the-stanford-internet-observatory-means-for-disinformation-research/" target="_blank">→ techpolicy.press · o que o fim do SIO significa para pesquisa de desinformação</a>
+      <a href="https://cyber.fsi.stanford.edu/io/publications" target="_blank">→ cyber.fsi.stanford.edu · publicações remanescentes</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · academia BR</div>
+    <h3>Primeiro paper brasileiro sobre <em>generalização</em> de detector de deepfake sai a 5 meses do 1º turno — em uma revista que poucos fact-checkers leem</h3>
+    <div class="meta">"Generalization in Deepfake Detection: A Comparative Analysis of Frequency-Domain and CNN Approaches" · Revista de Informática Teórica e Aplicada (UFRGS) · 2026</div>
+    <p>Autores brasileiros (Farinha Rodrigues, Akabane, Carbonezi de Souza, Buschetto Macarini) testam algo que importa muito na operação real: detectores treinados num modelo generativo <strong>colapsam em precisão</strong> quando enfrentam conteúdo de outro modelo. Em 2026, a campanha brasileira vai usar Veo, Sora, Kling, Wan, modelos open-source chineses — qualquer fact-checker que tenha um único detector vai errar. <strong>O paper é nacional, é recente, é técnico, e está fora do circuito de imprensa.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Os detectores de deepfake que o Brasil tem não vão funcionar em 2026"</strong> — pegar o paper, falar com os autores (UFRGS), pedir para Aláfia/Lupa/Comprova rodar testes nos detectores que usam hoje contra peças geradas por modelos diferentes. Confrontar resultado com a Resolução 23.755 do TSE — que pressupõe que a fiscalização funciona.</p>
+      <p><strong>Fonte essencial:</strong> autores do paper (UFRGS PPGC) · diretoria técnica de Lupa, Aos Fatos, Comprova · Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">paper não saiu da bolha acadêmica · imprensa não dialoga com seer.ufrgs.br</span>
+    </div>
+    <div class="links">
+      <a href="https://seer.ufrgs.br/index.php/rita/article/view/150900" target="_blank">→ seer.ufrgs.br · paper "Generalization in Deepfake Detection"</a>
+      <a href="https://arxiv.org/abs/2403.17881" target="_blank">→ arxiv.org · benchmark internacional de comparação</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · mercado paralelo</div>
+    <h3>Consultoria britânica Control Risks lança newsletter quinzenal exclusiva sobre interferência eleitoral e desinformação no Brasil — mercado corporativo está sendo briefado num idioma que a imprensa BR não lê</h3>
+    <div class="meta">Control Risks · "Brazil: Election interference and disinformation incidents" · primeira edição rastreada 7.abr.2026 · publicação quinzenal até outubro</div>
+    <p>A consultoria de risco político mais influente do mercado anglófono (cliente: bancos, multinacionais, embaixadas, fundos de pensão) começou a publicar um <strong>boletim dedicado às eleições brasileiras de 2026</strong> com foco em "ameaças cibernéticas emergentes" e "alta probabilidade de influência estrangeira" via deepfake. <strong>O frame é geopolítico</strong> (Rússia, China, atores estatais), não doméstico — o oposto do enquadramento brasileiro, que olha o miliciano digital interno. Quem assina recebe avisos antes da imprensa.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil que o capital estrangeiro está lendo sobre 2026"</strong> — pedir uma assinatura ou amostra do boletim, comparar o frame do Control Risks com o frame da imprensa brasileira (TSE-cêntrico, doméstico). Listar quais clientes corporativos no Brasil estão recebendo essas análises (bancos de Nova York, escritórios de London City, fundos soberanos). Incluir Eurasia Group, Verisk Maplecroft, Teneo — o conjunto é o "consenso de risco" que precifica o Brasil para fora.</p>
+      <p><strong>Fonte essencial:</strong> Control Risks LATAM (analista Brasil) · Eurasia Group (Christopher Garman) · áreas de relações institucionais de bancos brasileiros que assinam.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">newsletter B2B · ângulo "interferência estrangeira" inexistente em PT-BR</span>
+    </div>
+    <div class="links">
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ controlrisks.com · boletim 7.abr.2026</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>O Brasil de 2026 vai entrar na eleição sem watchdog acadêmico externo (Stanford IO caiu), com detectores nacionais que não generalizam (paper UFRGS) — e com o relatório de moderação que o STF mandou fazer sem destinatário definido</h3>
+    <p><strong>Stanford IO:</strong> desmontado em 2024 — não há monitor externo grande para 2026.<br>
+    <strong>Paper UFRGS (2026):</strong> detectores nacionais perdem precisão entre modelos generativos diferentes — capacidade técnica brasileira tem limite documentado.<br>
+    <strong>STF (jun/25):</strong> plataformas precisam publicar relatório anual de moderação <em>mas a tese não nomeou para quem</em> (TSE? AGU? CGI.br? Anatel? Ninguém sabe).<br>
+    <strong>NetLab + Minderoo (Cambridge):</strong> WhatsApp pontuou zero em transparência — dado bruto de plataforma já é inacessível.</p>
+    <p><strong>Síntese:</strong> a arquitetura de fiscalização independente das plataformas em 2026 está vazia em três camadas simultâneas — <em>auditor externo</em> (Stanford caiu), <em>auditor doméstico de Estado</em> (STF não nomeou um), <em>capacidade técnica nacional</em> (detectores não generalizam). Se uma das três camadas falhasse, seria notícia. Falham as três e ninguém somou.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande</span>
+      <p><strong>"O Brasil vai vigiar plataformas em 2026 com qual aparelho?"</strong> — reportagem-investigação tripla. Eixo 1: o vácuo do SIO (entrevistar Stamos/DiResta). Eixo 2: estado-da-arte dos detectores brasileiros (paper UFRGS, testes com Aláfia). Eixo 3: pedir formalmente ao STF, via assessoria do gabinete do relator (Toffoli? Barroso?), para quem o relatório de moderação deve ser endereçado — se a resposta for "ainda em definição", é manchete.</p>
+      <p><strong>Frame original:</strong> "fiscalização tripla vazia — auditor externo, auditor estatal e capacidade técnica nacional ausentes simultaneamente, a 5 meses do voto."</p>
+      <p><strong>Fontes essenciais:</strong> NetLab UFRJ + Minderoo Centre (parceria já existente — abre porta para BBC) · Data Privacy Brasil · gabinete do relator do Tema 987 do STF · ex-SIO.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 fatos existem isolados · ninguém os somou como falha sistêmica</span>
+    </div>
+    <div class="links">
+      <a href="https://noticias.stf.jus.br/postsnoticias/marco-civil-da-internet-julgamento-continuara-em-25-6/" target="_blank">→ stf.jus.br · julgamento Marco Civil</a>
+      <a href="https://netlab.eco.ufrj.br/en/post/panorama-da-infodemia-socioambiental" target="_blank">→ NetLab · transparência social media + Minderoo Cambridge</a>
+      <a href="https://seer.ufrgs.br/index.php/rita/article/view/150900" target="_blank">→ UFRGS · paper detector deepfake</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · capacidade técnica do TSE</div>
+    <h3>Qual modelo de detecção o próprio TSE — que assinou a Resolução 23.755 — usa para identificar conteúdo sintético hoje? Está auditado? Quem fez?</h3>
+    <p><strong>Hipótese desconfortável:</strong> a resolução do TSE pressupõe capacidade de identificar conteúdo gerado por IA para aplicar a multa de R$ 5k–30k e ordenar remoção. Mas <strong>não há registro público</strong> do detector que a Secretaria de Tecnologia da Informação do TSE usa — se compra de fornecedor (Hive, Reality Defender, Sensity), se usa modelo nacional, se é detecção humana caso-a-caso por servidores da Corregedoria. Considerando o paper UFRGS (A2): qualquer detector único colapsa em precisão entre modelos generativos. Logo, o TSE pode estar legislando sobre uma capacidade que sua infraestrutura interna não tem.</p>
+    <p><strong>Metodologia sugerida:</strong></p>
+    <p>· LAI (Lei de Acesso à Informação) à STI/TSE pedindo: contratos vigentes de detecção de conteúdo sintético, descritivo técnico, fornecedor, valor, número de licenças, métricas de acurácia comprometidas em SLA<br>
+    · pregão eletrônico do TSE 2024–2026: filtrar por "inteligência artificial", "verificação de autenticidade", "análise forense de imagem"<br>
+    · entrevistar ex-servidores da STI/TSE que saíram após 2022 (LinkedIn) sobre o que existia antes<br>
+    · cruzar com Resolução 23.755: a expressão "tecnologia equivalente" no artigo 9º-B é blank check ou tem contraparte técnica?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa</span>
+      <p><strong>"O detector que o TSE não tem"</strong> — se a LAI for negada com sigilo, é manchete. Se a resposta vier e o fornecedor for estrangeiro com modelo único, é matéria. Se o TSE usa só denúncia + servidor humano, é outra matéria ainda mais grave: infraestrutura de fiscalização não escala em ano de ~150 mil candidatos.</p>
+      <p><strong>Por que ninguém perguntou:</strong> a imprensa cobriu a Resolução 23.755 como notícia política (regra X regra) sem reportar a contraparte operacional. Pergunta básica, nunca formulada em PT-BR: "TSE tem detector?"</p>
+      <p><strong>Fonte essencial:</strong> Secretaria de Tecnologia da Informação do TSE · ex-servidores da STI · Comprasnet/Portal de Compras do TSE.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pauta inexistente · pergunta primária nunca foi feita</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA 2026</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #013 · gerado em 09.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · 148 dias até o 1º turno</p>
+  </div>
+
+</div>
+</body>
+</html>
