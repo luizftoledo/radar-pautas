@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #014 — 10.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER */
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  /* SECTION */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ITEM */
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  /* FOOT */
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #014</span>
+    <span>domingo · 10.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <!-- ANOMALIAS -->
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · enquadramento novo</div>
+    <h3>Apareceu uma tese rival ao "deepfake": o problema não é o engano, é o cansaço</h3>
+    <div class="meta">Público (Portugal) · opinião · 9 de maio de 2026 · publicado no caderno Público Brasil</div>
+    <p>Coluna assinada na sexta argumenta que o vetor real do dano em 2026 não é o deepfake hiper-realista, e sim a <strong>fadiga cognitiva</strong> produzida por conteúdo "plausível o bastante" em escala. A consequência política não é "ser enganado" — é desistir de checar. Vira "exaustão democrática". Argumento ecoado em paralelo pela Agência Cenarium ("a ameaça maior é invisível"), mas o quadro do <em>Público</em> é mais radical: desloca o eixo da pauta.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Não é o deepfake, é a fadiga: a tese que vira de cabeça pra baixo o debate eleitoral de 2026."</strong> — entrevistar autores da coluna + cruzar com Aláfia/Data Privacy (que mediram 137 peças sintéticas em 3 meses) pra perguntar se o monitoramento está caçando o objeto errado.</p>
+      <p><strong>Fontes essenciais:</strong> autor da coluna no Público; coordenação do Observatório IA nas Eleições; pesquisador de psicologia política (PUC-RJ ou USP) sobre saturação informacional.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero no mainstream br</span>
+      <span class="badge neutral">tese saiu em pt-PT · ainda não rebatida em pt-BR</span>
+    </div>
+    <div class="links">
+      <a href="https://www.publico.pt/2026/05/09/publico-brasil/opiniao/inteligencia-artificial-eleicoes-problema-nao-deepfake-cansaco-2174111" target="_blank">→ publico.pt · "o problema não é o deepfake, é o cansaço"</a>
+      <a href="https://agenciacenarium.com.br/eleicoes-2026-deepfakes-preocupam-mas-ameaca-maior-e-invisivel-alerta-especialista/" target="_blank">→ Cenarium · "ameaça maior é invisível"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · análise acadêmica nova</div>
+    <h3>The Conversation publica diagnóstico de "lacunas estruturais" na resolução do TSE — três meses depois de ela existir</h3>
+    <div class="meta">The Conversation Brasil · maio de 2026 · análise acadêmica</div>
+    <p>Pela primeira vez surge crítica acadêmica frontal à Resolução 23.755/2026: o problema não estaria nas regras (rotulagem, janela de 96h, multa de R$ 5k–30k), e sim em <strong>buracos estruturais</strong> — falta de capacidade fiscalizatória, ausência de definição precisa de "manipulação digital", e dependência das próprias plataformas pra monitorar o que prometeram remover. Mainstream cobriu a resolução como avanço; ninguém destacou o diagnóstico das lacunas.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quem fiscaliza o fiscal? As lacunas estruturais da resolução do TSE de 2026."</strong> — entrevista com autoria do artigo + fonte interna do TSE pra responder ponto a ponto. Pedir relatório de capacidade técnica do TSE via LAI.</p>
+      <p><strong>Fonte essencial:</strong> autor(a) do artigo no The Conversation Brasil; STI/TSE via LAI; CDR (Bia Barbosa) pra contraponto.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">diagnóstico circulou em nicho · não chegou ao mainstream</span>
+    </div>
+    <div class="links">
+      <a href="https://theconversation.com/eleicoes-2026-novas-resolucoes-do-tse-contra-uso-da-desinformacao-sao-um-avanco-mas-ainda-ha-lacunas-estruturais-282224" target="_blank">→ theconversation.com · análise das lacunas</a>
+      <a href="https://www.aosfatos.org/noticias/tse-aumenta-responsabilidade-de-plataformas-digitais-nas-eleicoes-de-2026/" target="_blank">→ Aos Fatos · responsabilidade das plataformas</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · divergência de números</div>
+    <h3>Os dois "crescimentos de IA eleitoral" estão correndo em ritmos diferentes — e ninguém perguntou por quê</h3>
+    <div class="meta">cruzamento entre Observatório IA nas Eleições (Data Privacy + Aláfia) e dados TSE/Correio Braziliense, 4 mai 2026</div>
+    <p>Dois números circulam — e estão sendo tratados como se fossem o mesmo fenômeno:</p>
+    <p>· <strong>+308%</strong> em conteúdos políticos gerados por IA (39 → 159 casos, 2024 vs 2025).<br>
+    · <strong>+126%</strong> em fraudes com deepfake.</p>
+    <p>São curvas distintas. A primeira é campanha (jingle, montagem, paródia política). A segunda é crime — golpe financeiro, falsa cobrança, vídeo de "candidato pedindo Pix". A imprensa vem somando os dois sob "IA eleitoral", mas o ator econômico, o objetivo e o caminho técnico são diferentes. <strong>Quem está fazendo cada um?</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"As duas IAs eleitorais: a de campanha e a de golpe — não confunda."</strong> Reportagem de mercado separando os dois ecossistemas. Pedir microdados do Observatório (Data Privacy + Aláfia) e cruzar com base de boletins de ocorrência por estelionato eletrônico (SSP-SP, SSP-RJ).</p>
+      <p><strong>Fonte essencial:</strong> Aláfia Lab (microdados de 137 peças); Data Privacy Brasil; delegado de cibercrimes SP/RJ; PSafe ou Apura sobre golpe deepfake.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">números aparecem juntos · ninguém separou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ dataprivacybr.org · 137 peças, dez/25 a fev/26</a>
+      <a href="https://www.correiobraziliense.com.br/aqui/2026/05/04/tse-aperta-regras-contra-ia-para-combater-fake-news-nas-eleicoes-de-2026/" target="_blank">→ Correio Braziliense · 4 mai 2026</a>
+    </div>
+  </div>
+
+  <!-- CONEXAO -->
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Stanford IO morreu. NTIRE 2026 não tem áudio em PT-BR. NetLab depende de Cambridge. O Brasil entra na eleição com infraestrutura internacional de monitoramento balcanizada</h3>
+    <p><strong>Stanford Internet Observatory:</strong> dissolvido em 2024, depois de pressão política nos EUA. Não monitora a eleição brasileira de 2026. Stamos e DiResta saíram.<br>
+    <strong>NTIRE 2026 (CVPR):</strong> a competição global mais relevante de detecção de deepfake deste ano não inclui benchmark em português brasileiro — os 14 métodos submetidos foram treinados em outros idiomas/sotaques.<br>
+    <strong>NetLab UFRJ:</strong> hoje publica em parceria com o Minderoo Centre da Universidade de Cambridge — laboratório dependente de financiamento e infraestrutura externa.<br>
+    <strong>Control Risks:</strong> só uma empresa privada de risco político publica boletim quinzenal sobre o Brasil 2026 — newsletter paga, em inglês, para clientes corporativos.</p>
+    <p><strong>Síntese:</strong> O TSE prometeu fiscalizar 145 milhões de eleitores em português brasileiro. O detector de deepfake de ponta no mundo não foi treinado nesse idioma. O monitoramento internacional sobre a eleição está pulverizado entre uma ONG inglesa, uma consultoria privada e uma universidade que perdeu seu observatório. <strong>Não há autoridade pública internacional acompanhando o Brasil 2026.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta — grande, internacional</span>
+      <p><strong>"O Brasil entra em 2026 sem rede internacional: como morreu o Stanford IO e quem ficou no lugar."</strong> Reportagem ampla — pode virar série da BBC World. Ângulo claro: vácuo de governança internacional.</p>
+      <p><strong>Sub-ângulo técnico forte:</strong> "Os detectores de deepfake do mundo não falam português brasileiro." — pedir ao NTIRE 2026 (CVPR) a lista de idiomas dos datasets de treino e ao TSE qual ferramenta de detecção está usando.</p>
+      <p><strong>Fontes essenciais:</strong> Renée DiResta (ex-Stanford IO, hoje Georgetown); Alex Stamos; Rose Marie Santini (NetLab); Minderoo Centre (Cambridge — vizinho teu); Control Risks Brasil; Comitê Organizador NTIRE 2026; STI/TSE.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 4 pontos existem em silos · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://cyber.fsi.stanford.edu/io/publications" target="_blank">→ Stanford IO · publicações arquivadas</a>
+      <a href="https://arxiv.org/html/2604.24163v1" target="_blank">→ arXiv · NTIRE 2026 Robust Deepfake Detection Challenge</a>
+      <a href="https://netlab.eco.ufrj.br/en/post/panorama-da-infodemia-socioambiental" target="_blank">→ NetLab · parceria com Minderoo/Cambridge</a>
+      <a href="https://www.controlrisks.com/campaigns/electoral-protection-in-brazil/analysis/brazil-election-interference-and-disinformation-incidents-7-april-2026" target="_blank">→ Control Risks · boletim privado Brasil 2026</a>
+    </div>
+  </div>
+
+  <!-- PERGUNTA -->
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · pergunta jurídica</div>
+    <h3>A Resolução 23.755 fala em "conteúdo gerado ou manipulado digitalmente". Onde termina a edição comum de campanha e começa a "manipulação" punível?</h3>
+    <p>A resolução do TSE de 2 de março de 2026 trata como infração o uso de "conteúdo sintético em áudio, vídeo ou combinação dos dois — gerado ou digitalmente manipulado". Mas <strong>quase toda peça eleitoral hoje é digitalmente manipulada</strong>: corte de áudio, equalização, color grading, redução de ruído, masterização. Onde a régua cai?</p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Reduzir ruído de fundo num áudio de candidato com ferramenta de IA (Adobe Enhance, ElevenLabs Noise Removal) — manipulação punível?<br>
+    · Color grading com IA generativa (Topaz, Runway) que "limpa" pele do candidato — montagem proibida?<br>
+    · Reframe automático que troca o enquadramento por IA — fronteira?<br>
+    · Já existe parecer técnico do TSE separando "edição assistida" de "geração sintética"? Se não, o que vai a juiz eleitoral em outubro?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa-jurídica</span>
+      <p><strong>"A linha invisível entre editar e fabricar: o vácuo técnico da resolução do TSE."</strong> Pedir, via LAI, parecer técnico do STI/TSE sobre o que conta como "manipulação digital". Cruzar com 5 a 10 marqueteiros eleitorais (anonimato OK) — perguntar se eles sabem onde a régua cai. Resposta provável: ninguém sabe.</p>
+      <p><strong>Por que é forte:</strong> se nenhum marqueteiro sabe a régua, a regra é arbitrária por design — e a primeira condenação em outubro vira precedente sem base técnica. Manchete própria.</p>
+      <p><strong>Fonte essencial:</strong> STI/TSE (LAI); ABRAJI; Article 19; 5+ marqueteiros via Aliança de Marketing Político ou ABMP.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta tecnicamente óbvia · juridicamente ignorada</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ tse.jus.br · Resolução 23.755/2026 íntegra</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ tse.jus.br · regras IA 2026</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #014 · gerado em 10.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · domingo de tese rival e vácuo internacional</p>
+  </div>
+
+</div>
+</body>
+</html>
