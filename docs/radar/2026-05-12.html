@@ -1,1 +1,411 @@
-__HTML__
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #016 — 12.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #016</span>
+    <span>terça · 12.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · transição institucional</div>
+    <h3>Hoje, 12 de maio, Nunes Marques assume o TSE — herda regras de IA aprovadas pela presidência anterior e nunca presidiu uma eleição geral</h3>
+    <div class="meta">posse oficial · 12 de maio de 2026 · Tribunal Superior Eleitoral</div>
+    <p>O ministro <strong>Kássio Nunes Marques</strong>, indicado por Jair Bolsonaro em 2020, assume a presidência do TSE em um momento descrito como "decisivo para a Justiça Eleitoral brasileira". Será sua <strong>primeira eleição geral à frente da Corte</strong> — e a primeira eleição sob o regime da Resolução 23.755/2026, que cria janela de "silêncio sintético" de 96 horas, exige rotulagem obrigatória de conteúdo IA e proíbe sistemas de recomendação por IA mesmo a pedido do usuário.</p>
+    <p>O contraste é o ponto: as regras mais restritivas foram desenhadas e aprovadas sob Cármen Lúcia (a partir das audiências públicas de fevereiro/26 e da sessão de 2 de março). Quem agora executa essa fiscalização é o ministro que historicamente divergiu da ala "moraista" em julgamentos de moderação de conteúdo. Cobertura mainstream tratou a posse como cerimônia institucional — sem mapear o histórico de votos do novo presidente em casos de IA e desinformação.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Nunes Marques presidirá a primeira eleição com regras de IA — e foi quem mais divergiu sobre como aplicá-las."</strong> Reportagem de perfil + análise de votos. Sistematizar (1) decisões monocráticas e votos do ministro em casos de moderação 2022–2025, (2) declarações públicas sobre Resolução 23.755 e PL 212/26, (3) primeiros sinais de gestão: nomeações para assessoria de comunicação, secretarias técnicas, conselho consultivo de IA.</p>
+      <p><strong>Fonte essencial:</strong> gabinete de Nunes Marques (assessoria de imprensa do TSE); STF para histórico de votos; CDR, Article 19 e Aláfia Lab para leitura crítica.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">posse noticiada · histórico de votos não cruzado</span>
+    </div>
+    <div class="links">
+      <a href="https://portalnoticiasbahia.com.br/2026/05/11/nunes-marques-assume-presidencia-do-tse-com-foco-no-combate-a-ia-e-a-desinformacao-nas-eleicoes-2026/" target="_blank">→ Portal Notícias Bahia · posse e foco IA/desinformação</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ TSE · Resolução 23.755/2026 íntegra</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · jurisprudência</div>
+    <h3>Na véspera da troca de comando, Cármen Lúcia anulou multa de R$ 600 mil aplicada por Moraes — e abriu precedente em massa</h3>
+    <div class="meta">decisão de 11 de maio de 2026 · presidência do TSE · caso Rita de Cássia Serrão</div>
+    <p>Em sua última decisão relevante antes de passar o cargo, a ministra <strong>Cármen Lúcia</strong> anulou a cobrança de uma multa de aproximadamente <strong>R$ 600 mil</strong> aplicada pelo ministro Alexandre de Moraes contra uma usuária da rede X. A multa derivava da multa diária de R$ 20 mil estabelecida em janeiro de 2023 para o caso de "reincidência" em publicações qualificadas como desinformação eleitoral.</p>
+    <p>O fundamento da anulação é processual e estrutural: a usuária <strong>nunca foi formalmente intimada</strong> sobre a imposição da penalidade, e não foram apresentadas publicações que configurassem desinformação após a reativação da conta. Mainstream cobriu o caso individual; o que ninguém ainda quantificou: <strong>quantos perfis ainda têm multas diárias ativas, herdadas da operação de moderação 2022–2023</strong>, em condições jurídicas equivalentes — sem intimação formal, sem provas posteriores de reincidência? Se o critério da Cármen virar régua, há uma onda potencial de anulações pela frente.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Quantos R$ Moraes cobrou e quantos R$ entraram: a contabilidade oculta das multas de desinformação."</strong> Pedido via LAI ao TSE: (1) lista completa de multas aplicadas por desinformação eleitoral entre 2022 e 2026; (2) valor total nominal cobrado vs. arrecadação efetiva; (3) quantas estão sob recurso, suspensas ou anuladas. Cruzar com Receita Federal e PGFN (inscrição em dívida ativa).</p>
+      <p><strong>Por que importa:</strong> a fiscalização de desinformação 2022–2026 foi narrada como "punição efetiva" — sem qualquer auditoria pública sobre o que de fato saiu do papel. A decisão de Cármen põe o tema na agenda na semana exata em que o regime de IA estréia.</p>
+      <p><strong>Fonte essencial:</strong> Secretaria Judiciária do TSE (via LAI); PGFN e Receita; advogados da Rita de Cássia Serrão; ABRAJI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">caso noticiado · padrão estrutural não auditado</span>
+    </div>
+    <div class="links">
+      <a href="https://www.infomoney.com.br/politica/carmen-anula-multa-aplicada-por-moraes-em-caso-ligado-a-desinformacao/" target="_blank">→ InfoMoney · Cármen anula multa de Moraes</a>
+      <a href="https://www.gazetadopovo.com.br/republica/carmen-derruba-multa-imposta-moraes-suposta-desinformacao-2023/" target="_blank">→ Gazeta do Povo · derrube da multa</a>
+      <a href="https://www.acessa.com/politica/2026/05/324213-carmen-cancelou-multa-de-rs-600-mil-aplicada-por-moraes-a-dona-de-perfil-e-diz-que-cobranca-foi-indevida.html" target="_blank">→ Acessa · "cobrança indevida"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · dado novo</div>
+    <h3>O ritmo do deepfake brasileiro triplicou em três meses — e nenhum veículo somou as duas séries do mesmo observatório</h3>
+    <div class="meta">comparação interna · Observatório IA nas Eleições (Data Privacy Brasil + Aláfia Lab)</div>
+    <p>O Observatório IA nas Eleições publicou dois números, em duas janelas diferentes, sem nunca compará-los publicamente:</p>
+    <p>· <strong>Jan–nov 2025 (11 meses):</strong> "mais de 280 casos" de uso de IA em publicações relacionadas às eleições de 2026 — média de <strong>~25 casos/mês</strong>.<br>
+    · <strong>Dez 2025–fev 2026 (3 meses):</strong> 137 deepfakes de autoridades — média de <strong>~46 casos/mês</strong>.</p>
+    <p>A taxa mensal quase <strong>dobrou</strong> entre os dois períodos. Se a tendência se mantiver, o segundo trimestre civil de 2026 (abril–junho) deve fechar acima de 200 deepfakes — só de "autoridades" e só na superfície monitorável. Mainstream replicou os dois releases isoladamente; o gráfico de aceleração não foi feito por ninguém.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O deepfake brasileiro está acelerando, e a régua é do próprio Observatório."</strong> Pedir ao Aláfia Lab e ao Data Privacy Brasil a série mensal completa (jan/25 até abril/26) com critérios homogêneos. Projetar curva até o primeiro turno (4 de outubro de 2026). Cruzar com: (1) janelas de pico em 2022 — alguma semana foi 3x a média?; (2) lançamento de novos modelos de IA generativa de vídeo no período (Veo, Sora, Kling, Hailuo); (3) caso "Dona Maria" (radar #015) como ponto-fora-da-curva.</p>
+      <p><strong>Fonte essencial:</strong> coordenação técnica do Observatório IA nas Eleições; pesquisadores Aláfia Lab; Bruna Martins dos Santos (CDR) para leitura política.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">dois releases publicados · ninguém somou as séries</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ Data Privacy Brasil · 137 deepfakes (dez/25–fev/26)</a>
+      <a href="https://www.dataprivacybr.org/projeto/ia-e-integridade-do-processo-eleitoral/" target="_blank">→ Data Privacy Brasil · projeto Observatório (série 2025)</a>
+      <a href="https://desinformante.com.br/observatorio-ia-eleicoes/" target="_blank">→ Desinformante · lançamento do Observatório</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Em 24 horas, a presidência do TSE mudou de mãos, uma multa simbólica da era Moraes caiu, e o aparato de fiscalização de IA da resolução 23.755 entrou na largada — sem ninguém ligar os três pontos</h3>
+    <p><strong>11 mai (segunda):</strong> Cármen Lúcia anula multa de R$ 600 mil aplicada por Moraes em caso de desinformação — último ato relevante da gestão.<br>
+    <strong>12 mai (terça, hoje):</strong> Nunes Marques toma posse na presidência do TSE.<br>
+    <strong>Pano de fundo:</strong> a Resolução 23.755/2026 (silêncio sintético de 96h, rótulo obrigatório, remoção em 24h) precisa virar prática operacional nos próximos cinco meses até o pleito de 4 de outubro.<br>
+    <strong>Diagnóstico paralelo:</strong> NetLab/Cambridge — transparência de plataformas zero no Brasil; Observatório IA nas Eleições — ritmo de deepfake dobrou; paper UFRGS — detectores estado-da-arte overfitam e não foram avaliados em pt-BR (radar #015).</p>
+    <p><strong>Síntese:</strong> a infraestrutura simbólica da fiscalização de desinformação eleitoral brasileira (a multa-modelo de Moraes) <em>foi desativada na véspera</em> do dia em que um ministro com perfil oposto assume a Corte responsável por implementar regras inéditas de IA. Não é coincidência política — é arquitetura. E a imprensa cobriu cada pedaço como notícia isolada de fim de semana.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande, política + tecnologia</span>
+      <p><strong>"A virada silenciosa do TSE: como a era Moraes terminou na semana em que a era da IA começou."</strong> Reportagem ampla que costura os três pontos. Forte ângulo BBC: a Corte que organizou o pleito de 2022 sob doutrina de moderação ativa estréia a primeira eleição "pós-Moraes" com regras técnicas escritas, mas com presidência politicamente disposta a frear o gatilho.</p>
+      <p><strong>Frame original:</strong> "Brasil 2026 — a primeira eleição com regras duras de IA e mão leve para aplicá-las."</p>
+      <p><strong>Fontes essenciais:</strong> gabinete Nunes Marques; gabinete Cármen Lúcia (saída); STI/TSE; CDR (Bia Barbosa, Bruna Martins); Aláfia Lab; ABRAJI; Article 19; cientistas políticos UnB/USP especializados em comportamento institucional do Judiciário.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">os 3 pontos noticiados em silos · ninguém somou</span>
+    </div>
+    <div class="links">
+      <a href="https://portalnoticiasbahia.com.br/2026/05/11/nunes-marques-assume-presidencia-do-tse-com-foco-no-combate-a-ia-e-a-desinformacao-nas-eleicoes-2026/" target="_blank">→ Portal Notícias Bahia · posse Nunes Marques</a>
+      <a href="https://www.infomoney.com.br/politica/carmen-anula-multa-aplicada-por-moraes-em-caso-ligado-a-desinformacao/" target="_blank">→ InfoMoney · Cármen anula multa</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Abril/por-dentro-das-eleicoes-conheca-as-regras-sobre-uso-de-ia-na-campanha-eleitoral-de-2026" target="_blank">→ TSE · regras de IA campanha 2026</a>
+      <a href="https://theconversation.com/eleicoes-2026-novas-resolucoes-do-tse-contra-uso-da-desinformacao-sao-um-avanco-mas-ainda-ha-lacunas-estruturais" target="_blank">→ The Conversation · "lacunas estruturais"</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · follow the procedure</div>
+    <h3>Quantas multas diárias por desinformação ainda estão correndo, em silêncio, contra perfis bloqueados em 2022–2023 — e qual o estoque jurídico que Cármen acaba de tornar contestável?</h3>
+    <p>A decisão de 11 de maio anulou uma multa específica (caso Rita de Cássia Serrão) por dois fundamentos: ausência de intimação formal e ausência de publicações posteriores que configurassem "desinformação ou apologia a atos atentatórios à Justiça Eleitoral". Ambos podem ser replicáveis em escala — mas ninguém mediu o universo.</p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Quantos perfis tiveram <strong>multa diária ativa</strong> estabelecida por decisões monocráticas entre 2022 e 2023 no contexto do Inquérito das Fake News, das Milícias Digitais e dos Atos Antidemocráticos?<br>
+    · Quantas dessas multas foram efetivamente <strong>cobradas</strong> (inscritas em dívida ativa via PGFN)? E quantas foram <strong>pagas</strong>?<br>
+    · O TSE mantém banco de dados consolidado, ou cada caso vive no gabinete do relator?<br>
+    · Quantos casos estão atualmente em <strong>recurso</strong> com argumento equivalente ao acolhido pela Cármen?<br>
+    · A nova gestão (Nunes Marques) pretende editar resolução administrativa para auditar o estoque, ou deixará caso a caso?<br>
+    · Quem são os <strong>advogados</strong> que defendem esses perfis? Há concentração em escritórios ligados ao campo bolsonarista (Heleno-Steinbruch, por exemplo)?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / quantitativa</span>
+      <p><strong>"O estoque oculto de multas da era Moraes."</strong> Combinação de LAI + análise jurimétrica. Pedir ao TSE a relação completa de multas por desinformação aplicadas em decisões monocráticas (2022–2026), valor nominal, status, decisão original (nº do processo), relator, multa diária ativa. Construir base de dados, cruzar com PGFN. Indicar precedente Cármen como vetor de anulação massiva.</p>
+      <p><strong>Por que importa:</strong> se a "estatística de combate à desinformação" de 2022 era em parte teatral (multa aplicada mas não cobrada), essa narrativa cai junto. Se for substancial, é o maior passivo jurídico-financeiro herdado por Nunes Marques. Em qualquer cenário, é furo. <strong>Ângulo BBC:</strong> como uma democracia mediu a si mesma combatendo desinformação — e quanto da medição era ficcional.</p>
+      <p><strong>Fonte essencial:</strong> Secretaria Judiciária do TSE (LAI); PGFN (LAI); jurimetristas (FGV Direito Rio); ABRAJI; advogados criminalistas Augusto de Arruda Botelho e Cristiano Zanin (este último com cuidado, em razão do conflito); JOTA (cobertura técnica).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">caso individual noticiado · estoque agregado invisível</span>
+    </div>
+    <div class="links">
+      <a href="https://www.jota.info/opiniao-e-analise/colunas/coluna-flavia-maia/ao-julgar-nucleo-da-desinformacao-stf-sinalizara-o-peso-das-fake-news-para-2026" target="_blank">→ JOTA · "núcleo da desinformação" e 2026</a>
+      <a href="https://www.gazetadopovo.com.br/republica/carmen-derruba-multa-imposta-moraes-suposta-desinformacao-2023/" target="_blank">→ Gazeta do Povo · derrube da multa (precedente)</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #016 · gerado em 12.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · terça da virada institucional do TSE</p>
+  </div>
+
+</div>
+</body>
+</html>
