@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #017 — 13.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #017</span>
+    <span>quarta · 13.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · conflito institucional</div>
+    <h3>Em 24 horas, Nunes Marques assumiu o TSE e foi sorteado relator do pedido de Bolsonaro para anular a própria condenação no STF</h3>
+    <div class="meta">sorteio em 11 mai · posse em 12 mai · Segunda Turma do STF · revisão criminal protocolada em 8 mai</div>
+    <p>O ministro <strong>Kassio Nunes Marques</strong> ocupa, simultaneamente, duas funções com sobreposição direta sobre o calendário eleitoral de 2026: (1) presidência do TSE, responsável por implementar a Resolução 23.755/2026 sobre uso de IA; (2) relatoria, na Segunda Turma do STF, da revisão criminal que busca anular a condenação de <strong>27 anos</strong> imposta a Jair Bolsonaro pela Primeira Turma. A ação foi protocolada na sexta (8 de maio) e sorteada em 11 de maio — véspera da posse no TSE. Não estão no escopo do sorteio Moraes, Cármen, Dino, Zanin e Fux, justamente os ministros que julgaram o caso.</p>
+    <p>O mainstream noticiou os dois fatos em silos. Ninguém somou: <strong>a Corte que vai julgar a moldura jurídica de eventuais deepfakes contra Bolsonaro em outubro tem, hoje, o mesmo presidente que decidirá, no STF, se Bolsonaro permanece condenado por tentativa de golpe</strong>. O conflito não é hipotético — é cronograma.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O ministro de dois calendários: como Nunes Marques administra o impeachment simbólico do bolsonarismo no STF enquanto regula a campanha de seus aliados no TSE."</strong> Reportagem que cruza prazos. Mapear: (1) cronograma da revisão criminal na Segunda Turma — quando entra em pauta, quando provável julgamento; (2) cronograma do TSE — quando a primeira denúncia por uso de IA cai na mesa da presidência; (3) eventos públicos do ministro até outubro, com chance de pronunciamento sobre o caso. ABRAJI e Article 19 podem dimensionar se há impedimento técnico de relatoria simultânea.</p>
+      <p><strong>Fonte essencial:</strong> assessoria de imprensa do TSE e do gabinete do ministro no STF; constitucionalistas (Conrado Hübner Mendes — USP; Diego Werneck — Insper); ABRAJI; defesa de Bolsonaro (Paulo Cunha Bueno).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">dois fatos · um sorteio · ninguém amarrou o efeito sobre a eleição</span>
+    </div>
+    <div class="links">
+      <a href="https://www.cartacapital.com.br/politica/nunes-marques-e-sorteado-como-relator-de-acao-de-bolsonaro-para-anular-condenacao/" target="_blank">→ CartaCapital · sorteio da relatoria</a>
+      <a href="https://tribunadonorte.com.br/politica/nunes-marques-e-sorteado-relator-de-revisao-criminal-para-anular-condenacao-de-bolsonaro-no-stf/" target="_blank">→ Tribuna do Norte · "relator da revisão criminal"</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Maio/acompanhe-ao-vivo-a-posse-do-ministro-nunes-marques-na-presidencia-do-tse" target="_blank">→ TSE · posse oficial 12.mai</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · Congresso</div>
+    <h3>Hugo Motta sinaliza votação do Marco Legal da IA (PL 2338/2023) ainda em maio — dois meses depois que a Resolução 23.755 do TSE já entrou em vigor</h3>
+    <div class="meta">Câmara dos Deputados · relator dep. Aguinaldo Ribeiro (PP-PB) · texto "90% pronto"</div>
+    <p>O presidente da Câmara, <strong>Hugo Motta</strong>, sinalizou que o PL 2338/2023 — marco legal nacional da IA, aprovado pelo Senado em dezembro de 2024 e parado na Câmara desde março de 2025 — pode ir a plenário ainda neste mês. O relator, <strong>Aguinaldo Ribeiro</strong>, declarou em 26 de março que o texto está "90% pronto". A janela de votação coincide com a primeira semana da gestão Nunes Marques no TSE e com a estréia operacional do art. 9º-B da Resolução 23.755/2026 (silêncio sintético de 96h, rótulo obrigatório, remoção em 24h).</p>
+    <p>O ponto que ninguém amarrou: <strong>o Brasil terá regras eleitorais de IA antes de ter regras gerais de IA</strong>. A Resolução 23.755 só vale na propaganda eleitoral; um deepfake "comercial" ou "satírico" sobre candidato fora do período eleitoral cai em vácuo regulatório federal. A indústria de tecnologia já listou "ajustes ao marco da IA" como prioridade na agenda legislativa 2026 — e a Data Privacy Brasil reabriu pedido por mais transparência e participação social no debate, em alerta de dezembro/25 que segue válido.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil regulou a campanha antes de regular a IA: o vácuo que sobra entre a Resolução 23.755 e o PL 2338."</strong> Análise jurídica de cenário: (1) o que NÃO é alcançado pela resolução do TSE mas seria alcançado pelo marco geral (sistemas de recomendação não-eleitorais; rotulagem fora de campanha; due process de moderação); (2) que emendas a indústria empurra para "ajustar" o marco; (3) qual o impacto se o PL for aprovado em maio com brechas que neutralizem o art. 9º-B na prática. Cruzar com paper Demarest sobre debates atuais e nota da CDR (10 dez 2025).</p>
+      <p><strong>Fonte essencial:</strong> gabinete Aguinaldo Ribeiro (PP-PB); coordenação Data Privacy Brasil (Bruno Bioni, Rafael Zanatta); CDR (Bia Barbosa); Demarest (peça pública de análise); Convergência Digital (cobertura técnica).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">votação iminente noticiada · gap regulatório com TSE não destrinchado</span>
+    </div>
+    <div class="links">
+      <a href="https://www.mobiletime.com.br/noticias/25/03/2026/marco-de-ia-relator/" target="_blank">→ Mobile Time · "votado até maio, diz relator"</a>
+      <a href="https://blogdoamarildo.com.br/ia-no-brasil-entra-na-reta-decisiva-camara-deve-votar-marco-regulatorio-em-maio/" target="_blank">→ Blog do Amarildo · Câmara deve votar marco em maio</a>
+      <a href="https://direitosnarede.org.br/2025/12/10/regulacao-da-ia-protetiva-de-direitos-ja-e-maior-participacao-sociedade-civil-pl-2338/" target="_blank">→ CDR · urgência por transparência no PL 2338</a>
+      <a href="https://eixos.com.br/politica/congresso/industria-lista-ajustes-no-marco-da-ia-em-prioridades-da-agenda-legislativa-para-2026/" target="_blank">→ Eixos · indústria lista ajustes ao marco</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · observação paralela</div>
+    <h3>A diáspora brasileira em Washington lançou um observatório das eleições 2026 em inglês — paralelo ao TSE e fora da soberania brasileira</h3>
+    <div class="meta">International Observatory on Brazil's 2026 Elections · Washington Brazil Office (WBO) · James N. Green · Gustavo Ribeiro</div>
+    <p>O <strong>Washington Brazil Office</strong> — entidade independente que reúne acadêmicos e ativistas brasileiros e norte-americanos, presidida por James N. Green (Brown University) — lançou o <strong>"International Observatory on Brazil's 2026 Elections"</strong>. A iniciativa monitora a política brasileira em inglês, do ângulo da sociedade civil, e reúne Democracia em Xeque, Faculdade de Direito da USP, Pacto pela Democracia, Instituto Marielle Franco, Democracy Hub e Oxfam. Já publicou peça analítica sobre <em>"International Interference in the 2026 Elections: What to Expect"</em>.</p>
+    <p>O ângulo anômalo: pela primeira vez em uma eleição brasileira de massa, há um <strong>observatório formal de língua inglesa, sediado nos EUA</strong>, com pretensão de pautar opinião pública internacional sobre integridade do pleito. A imprensa mainstream brasileira praticamente ignorou. Para a BBC, isso desloca o problema: o que esses analistas estão olhando que o TSE não consegue cobrir? Quem é a audiência de Capitol Hill que vai consumir o relatório?</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O observatório que fala inglês: como a diáspora brasileira nos EUA está construindo um contra-relato das eleições 2026."</strong> Perfil + metodologia. Entrevistar James N. Green e Gustavo Ribeiro sobre: (1) critérios de seleção do que monitorar; (2) por que em inglês e por que agora; (3) interlocução com a Casa Branca pós-Trump, com Departamento de Estado, com think-tanks (CFR, Brookings); (4) eventual canal com a CDR/InternetLab; (5) leitura sobre interferência estrangeira via redes sociais e IA. Tem ângulo BBC duplo: Brazil + audiência anglófona.</p>
+      <p><strong>Fonte essencial:</strong> James N. Green (Brown); Gustavo Ribeiro (jornalista, fundador do The Brazilian Report); diretoria WBO; representação Oxfam Brasil; coordenação Pacto pela Democracia.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">lançamento noticiado em nicho · mainstream BR não cobriu</span>
+    </div>
+    <div class="links">
+      <a href="https://www.braziloffice.org/en/podcasts/international-observatory-on-brazils-2026-elections-project-launch" target="_blank">→ WBO · lançamento do Observatório (en)</a>
+      <a href="https://www.braziloffice.org/en/articles/international-interference-in-the-2026-elections-what-to-expect" target="_blank">→ WBO · "International Interference in the 2026 Elections"</a>
+      <a href="https://www.braziloffice.org/pt/observatorio" target="_blank">→ WBO · página do Observatório (pt)</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Três processos paralelos com IA, desinformação e Bolsonaro convergem nesta semana — e todos passam pela mesma mesa (a de Nunes Marques)</h3>
+    <p><strong>STF (mesa Nunes Marques · Segunda Turma):</strong> revisão criminal protocolada em 8 mai, sorteada em 11 mai, com objetivo de anular a condenação de Bolsonaro por tentativa de golpe — narrativa em que desinformação digital é elemento estruturante do tipo penal.<br>
+    <strong>TSE (mesa Nunes Marques · presidência):</strong> primeira semana de implementação da Resolução 23.755/2026, que regula IA na propaganda; relatoria histórica do próprio ministro nas audiências de fev/26.<br>
+    <strong>Câmara (próximas semanas):</strong> votação iminente do PL 2338/23 (Marco Legal da IA), com pressão da indústria para "ajustes" e da sociedade civil por transparência.<br>
+    <strong>STF (paralelo · Moraes):</strong> inquérito das milícias digitais mantido aberto pelo menos até o fim de 2026, com adesão majoritária do plenário.</p>
+    <p><strong>Síntese:</strong> a infraestrutura jurídica brasileira de combate à desinformação eleitoral está sendo simultaneamente <em>renovada</em> (resolução TSE, marco IA) e <em>desafiada</em> (revisão criminal Bolsonaro, herança Moraes). E o vértice operacional dessa reconfiguração é uma única autoridade — o presidente do TSE que também é o relator da revisão. Imprensa cobriu cada peça isoladamente como se fossem agendas distintas. Não são.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande, política institucional</span>
+      <p><strong>"Maio de 2026: o mês em que a arquitetura jurídica das eleições brasileiras passou a depender de um único ministro."</strong> Reportagem-mapa. Linha do tempo da semana (8–15 mai) com três pistas paralelas: STF, TSE, Câmara. Ouvir os atores principais sobre o desenho de calendário — é coincidência ou produto? Pedir leituras a três campos: constitucionalistas (Hübner, Werneck), institucionalistas/empíricos (Marcus André Melo, Andrei Roman), e analistas de mídia digital (NetLab, InternetLab, FGV DAPP).</p>
+      <p><strong>Frame BBC:</strong> "Brazil enters the AI election year with a Supreme Court bench engineered to reshape, not enforce, the country's anti-disinformation framework."</p>
+      <p><strong>Fontes essenciais:</strong> gabinetes envolvidos; ABRAJI; constitucionalistas indicados; CDR; Aláfia Lab; WBO (Green/Ribeiro) para leitura externa.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">quatro processos cobertos em silos · ninguém amarrou na mesma mesa</span>
+    </div>
+    <div class="links">
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ TSE · Resolução 23.755/2026</a>
+      <a href="https://www.cartacapital.com.br/politica/nunes-marques-e-sorteado-como-relator-de-acao-de-bolsonaro-para-anular-condenacao/" target="_blank">→ CartaCapital · sorteio relatoria revisão criminal</a>
+      <a href="https://blogdoamarildo.com.br/ia-no-brasil-entra-na-reta-decisiva-camara-deve-votar-marco-regulatorio-em-maio/" target="_blank">→ Blog do Amarildo · PL 2338 reta decisiva</a>
+      <a href="https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-descarta-fim-de-inquerito-que-mira-bolsonaristas-e-deve-mante-lo-em-2026/" target="_blank">→ Jornal de Brasília · STF mantém inquérito milícias digitais</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · cross-base</div>
+    <h3>Dos 137 deepfakes de autoridades documentados pelo Observatório IA nas Eleições (dez/25–fev/26), quantos já viraram representação no TSE — e quantos foram absorvidos pelo inquérito das milícias digitais de Moraes?</h3>
+    <p>Existem hoje, em paralelo, pelo menos três bases que monitoram desinformação política sintética no Brasil — e ninguém público está cruzando as três:</p>
+    <p>· <strong>Observatório IA nas Eleições</strong> (Data Privacy Brasil + Aláfia Lab + Desinformante): 137 deepfakes de autoridades dez/25–fev/26, sendo um terço publicado por políticos. 73% sem rótulo. Base aberta para fins de monitoramento.<br>
+    · <strong>TSE</strong> (Sistema de Representações e PJe): denúncias formais por uso indevido de IA em propaganda. Não há painel público.<br>
+    · <strong>STF — gabinete Moraes</strong>: inquérito das milícias digitais, prorrogado para 2026, mira "organização criminosa de atuação digital" com núcleos de produção, publicação, financiamento e uso político.</p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Quantos casos do Observatório foram <strong>formalmente comunicados</strong> ao TSE ou ao MPE? Há protocolo?<br>
+    · Quantos viraram <strong>representação eleitoral</strong> com pedido de remoção sob a Res. 23.755?<br>
+    · Algum dos 137 perfis identificados como difusores está incluído no <strong>inquérito das milícias digitais</strong>?<br>
+    · A Procuradoria-Geral Eleitoral tem fluxo automático de recepção de evidências do Observatório, ou cada caso entra como denúncia isolada?<br>
+    · A nova gestão do TSE (Nunes Marques) pretende manter ou desmontar canais informais com observatórios da sociedade civil construídos sob Cármen?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / quantitativa</span>
+      <p><strong>"Onde param os deepfakes que o Observatório encontra: o gargalo entre a sociedade civil e o aparato eleitoral brasileiro."</strong> LAI ao TSE pedindo: (1) lista de representações por uso de IA em propaganda eleitoral 2025–2026; (2) origem (denúncia pública, denúncia de partido, ofício do MPE, comunicação de observatório); (3) status atual. Comparar com a base do Observatório IA nas Eleições. Se a interseção for <strong>baixa</strong>, é o sintoma central da arquitetura: o Brasil monta vigilância civil de ponta e não tem dobradiça para a fiscalização estatal. Se for <strong>alta</strong>, mostra dependência do TSE em relação à sociedade civil — e levanta a questão do que acontece quando essa dependência é vista politicamente.</p>
+      <p><strong>Por que importa:</strong> a Resolução 23.755 só tem eficácia se houver fluxo de evidência. O <em>plumbing</em> está oculto. <strong>Ângulo BBC:</strong> "How a 137-deepfake watchlist tests Brazil's new AI election law before the campaign even begins."</p>
+      <p><strong>Fonte essencial:</strong> Procuradoria-Geral Eleitoral (Paulo Gonet · gabinete); coordenação Observatório IA nas Eleições (Aláfia Lab + Data Privacy Brasil); CDR (Bruna Martins dos Santos); ABRAJI; Desinformante (Sérgio Lüdtke).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">três bases vivem em paralelo · ninguém cruzou IDs</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ Data Privacy Brasil · 137 deepfakes (dez/25–fev/26)</a>
+      <a href="https://desinformante.com.br/observatorio-ia-eleicoes/" target="_blank">→ Desinformante · Observatório IA nas Eleições</a>
+      <a href="https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-descarta-fim-de-inquerito-que-mira-bolsonaristas-e-deve-mante-lo-em-2026/" target="_blank">→ Jornal de Brasília · inquérito milícias digitais até 2026</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #017 · gerado em 13.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · quarta da convergência institucional</p>
+  </div>
+
+</div>
+</body>
+</html>
