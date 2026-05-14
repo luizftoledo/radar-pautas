@@ -1,1 +1,405 @@
-PLACEHOLDER_HTML
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #018 — 14.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #018</span>
+    <span>quinta · 14.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · primeiro do tipo</div>
+    <h3>"Dona Maria": pela primeira vez, partidos pedem ao TSE a remoção de um personagem 100% sintético — que não imita ninguém real</h3>
+    <div class="meta">representação de PT, PV e PCdoB · perfis anônimos · imagem realista de idosa negra · alegação: ataques à esquerda sem aviso de IA</div>
+    <p>PT, PV e PCdoB protocolaram representação no TSE pedindo a suspensão dos perfis do <strong>personagem "Dona Maria"</strong> — uma idosa negra gerada por IA, sem identidade real correspondente, usada em perfis anônimos para atacar candidatos da esquerda. A peça chega no momento em que <strong>Nunes Marques completa 48h na presidência do TSE</strong> e ainda não se manifestou sobre o caso.</p>
+    <p>O ponto sutil: a Resolução 23.755/2026 foi escrita para regular conteúdo que use "imagem, voz ou manifestação de candidato ou pessoa pública". <strong>"Dona Maria" não é nenhum dos três.</strong> Não imita Lula, não imita Bolsonaro, não imita autoridade nenhuma — é um personagem ficcional sintético. Se o TSE acolher o pedido, abrirá precedente para uma categoria nova (a do "ator IA não-impersonação"). Se rejeitar, o vácuo regulatório vira modelo de campanha negativa para o segundo semestre.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O caso Dona Maria: como uma idosa negra que nunca existiu testa pela primeira vez a Resolução 23.755 do TSE."</strong> Pedir cópia integral da representação ao gabinete dos três partidos (jurídico nacional). Mapear: (1) quantos perfis e por quanto tempo operaram; (2) qual o argumento jurídico — propaganda enganosa, anonimato vedado, abuso de IA? (3) leitura de juristas eleitorais sobre a brecha "não-impersonação". O ângulo BBC: <em>a primeira persona sintética no banco de réus do TSE não é deepfake de candidato — é uma "pessoa" inventada.</em></p>
+      <p><strong>Fonte essencial:</strong> jurídico nacional do PT (Eugênio Aragão), PV e PCdoB; gabinete da presidência do TSE; Aláfia Lab + Data Privacy Brasil (saber se o personagem já estava no banco do Observatório); Conrado Hübner Mendes (USP) e Ana Frazão (UnB).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">caso noticiado em nota · brecha jurídica não destrinchada</span>
+    </div>
+    <div class="links">
+      <a href="https://www.acessa.com/politica/2026/05/324174-pt-prepara-estrategia-contra-desinformacao-eleitoral-mas-ia-e-composicao-do-tse-preocupam.html" target="_blank">→ Acessa · "PT prepara estratégia contra desinformação eleitoral"</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ TSE · Resolução 23.755/2026 (texto)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · descompasso institucional</div>
+    <h3>O primeiro ato público de Nunes Marques no TSE é testar a urna — não a campanha</h3>
+    <div class="meta">8ª edição do Teste Público de Segurança · 13 a 15 de maio · sede do TSE · Brasília</div>
+    <p>De 13 a 15 de maio, o TSE recebe pesquisadores na 2ª fase do <strong>8º Teste Público de Segurança (TPS) dos Sistemas Eleitorais</strong>. O presidente recém-empossado, Kassio Nunes Marques, anunciou sua presença e definiu o evento como sua "primeira agenda" frente à Corte. Na primeira fase (dezembro/25), <strong>nenhum participante conseguiu comprometer integridade ou sigilo do voto</strong>.</p>
+    <p>O descompasso: o TPS audita o <em>hardware</em> e o <em>software</em> da urna — código-fonte, criptografia, integridade do boletim. Nenhum dos 137 casos documentados pelo Observatório IA nas Eleições (dez/25–fev/26) atacaria uma urna. <strong>O vetor de risco eleitoral em 2026 não está no equipamento que registra o voto, mas no ecossistema que persuade o eleitor antes de chegar à seção.</strong> O TPS é o ritual público de segurança de um país que historicamente desconfia da urna — mas o terreno onde a eleição é jogada agora migrou. Nenhum repórter mainstream apontou: a estréia simbólica da gestão Nunes Marques reforça o frame errado de ameaça.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O ministro que assumiu o TSE testando a urna enquanto o deepfake circula no Instagram."</strong> Reportagem analítica. Pedir ao TSE: agenda completa de Nunes Marques nas próximas 4 semanas; quantos eventos públicos sobre segurança da urna vs quantos sobre IA/propaganda. Cruzar com o calendário do Observatório IA nas Eleições — qual o volume previsto de casos em junho? Falar com Diogo Rais (Mackenzie), historiador da Justiça Eleitoral, sobre o porquê de o TPS continuar sendo o ritual <em>signal</em> da Corte mesmo num ano em que o risco é outro.</p>
+      <p><strong>Fonte essencial:</strong> assessoria do TSE; Comissão Avaliadora do TPS; Diogo Rais; Aláfia Lab; SaferNet.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">TPS noticiado · frame de descompasso não foi feito</span>
+    </div>
+    <div class="links">
+      <a href="https://expressaobrasiliense.com/eleicoes-2026/tse-realiza-teste-publico-de-seguranca-da-urna-eletronica-de-13-a-15-de-maio/" target="_blank">→ Expressão Brasiliense · TPS 13 a 15 mai</a>
+      <a href="https://m.imirante.com/mirantenews/noticias/sao-luis/2026/05/13/tse-inicia-nova-etapa-de-testes-de-seguranca-das-urnas" target="_blank">→ Mirante · 2ª etapa do 8º TPS</a>
+      <a href="https://terrabrasilnoticias.com/2026/05/nunes-marques-assume-o-tse-e-toma-primeira-medida-em-ano-eleitoral/" target="_blank">→ Terra Brasil · primeira medida de Nunes Marques</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · dado de mercado</div>
+    <h3>Brasileiro é o mais exposto a deepfakes do planeta — e o pior em detectá-los, segundo relatório global da Veriff</h3>
+    <div class="meta">Veriff · Deepfakes Detection in Brazil 2026 · pesquisa global comparando BR, EUA, UK</div>
+    <p>A empresa de verificação de identidade Veriff publicou o relatório <em>Deepfakes detection in Brazil 2026</em> com três números brutais: <strong>80% dos brasileiros</strong> dizem já ter visto um deepfake online — a maior taxa entre os mercados pesquisados. <strong>87%</strong> temem ser vítimas de fraude por deepfake. E o mais grave: a <strong>acurácia média de detecção é 0,08/1,0</strong> — abaixo do acaso (0,5), o que significa que, em média, o brasileiro <em>erra mais do que acerta</em> ao tentar dizer se uma peça é real ou sintética.</p>
+    <p>O dado é de relatório comercial (foco em fraude financeira, não eleitoral), mas reverbera direto na questão política: se o eleitor brasileiro mediano não consegue distinguir IA de real em 92% das tentativas, qualquer rotulagem voluntária ("conteúdo gerado por IA") opera num público que <em>já vinha falhando antes da rotulagem existir</em>. A Resolução 23.755 assume um eleitor minimamente capaz de processar o aviso. <strong>A base empírica diz o contrário.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O eleitor brasileiro acerta menos do que o acaso ao detectar IA — e a Resolução do TSE foi escrita supondo que ele acerta."</strong> Reportagem de fundo. Cruzar os dados Veriff com o protocolo da Resolução 23.755 (artigos sobre rotulagem visível); ouvir pesquisador da Veriff Brasil; pedir ao TSE/CGE como ele dimensionou o efeito real do rótulo na decisão eleitoral; ouvir Rose Marie Santini (NetLab) e Pollyana Ferrari (PUC-SP) sobre alfabetização midiática. <strong>Ângulo BBC:</strong> <em>"Brazil regulated AI-content labelling for an electorate that scores 0.08/1.0 in spotting it."</em></p>
+      <p><strong>Fonte essencial:</strong> Veriff (porta-voz Brasil); área de educação digital do TSE; SaferNet; NetLab; Coordenação do Observatório IA nas Eleições.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">relatório saiu fora do circuito político · mainstream BR não cruzou com Res. 23.755</span>
+    </div>
+    <div class="links">
+      <a href="https://www.veriff.com/resources/ebooks/deepfakes-report-2026-brazil" target="_blank">→ Veriff · Deepfakes Detection in Brazil 2026</a>
+      <a href="https://www.veriff.com/pr-news/veriff-identity-fraud-report-2026" target="_blank">→ Veriff · Identity Fraud Report 2026 (release)</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>"Dona Maria" + 0,08 de acurácia + 73% sem rótulo = a Resolução 23.755 protege contra um ataque que já não é mais o mais barato</h3>
+    <p><strong>Resolução 23.755/2026:</strong> regula conteúdo gerado por IA que use "imagem, voz ou manifestação de candidato ou pessoa pública". Foco: <em>impersonação</em>.<br>
+    <strong>Caso Dona Maria (mai/26):</strong> o primeiro caso eleitoral 100% sintético submetido ao TSE <em>não é impersonação</em> — é uma persona inventada.<br>
+    <strong>Veriff (mai/26):</strong> brasileiro acerta 0,08/1,0 ao tentar detectar IA. Detecta menos do que sorteia.<br>
+    <strong>Observatório IA nas Eleições (dez/25–fev/26):</strong> 73% dos conteúdos sintéticos políticos circulam sem rótulo. Instagram concentra 75 dos 137 casos.</p>
+    <p><strong>Síntese:</strong> a moldura jurídica do TSE foi calibrada para o pior caso de 2024 — o deepfake de Lula, Bolsonaro, prefeito X. Mas o ataque marginalmente mais barato em 2026 não pede mais um rosto famoso. Pede um <em>arquétipo</em> ("a idosa, o trabalhador, o pastor") que dispense due diligence sobre identidade. <strong>"Dona Maria" é exatamente esse pivô.</strong> E, num eleitorado que erra a detecção em 92% dos casos, a persona genérica é a forma mais eficiente possível de injetar um vetor político sem cair em nenhuma das hipóteses tipificadas. Imprensa cobriu os três pontos em silos. Eles formam, juntos, a tese de que <strong>a regulação 23.755 já está atrasada antes da campanha começar</strong>.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande, política regulatória</span>
+      <p><strong>"O TSE armou-se contra o deepfake de candidato — mas a campanha de 2026 vai correr no terreno da persona genérica."</strong> Reportagem de moldura. Mapear: (a) levantar com Aláfia Lab quantos dos 137 casos do Observatório se encaixam na categoria "persona genérica não-impersonadora" vs "deepfake de figura pública"; (b) ouvir três campos — relatores do TSE (passado: Nunes Marques; presente: equipe ATSEL), criadores das peças (anônimos via Telegram, se possível), e plataformas (Meta, TikTok, X) sobre como elas tratam contas de personagens sintéticos sem identidade real; (c) projetar emendas urgentes a uma instrução normativa do TSE que feche a brecha.</p>
+      <p><strong>Frame BBC:</strong> "Brazil's new AI election rules were written to stop deepfakes of politicians. The cheap attack of 2026 is a fictional grandmother who attacks them."</p>
+      <p><strong>Fontes essenciais:</strong> coordenação Observatório IA nas Eleições; juristas eleitorais (Diogo Rais, Ana Frazão, Conrado Hübner); jurídico PT/PV/PCdoB; policy BR de Meta/TikTok; Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">3 sinais publicados em separado · ninguém amarrou no mesmo enquadramento regulatório</span>
+    </div>
+    <div class="links">
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ Data Privacy Brasil · 137 deepfakes, 73% sem rótulo</a>
+      <a href="https://www.veriff.com/resources/ebooks/deepfakes-report-2026-brazil" target="_blank">→ Veriff · 0,08 de acurácia média</a>
+      <a href="https://www.acessa.com/politica/2026/05/324174-pt-prepara-estrategia-contra-desinformacao-eleitoral-mas-ia-e-composicao-do-tse-preocupam.html" target="_blank">→ Acessa · "Dona Maria" no TSE</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · before/after empírico</div>
+    <h3>A Justiça Eleitoral condenou apenas 20% dos casos de deepfake de 2024 — qual é a taxa hoje, três meses depois de a Resolução 23.755 entrar em vigor?</h3>
+    <p>Um levantamento publicado em 25 de março de 2026 (Imirante/iPolítica) revelou que <strong>a Justiça Eleitoral condenou apenas 20% dos casos de deepfake</strong> que chegaram a julgamento nas eleições de 2024 — um patamar baixo o suficiente para sugerir que, mesmo com regra antiga, a punição é exceção. A Resolução 23.755 entrou em vigor em 2 de março de 2026 e endureceu três pontos: inversão do ônus da prova, prazo de remoção em 24h e multa de R$ 5k–R$ 30k. <strong>Nenhum levantamento público hoje mostra se a curva mudou.</strong></p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Quantas representações com base na Res. 23.755 foram protocoladas desde 2 de março? Quantas em fase de instrução? Quantas com decisão liminar de remoção?<br>
+    · O caso "Dona Maria" (mai/26) será o teste-piloto da Corte para personagens sintéticos não-impersonadores? Que turma o relatora?<br>
+    · As plataformas (Meta, TikTok, X) cumpriram o prazo de 24h em todos os pedidos? Qual a taxa real, e em qual plataforma o gargalo está?<br>
+    · O Observatório IA nas Eleições registrou os 137 casos entre dez/25 e fev/26 — quantos foram convertidos em representação eleitoral, comparado com o universo total observado?<br>
+    · A Procuradoria-Geral Eleitoral (PGE) já pediu ao TSE para apertar mais a regra. Que tipo de "aperto" e em que prazo?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / quantitativa</span>
+      <p><strong>"Depois da Resolução: os primeiros 100 dias da nova regra de IA do TSE em três indicadores."</strong> LAI ao TSE pedindo painel das representações por uso de IA entre 2 mar e 2 jun/26, com status, decisão e plataforma. Comparar com o levantamento do iPolítica sobre 2024 (20% de condenação). Trazer leitura empírica de pesquisador: a regra está mudando o equilíbrio ou apenas multiplicando o protocolo? <strong>Ângulo BBC:</strong> uma das resoluções eleitorais mais ambiciosas do mundo posta à prova em tempo real.</p>
+      <p><strong>Por que importa:</strong> a credibilidade da Res. 23.755 como modelo internacional depende de uma taxa de execução publicada. Sem painel, o TSE arrisca repetir o ciclo 2024: regra forte, aplicação rarefeita.</p>
+      <p><strong>Fonte essencial:</strong> Secretaria Judiciária do TSE; PGE (Paulo Gonet); coordenação iPolítica/Imirante (base de 2024); Aláfia Lab; ABRAJI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">levantamento 2024 isolado · ninguém reaplicou a metodologia pós-Resolução</span>
+    </div>
+    <div class="links">
+      <a href="https://m.imirante.com/noticias/brasil/2026/03/25/ipolitica-deepfake-nas-eleicoes-justica-eleitoral-condena-so-20-dos-casos" target="_blank">→ Imirante/iPolítica · "Justiça condena só 20% dos casos" (25 mar)</a>
+      <a href="https://www.mpf.mp.br/o-mpf/unidades/procuradoria-geral-da-republica-pgr/noticias/eleicoes-2026-normas-garantem-tempo-de-propaganda-para-indigenas-e-limites-para-uso-de-inteligencia-artificial" target="_blank">→ MPF/PGR · pedido por mais restrições à IA</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #018 · gerado em 14.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · quinta da persona sintética</p>
+  </div>
+
+</div>
+</body>
+</html>
