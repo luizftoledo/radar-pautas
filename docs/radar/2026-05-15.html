@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #019 — 15.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #019</span>
+    <span>sexta · 15.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · paper novo</div>
+    <h3>"Construímos detectores para uma ameaça que não chegou": paper publicado anteontem reescreve o mapa da ameaça de deepfake — e expõe que o TSE legislou para o frame antigo</h3>
+    <div class="meta">arXiv 2605.12075 · Shaina Raza · submetido em 12 de maio de 2026 (anteontem) · position paper</div>
+    <p>O paper faz a contabilidade dos incidentes de deepfake de 2022 a 2026 e conclui que a comunidade de Machine Learning passou quase uma década organizando pesquisa em torno de um modelo de ameaça <em>2017–2019</em>: <strong>face-swap e talking-head de figuras públicas</strong>. Esse ataque, segundo o paper, <strong>não chegou na escala prevista</strong>. As ameaças dominantes hoje são outras três: imagens íntimas não-consensuais (NCII) geradas entre pares, golpes de voice-clone contra famílias e setores financeiros, e fraudes de manipulação emocional. A autora conclui que o desalinhamento entre pesquisa e ameaça real <em>"é hoje o principal gargalo da defesa contra deepfake — não a capacidade dos modelos"</em>.</p>
+    <p>O ponto político: a Resolução 23.755 do TSE foi escrita exatamente para o modelo antigo. O artigo 9º-B regula "imagem, voz ou manifestação" de "candidato ou pessoa pública" — o talking-head 2017–2019. O paper, publicado três dias atrás, é a primeira admissão pública de que <strong>a comunidade técnica que sustentou tecnicamente esse frame está abandonando-o</strong>. E o Brasil entra em campanha presidencial em outubro com a régua jurídica calibrada na premissa que a área-fim acaba de declarar obsoleta.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O paper que enterra o frame jurídico do TSE — três dias antes do TPS encerrar."</strong> Reportagem analítica. Pedir entrevista com a autora Shaina Raza; ouvir, no Brasil, Anderson Rocha (Unicamp/Recod), Helio Pedrini (Unicamp) e o time de visão computacional do TSE/CGE sobre a leitura do paper. Confrontar com o jurídico do TSE: como ler a Res. 23.755 à luz de uma comunidade que assume que o ataque previsto não veio? <strong>Ângulo BBC:</strong> <em>"The world's most ambitious AI-election rules were built on a threat model the field has just abandoned."</em></p>
+      <p><strong>Fonte essencial:</strong> Shaina Raza (Vector Institute, Canadá); Anderson Rocha (Recod/Unicamp); CGE-TSE; Aláfia Lab.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">paper técnico · não saiu do circuito de ML · imprensa BR não viu</span>
+    </div>
+    <div class="links">
+      <a href="https://arxiv.org/abs/2605.12075" target="_blank">→ arXiv · "The Deepfakes We Missed" (Raza, 12 mai 2026)</a>
+      <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-755-de-2-de-marco-de-2026" target="_blank">→ TSE · Res. 23.755/2026 (texto)</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · economia do operador</div>
+    <h3>O homem por trás de "Dona Maria" é motorista de aplicativo em Magé, ganha R$ 1.500/mês com a persona — e casas de apostas começaram a procurá-lo</h3>
+    <div class="meta">Daniel Cristiano dos Santos, 37, motorista de app, Magé (RJ) · perfil derrubado no TikTok esta semana · novo perfil @dn.mariass criado em seguida</div>
+    <p>Quando o TikTok derrubou o perfil principal de "Dona Maria" depois da representação de PT/PV/PCdoB, o operador <strong>criou imediatamente o sucessor</strong>: a conta <em>dn.mariass</em> apareceu na mesma plataforma. O criador, identificado como Daniel Cristiano dos Santos (37, motorista de aplicativo em Magé, RJ), assumiu publicamente a autoria e <strong>declarou que continuará criando outros perfis</strong>. Levantamento do DataFórum aponta <strong>110 milhões de visualizações e 11,5 milhões de interações</strong> acumuladas pelas peças. Renda declarada: <strong>cerca de R$ 1.500 por mês</strong>. E o detalhe que ninguém mainstream destrinchou: <strong>casas de apostas online começaram a procurá-lo</strong> para patrocinar a persona, somadas a ofertas de cursos de IA e automação no Instagram.</p>
+    <p>O perfil do operador <em>não é</em> de marketeiro político, agência de campanha ou militante orgânico. É um motorista de aplicativo do interior do Estado do Rio que descobriu monetização e está sendo cortejado pela <em>ad-tech</em> de apostas — a indústria que mais cresceu no Brasil entre 2024–2026. <strong>A regulação do TSE foi escrita para campanhas. A realidade é um gig worker com Stable Diffusion e CapCut.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O motorista de Magé: como um único trabalhador uberizado virou o teste mais difícil da Res. 23.755 do TSE."</strong> Perfil + investigação econômica. Ir a Magé. Entrevistar Daniel Cristiano (já público e falando). Mapear: que ferramentas usa (Midjourney? Stable Diffusion? voice-cloning?), quanto tempo leva pra produzir uma peça, qual o custo mensal de assinaturas, <strong>quais casas de apostas o procuraram</strong> (Bet365? Sportingbet? cassinos offshore?), se há intermediário. Cruzar com o universo do Observatório IA nas Eleições: <strong>quantos dos 137 casos coletados têm autoria identificável e de natureza semelhante?</strong> Frame BBC: <em>"Brazil's biggest synthetic-content case is being run by a gig-economy worker — not a campaign."</em></p>
+      <p><strong>Fonte essencial:</strong> Daniel Cristiano (direto); DataFórum; Aláfia Lab; jurídico nacional do PT (Eugênio Aragão); Senacon/MJ (área de apostas); especialistas em monetização de creators (Renata Mielli, do CGI.br).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">fatos publicados em silos · economia do operador não foi reportada</span>
+    </div>
+    <div class="links">
+      <a href="https://revistaforum.com.br/politica/dona-maria-tiktok-tse-ia/" target="_blank">→ Fórum · "Dona Maria sai do ar no TikTok, mas bolsonarista promete criar outros"</a>
+      <a href="https://revistaforum.com.br/politica/dona-maria-avatar-ia-tse/" target="_blank">→ Fórum/DataFórum · 110 mi de visualizações, R$ 1.500/mês, casas de apostas</a>
+      <a href="https://www.brasil247.com/midia/partidos-acionam-tse-contra-dona-maria-personagem-de-ia-criada-para-atacar-lula" target="_blank">→ Brasil 247 · Estela Aranha relatora</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · cronograma</div>
+    <h3>Câmara sinaliza votar o PL 2338 (marco da IA) em maio — a 5 meses da eleição. Risco: colisão com a Resolução 23.755 do TSE</h3>
+    <div class="meta">presidente da Câmara Hugo Motta sinalizou plenário · relator deputado Aguinaldo Ribeiro · PL 2338/2023 vindo do Senado (aprovado 10 dez 2024)</div>
+    <p>O presidente da Câmara, Hugo Motta, sinalizou que o PL 2338/2023 — o marco regulatório geral da Inteligência Artificial no Brasil, espelhado no AI Act europeu — pode ir ao plenário ainda em maio, sob relatoria de Aguinaldo Ribeiro. O texto classifica sistemas de IA por risco (excessivo, alto, baixo), cria o Sistema Nacional de Regulação e Governança de IA (SIA) e prevê <strong>multa de até R$ 50 milhões por infração</strong>.</p>
+    <p>O ponto que ninguém juntou: <strong>o PL 2338 e a Res. 23.755 do TSE regulam parcialmente o mesmo objeto</strong> — conteúdo sintético — com lógicas diferentes. A Res. 23.755 é eleitoral, baseada em propaganda e impersonação. O PL 2338 é horizontal, baseado em risco do sistema. <strong>Se a Câmara aprovar em maio, em 5 meses entra em vigor um marco geral que pode reabrir a discussão sobre quem fiscaliza o sintético eleitoral.</strong> A coordenação institucional entre SIA, TSE e ANPD <em>não existe no texto atual do PL</em>. E o calendário aperta: o registro de candidaturas começa em 20 de julho.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"A votação do PL 2338 em maio é uma reforma silenciosa da régua eleitoral de IA."</strong> Reportagem de bastidor. Ouvir: (1) Aguinaldo Ribeiro (relator) e Hugo Motta (presidente) — qual o texto que vai a plenário, há dispositivo eleitoral? (2) Estela Aranha no TSE (já relatora do caso Dona Maria) — sua leitura da interação com o futuro SIA; (3) Senado/Senador Eduardo Gomes (relator original) — se a Câmara mexer, volta? (4) Data Privacy Brasil e CDR — qual o texto que aceitam. <strong>Ângulo:</strong> a 5 meses da eleição, o Brasil discute marco geral de IA num timing que ou cria coerência regulatória ou abre brecha jurisdicional.</p>
+      <p><strong>Fonte essencial:</strong> Aguinaldo Ribeiro (Câmara); Hugo Motta (presidência); Estela Aranha (TSE); Eduardo Gomes (Senado); Data Privacy Brasil; CDR; ABRIA.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio</span>
+      <span class="badge neutral">PL noticiado · colisão com Res. 23.755 não foi analisada</span>
+    </div>
+    <div class="links">
+      <a href="https://blogdoamarildo.com.br/ia-no-brasil-entra-na-reta-decisiva-camara-deve-votar-marco-regulatorio-em-maio/" target="_blank">→ Blog do Amarildo · "Câmara deve votar marco regulatório em maio"</a>
+      <a href="https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-temporarias/especiais/57a-legislatura/comissao-especial-sobre-inteligencia-artificial-pl-2338-23" target="_blank">→ Câmara · Comissão Especial PL 2338/23</a>
+      <a href="https://www25.senado.leg.br/web/atividade/materias/-/materia/157233" target="_blank">→ Senado · PL 2338/2023 (ficha)</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Paper que enterra o velho modelo + motorista de Magé com R$ 1.500/mês + casas de apostas patrocinando uma persona = a desinformação política se uberizou</h3>
+    <p><strong>arXiv (12 mai/26):</strong> a comunidade de ML admite que o frame "deepfake de figura pública por ator estatal/político" não chegou. As ameaças reais são pulverizadas e individuais.<br>
+    <strong>Dona Maria 2.0 (esta semana):</strong> derrubada do TikTok não funcionou — o operador respondeu com novo perfil em horas. A persona é resiliente porque o operador é micro.<br>
+    <strong>Daniel Cristiano, Magé/RJ:</strong> motorista de aplicativo, R$ 1.500/mês, casas de apostas tentando patrocinar a persona. Não há agência, não há campanha. Há um gig worker.</p>
+    <p><strong>Síntese:</strong> a desinformação política <em>do tipo que preocupa o TSE</em> deixou de ser produto de centros organizados (agências, marketeiros, milícias digitais corporativas) e virou <strong>um vetor uberizado</strong>: trabalhadores precários produzindo, escalando e monetizando personas sintéticas em tempo parcial, eventualmente patrocinados por <em>ad-tech</em> de apostas — não por partidos. Três pesquisas até agora trataram cada ponto em silo. <strong>Juntos, eles redefinem o objeto regulatório:</strong> a Res. 23.755 fala de "candidato", "propaganda" e "plataforma". O ator emergente não é nenhum dos três. É um indivíduo com Stable Diffusion, conexão 4G e um boleto de assinatura.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande, sociologia regulatória</span>
+      <p><strong>"A uberização da desinformação política — e por que a regulação eleitoral brasileira não enxerga o operador."</strong> Reportagem ampla. Mapear, em parceria com o Observatório IA nas Eleições, quantos dos 137 casos têm <em>autoria conhecida</em>. Dos com autoria, qual perfil: agência política, militante orgânico, ou indivíduo gig (como Daniel)? Cruzar com a hipótese de patrocínio de <em>ad-tech</em> de apostas, que é o mercado de creators que mais cresceu (Senacon investiga apostas desde 2024). Ouvir o Lavits, Internetlab, Aláfia Lab e o pesquisador Marcelo El Khouri (FGV). <strong>Frame BBC:</strong> <em>"Brazil's political deepfakes aren't being made by political operators. They're being made by Uber drivers. And gambling firms are footing the bill."</em></p>
+      <p><strong>Por que importa:</strong> se a tese se sustenta, a regulação eleitoral brasileira está mirando o vetor errado (a campanha) e ignorando o real (o creator-individual + sponsorship cinza). É reportagem de impacto internacional e potencial de longform para BBC.</p>
+      <p><strong>Fontes essenciais:</strong> Observatório IA nas Eleições; Aláfia Lab; Senacon/MJ (área de apostas); Daniel Cristiano (operador); Internetlab (Francisco Brito Cruz); LAVITS; ABRAJI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">3 sinais inéditos · o vetor "gig + apostas" nunca foi formulado em português</span>
+    </div>
+    <div class="links">
+      <a href="https://arxiv.org/abs/2605.12075" target="_blank">→ arXiv · paper diz que ameaça prevista não veio</a>
+      <a href="https://revistaforum.com.br/politica/dona-maria-tiktok-tse-ia/" target="_blank">→ Fórum · Dona Maria 2.0 e a resposta do operador</a>
+      <a href="https://revistaforum.com.br/politica/dona-maria-avatar-ia-tse/" target="_blank">→ Fórum/DataFórum · monetização + casas de apostas</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · censo do operador</div>
+    <h3>Quantos "Daniel Cristianos" estão operando hoje no Brasil — e qual o salário médio de quem ganha a vida com uma persona política sintética?</h3>
+    <p>O caso "Dona Maria" expôs, pela primeira vez de forma documentada, o perfil econômico de quem produz desinformação política sintética no Brasil em 2026: um trabalhador uberizado, com renda de R$ 1.500/mês, monetizado por engajamento e cortejado por <em>ad-tech</em> de apostas. <strong>Mas é o primeiro caso ou é o caso N de quantos?</strong> Nenhuma pesquisa pública brasileira fez o censo.</p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Dos 137 casos catalogados pelo Observatório IA nas Eleições (dez/25–fev/26), quantos têm autoria identificável? Desses, qual a divisão entre <em>operador individual gig</em> vs <em>agência/campanha</em> vs <em>militante orgânico</em>?<br>
+    · Existe um <strong>mercado consolidado de monetização</strong> de personas políticas no TikTok, Instagram e Kwai? Em que faixa de renda?<br>
+    · Quais casas de apostas, plataformas de cursos de IA ou anunciantes de baixo custo já patrocinaram ou tentaram patrocinar creators políticos sintéticos? <strong>Existe contrato? Boleto? Pix?</strong><br>
+    · A Receita Federal tem como mapear os MEIs cadastrados como "produção audiovisual" ou "marketing digital" que tiveram salto de receita entre 2024 e 2026 vinculado a engajamento político?<br>
+    · A Senacon, que já investiga publicidade enganosa de apostas, pode requisitar às plataformas a base de creators de conteúdo político remunerados via parcerias comerciais?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / quantitativa</span>
+      <p><strong>"O salário da desinformação: o primeiro censo do operador uberizado de IA política no Brasil."</strong> Reportagem-coelho com 6–8 semanas de apuração. Combinar: (a) raspagem do Observatório IA nas Eleições para identificar autorias; (b) LAI à Receita Federal pedindo recorte de MEIs com salto suspeito em "produção audiovisual"; (c) LAI à Senacon sobre creators políticos patrocinados por apostas; (d) entrevistas etnográficas com 5 a 10 operadores na faixa de Daniel; (e) cruzamento com o levantamento Aláfia Lab. <strong>Entregável:</strong> um perfil-tipo (faixa etária, renda, ferramentas, motivação ideológica vs financeira) + estimativa de tamanho de mercado.</p>
+      <p><strong>Por que importa:</strong> se há, digamos, 200 "Daniels" operando hoje no Brasil, a régua eleitoral está calibrada para um inimigo errado. Furo nacional + base sólida para longform internacional.</p>
+      <p><strong>Fonte essencial:</strong> Observatório IA nas Eleições (Yasmin Curzi, Pedro Saliba); Aláfia Lab; Senacon/MJ; Receita Federal (LAI); Daniel Cristiano e operadores no entorno; Letícia Cesarino (UFSC) sobre etnografia de bolsonarismo digital.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pauta inédita · ninguém perguntou o tamanho do mercado de operadores</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #019 · gerado em 15.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · sexta da uberização</p>
+  </div>
+
+</div>
+</body>
+</html>
