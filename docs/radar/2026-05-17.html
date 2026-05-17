@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #021 — 17.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #021</span>
+    <span>domingo · 17.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · furo de cruzamento</div>
+    <h3>Aos Fatos cruzou prestação de contas com política das plataformas e achou: candidatos brasileiros estão declarando gastos com anúncios que Google e TikTok dizem que não vendem</h3>
+    <div class="meta">Aos Fatos · matéria recente · cruzamento entre declaração de despesas eleitorais e termos de serviço de plataformas</div>
+    <p>O furo é simples e devastador: <strong>candidatos lançaram nas suas prestações de contas eleitorais despesas com anúncios pagos em Google e TikTok</strong> — duas plataformas que <strong>oficialmente proíbem propaganda político-eleitoral no Brasil</strong>. TikTok não permite anúncios políticos ou monetização para contas de políticos/partidos. <strong>Google Ads decidiu, após as novas regras do TSE, encerrar a veiculação de anúncios políticos no país a partir de 1º de maio de 2026.</strong> A inconsistência tem três explicações possíveis, e cada uma é manchete: (a) a prestação de contas registra rubrica inválida ou inflada; (b) as plataformas estão aceitando anúncios que dizem não aceitar; (c) o dinheiro foi para terceiros (agências, influenciadores, brokers de mídia) e foi rotulado como "Google/TikTok" porque essa era a categoria mais próxima no plano de contas do TSE — o que significa que <strong>o plano de contas do TSE não tem categoria para gasto digital indireto</strong>.</p>
+    <p>O ponto temporal: a busca passou exatamente pela janela em que <strong>Google Ads sai do mercado político brasileiro (1º mai)</strong> e <strong>vaquinha eleitoral é liberada (15 mai)</strong>. O Aos Fatos enxergou a inconsistência <em>antes</em> do funil oficial de fiscalização do TSE — porque o TSE ainda nem fechou a base de prestações da pré-campanha, e o auditor é a checagem independente. Isso é incomum: o monitoramento privado se antecipou ao monitoramento público.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"Os anúncios que Google e TikTok dizem não vender — mas que estão nas prestações de contas."</strong> Reportagem de verificação cruzada. Pedir ao Aos Fatos a base usada (CNPJs, valores, períodos) e expandir: <strong>(1)</strong> em quantas das 2022 prestações de contas a rubrica "Google" ou "TikTok" aparece, e em qual volume? <strong>(2)</strong> Quem são as agências intermediárias citadas como fornecedoras nessas mesmas contas? <strong>(3)</strong> Houve resposta oficial de Google Brasil e TikTok Brasil ao Aos Fatos? <strong>(4)</strong> Existe categoria específica para "anúncio em influenciador" no plano de contas do TSE? Se não, o gasto pode estar sendo rotulado como "publicidade digital" por default. <strong>Frame BBC:</strong> <em>"Brazilian candidates are declaring spending on ad platforms that say they don't sell political ads — a discrepancy that exposes how little the country's electoral accounting system knows about where digital money actually goes."</em></p>
+      <p><strong>Fonte essencial:</strong> Aos Fatos (Tai Nalon); Google Brasil (Marcelo Lacerda — política pública); TikTok Brasil; Assessoria de Contas Eleitorais do TSE; Transparência Brasil; FGV DAPP.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">Aos Fatos publicou · ninguém replicou metodologia · TSE não comentou</span>
+    </div>
+    <div class="links">
+      <a href="https://www.aosfatos.org/noticias/anuncios-google-tiktok-campanha-eleitoral/" target="_blank">→ Aos Fatos · "Candidatos declaram gastos com anúncios que Google e TikTok dizem proibir"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · troca institucional</div>
+    <h3>Há 5 dias, Kassio Nunes Marques — indicação Bolsonaro — assumiu a presidência do TSE prometendo "ação contra uso irregular de IA". A frase é boa; a posição política do enunciador é o que ninguém destacou</h3>
+    <div class="meta">Kassio Nunes Marques · posse como presidente do TSE em 12 de maio de 2026 · primeira eleição presidencial sob sua presidência da Corte</div>
+    <p>Em 12 de maio, <strong>cinco dias atrás</strong>, o ministro Kassio Nunes Marques tomou posse como presidente do TSE. Na fala de posse, <strong>classificou as eleições 2026 como "uma das mais importantes desde a redemocratização" e prometeu agir contra o uso irregular de IA</strong>. A imprensa tratou como protocolo. O ângulo que passou: <strong>Nunes Marques foi indicado ao STF pelo presidente Jair Bolsonaro em 2020</strong>, é o único ministro com esse perfil entre os atuais membros da Corte Eleitoral, e <strong>vai presidir o TSE durante a primeira eleição presidencial pós-anistia em debate, em que o bolsonarismo disputa a sucessão de Lula</strong>. O combate à desinformação por IA é hoje, no Brasil, um eixo simbolicamente associado ao alinhamento progressista (frame Alexandre de Moraes, Res. 23.755, decisão do STF de junho/25). <strong>Não houve declaração pública de Nunes Marques explicando como ele lê esse legado — só a promessa genérica de "agir".</strong></p>
+    <p>Por que isso é anomalia e não notícia comum: <strong>a estrutura de combate à desinformação eleitoral no Brasil é hoje, em larga parte, herança Moraes</strong> — incluindo a operacionalização da Res. 23.755, do Sistema Permanente de Combate à Desinformação, dos acordos com plataformas e do programa de checagem com agências parceiras. <strong>Substituir o enunciador-chefe dessa estrutura por um ministro cuja indicação política é o oposto, a 4 meses e meio do primeiro turno</strong>, não é uma alternância protocolar. <strong>Qualquer mudança de tom, qualquer despriorização operacional, qualquer interpretação distinta da Res. 23.755 — feita ou não feita — vira política pública por sinalização.</strong> A imprensa noticiou a posse; nenhum veículo perfilou em profundidade <em>como</em> as áreas técnicas do TSE (STI, Assessoria de Comunicação, AECC) leem a transição.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O TSE de Kassio Nunes Marques nas eleições da era IA — o que muda em 4 meses?"</strong> Reportagem-perfil institucional. Conversar com servidores das áreas técnicas (STI, Assessoria de Combate à Desinformação) — sob anonimato se preciso — sobre: (1) houve reunião de transição com Moraes sobre o programa de IA/desinformação? (2) o plano de fiscalização das 4 plataformas autorizadas (AppCívico, Elegis, GMT, QueroApoiar — radar #020) já foi assinado pelo novo presidente? (3) o roteiro de remoção rápida em 96h sob a Res. 23.755 mantém os mesmos parâmetros? (4) o orçamento para detecção técnica foi confirmado? Cruzar com análise jurídica: Wallace Vieira (USP), Eneida Salgado (UFPR), Estela Aranha. <strong>Frame BBC:</strong> <em>"Brazil's first election under AI-era rules will be presided over by a Bolsonaro-appointed judge — and the country has yet to ask publicly what that means for the enforcement playbook built by his predecessor."</em></p>
+      <p><strong>Fonte essencial:</strong> Nunes Marques (gabinete TSE); Estela Aranha; Eneida Salgado (UFPR); Wallace Vieira (USP); Conrado Hübner Mendes; servidores STI/AECC TSE; ABRAJI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">posse noticiada como protocolo · ângulo "herança Moraes vs. novo presidente" não foi feito</span>
+    </div>
+    <div class="links">
+      <a href="https://www.poder360.com.br/poder-eleicoes/nunes-marques-desinformacao-ia-eleicoes-2026/" target="_blank">→ Poder360 · Nunes Marques promete combate à desinformação com IA</a>
+      <a href="https://www.cnnbrasil.com.br/eleicoes/uso-de-ia-e-riscos-da-desinformacao-pautam-regras-para-eleicoes-de-2026/" target="_blank">→ CNN Brasil · IA e desinformação pautam regras 2026</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · vetor financeiro</div>
+    <h3>Dia das Mães (10 mai): bancos relatam pico de tentativas de golpe com voz clonada por IA — e o setor financeiro tem hoje a melhor base de incidência real de IA generativa contra brasileiros, fora do alcance do TSE</h3>
+    <div class="meta">TechTudo, CNN Brasil, Band, alertas bancários · maio de 2026 · semana do Dia das Mães · Brasil</div>
+    <p>A semana entre 10 e 17 de maio concentrou a maior leva de matérias brasileiras de 2026 sobre <strong>golpe com voz clonada por IA imitando filhos para induzir transferência via Pix</strong>. O padrão técnico está documentado: <strong>poucos segundos de áudio extraídos de WhatsApp e redes sociais são suficientes para clonar timbre e entonação</strong> com IA generativa de baixo custo. A escala já é grande: segundo levantamento citado por banco brasileiro, <strong>"mais de um quarto" dos entrevistados em pesquisa com 3 mil adultos disseram ter sido alvo de tentativa de golpe com voz clonada nos últimos 12 meses</strong>. O Dia das Mães é a janela sazonal porque o ataque emocional é otimizado pela data — mas a infraestrutura técnica é a mesma usada o ano todo.</p>
+    <p>O ponto que falta na conversa eleitoral: <strong>esse é, hoje, o principal corpus empírico brasileiro de uso adversarial de IA generativa em escala — e ele está em mãos do setor financeiro</strong>. Itaú, Bradesco, Nubank, Santander, BTG, Caixa, BB e bandeiras Visa/Mastercard <strong>têm contagens internas granulares</strong> de tentativas detectadas (por canal, por valor, por hora do dia, por geografia). Essa base é qualitativamente diferente de tudo que o TSE, o Aláfia Lab, a Data Privacy Brasil ou o NetLab têm acesso — porque é <strong>incidência real, com vítima identificada e tentativa de fraude documentada</strong>, não monitoramento de circulação em rede aberta. <strong>Nada disso é público em granularidade comparável.</strong> A FEBRABAN agrega; bancos individuais não publicam.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O setor financeiro brasileiro tem o melhor mapa de uso adversarial de IA generativa no país — e quase ninguém pediu para ver."</strong> Reportagem-investigação. Pedir, formalmente, a Itaú, Bradesco, Nubank, Santander, BTG, BB, Caixa, FEBRABAN, ABBC: <strong>(1)</strong> número total de tentativas de fraude com voz clonada por IA identificadas em 2024, 2025 e 1º quadrimestre 2026; <strong>(2)</strong> distribuição por canal (Pix, TED, cartão); <strong>(3)</strong> taxa de sucesso; <strong>(4)</strong> ticket médio. Cruzar com <strong>(5)</strong> Banco Central / DEPEF; <strong>(6)</strong> SaferNet (denúncias civis); <strong>(7)</strong> Recod/Unicamp (Anderson Rocha). <strong>Ângulo eleitoral:</strong> a Res. 23.755 do TSE proíbe deepfake político — mas o vetor dominante de IA adversarial no Brasil <em>já não é político</em>. Conectar com o paper "Deepfakes We Missed" (radar #020): <strong>se as vítimas brasileiras de IA generativa em 2026 são mães vítimas de golpe de Pix, não eleitores expostos a deepfake de candidato, qual é a régua certa?</strong> <strong>Frame BBC:</strong> <em>"Brazilian banks already have the country's clearest picture of generative AI in the wild — used against grandmothers on Mother's Day, not against voters. No one has published it."</em></p>
+      <p><strong>Fonte essencial:</strong> Itaú (Diretoria de Prevenção a Fraudes); Nubank (Trust & Safety); FEBRABAN; ABBC; Banco Central (Pix); SaferNet (Thiago Tavares); Anderson Rocha (Recod/Unicamp); Article 19; Data Privacy Brasil.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio para o golpe · zero para a tese da base bancária</span>
+      <span class="badge neutral">golpe foi pautado · ninguém articulou os bancos como detentores do corpus</span>
+    </div>
+    <div class="links">
+      <a href="https://www.techtudo.com.br/noticias/2026/05/golpe-com-voz-clonada-por-ia-imita-filhos-no-dia-das-maes-saiba-se-proteger-edsoftwares.ghtml" target="_blank">→ TechTudo · golpe voz clonada Dia das Mães (mai/2026)</a>
+      <a href="https://www.cnnbrasil.com.br/economia/negocios/banco-faz-alerta-milhoes-de-pessoas-podem-ser-alvos-de-golpes-de-clonagem-de-voz-por-ia/" target="_blank">→ CNN Brasil · banco alerta para milhões de potenciais alvos</a>
+      <a href="https://www.direitonews.com.br/2026/04/advogada-descobre-que-teve-voz-clonada-ia-alvo-golpistas-franca-fui-surpreendida.html" target="_blank">→ Direito News · advogada de Franca tem voz clonada (abr/2026)</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>Em 17 dias úteis (1 mai → 15 mai → 17 mai), a infraestrutura publicitária digital da eleição 2026 se reordenou em três direções simultâneas — e o efeito agregado é a invisibilização do dinheiro digital de campanha</h3>
+    <p><strong>1º mai:</strong> Google Ads <strong>encerra</strong> a veiculação de anúncios políticos no Brasil (resposta às novas regras do TSE).<br>
+    <strong>12 mai:</strong> Kassio Nunes Marques <strong>assume</strong> a presidência do TSE — perfil político oposto ao do antecessor que arquitetou a régua de IA + desinformação.<br>
+    <strong>15 mai:</strong> <strong>Vaquinha eleitoral abre</strong> em 4 plataformas autorizadas (AppCívico, Elegis, GMT, QueroApoiar) — inflow rastreável por CPF.<br>
+    <strong>17 mai (hoje):</strong> Aos Fatos publica que candidatos <strong>declaram gastos em Google e TikTok</strong> — plataformas que não vendem anúncios políticos.</p>
+    <p><strong>Síntese:</strong> em pouco mais de duas semanas, três movimentos institucionais simultâneos criaram o cenário inverso ao que a Res. 23.755 prometia: <strong>(a)</strong> a plataforma que mais investia em transparência de anúncio político (Google) saiu; <strong>(b)</strong> o presidente da Corte que vai fiscalizar tudo isso mudou — e o público não sabe se a operação técnica vai manter a mesma velocidade; <strong>(c)</strong> o dinheiro de pré-campanha começou a entrar com nome e CPF, mas o canal por onde sai está se reconfigurando para fora do que o sistema de prestação de contas consegue rotular. <strong>O efeito agregado:</strong> o orçamento digital de 2026 vai migrar para canais não-classificáveis — influenciadores, brokers, micro-tráfego, programmatic via DSPs offshore, agências terceirizadas, possivelmente WhatsApp Business API — e <strong>nada disso aparece na rubrica</strong>. Quando o TSE ou a imprensa abrir as contas em outubro, a categoria "publicidade digital genérica" vai estar inchada e opaca, e o gasto real com IA generativa estará embutido nela.</p>
+    <p><strong>Por que importa agora:</strong> a janela para forçar transparência é <em>esta semana</em> — antes de a vaquinha consolidar fluxo, antes de a nova presidência do TSE assentar prioridades, antes de o ecossistema de agências reconfigurar contratos pós-saída do Google. <strong>Em três semanas, esse cluster de decisões já estará naturalizado.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta — grande, conjuntural</span>
+      <p><strong>"Maio de 2026 reescreveu o mercado de propaganda eleitoral digital — e ninguém percebeu porque a notícia veio em três pedaços."</strong> Reportagem analítica de fôlego. Cruzar: <strong>(1)</strong> dados do repositório de transparência do Google Ads (último corte antes de 1º mai); <strong>(2)</strong> base do Aos Fatos sobre gastos declarados em plataformas que proíbem propaganda; <strong>(3)</strong> entrevistas com agências de marketing político médias e grandes (Bracher Inteligência, FSB, Calia, Nova/SB) sobre redirecionamento de budget; <strong>(4)</strong> servidores AECC/TSE sobre o plano de fiscalização da nova gestão Nunes Marques; <strong>(5)</strong> pesquisadores do InternetLab e Data Privacy Brasil sobre brechas no plano de contas. <strong>Tese:</strong> a fragmentação publicitária de maio criou um <em>buraco de auditoria</em> de cerca de 90-180 dias — o suficiente para que a maior parte do gasto digital de campanha entre invisível ao sistema. <strong>Frame BBC:</strong> <em>"In seventeen working days of May, three simultaneous decisions reshaped Brazil's digital election advertising market — and the cumulative effect is that the money is now harder to trace than before any of those decisions were taken."</em></p>
+      <p><strong>Por que é furo:</strong> ninguém alinhou as três datas. A saída do Google foi notícia de negócios. A posse de Nunes Marques foi notícia institucional. A vaquinha foi notícia operacional. O cruzamento do Aos Fatos foi notícia de checagem. <strong>O efeito agregado de invisibilização não foi narrado por ninguém em PT-BR.</strong></p>
+      <p><strong>Fontes essenciais:</strong> Aos Fatos (Tai Nalon); InternetLab (Francisco Brito Cruz); Data Privacy Brasil (Bruno Bioni, Yasmin Curzi); Transparência Brasil (Manoel Galdino); FGV DAPP; AECC/TSE; agências de marketing político; Google Brasil; TikTok Brasil.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">3 fatos noticiados em silo · cluster temporal e o efeito agregado nunca foram costurados</span>
+    </div>
+    <div class="links">
+      <a href="https://www.aosfatos.org/noticias/anuncios-google-tiktok-campanha-eleitoral/" target="_blank">→ Aos Fatos · gastos declarados em plataformas que proíbem</a>
+      <a href="https://www.poder360.com.br/poder-eleicoes/nunes-marques-desinformacao-ia-eleicoes-2026/" target="_blank">→ Poder360 · posse Nunes Marques (12 mai)</a>
+      <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Maio/eleicoes-2026-financiamento-coletivo-para-pre-campanhas-passa-a-ser-permitido-a-partir-desta-sexta-15" target="_blank">→ TSE · vaquinha liberada (15 mai)</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · follow the money</div>
+    <h3>Depois de 1º de maio, quanto do orçamento que antes ia para Google Ads político migrou para "influenciadores" — e quais agências brasileiras estão hoje intermediando esses contratos para a pré-campanha 2026?</h3>
+    <p>O Google Ads sai do mercado político brasileiro em 1º de maio. <strong>O dinheiro que estava ali não evapora — migra.</strong> O destino mais provável, segundo padrão observado em 2022 e em mercados comparáveis (EUA 2024, Argentina 2023, Índia 2024), é o <strong>"influencer marketing"</strong>: contratos com criadores de conteúdo de médio e grande porte que publicam material favorável ao contratante sem rotulagem clara de propaganda eleitoral. O Brasil tem hoje cerca de <strong>500 mil criadores remunerados</strong> (Estimativa Kantar/Influencer Marketing Hub) e nenhuma obrigação automática de identificação de patrocínio eleitoral antes da campanha começar. <strong>Ninguém perguntou: para onde foi o budget que o Google devolveu?</strong></p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Existe um <em>spike</em> verificável em receita de plataformas de intermediação de influencer (Squid, Celebryts, Mynd, Hype, GoAd, BrandLovers) entre 1º e 15 de maio de 2026 — exatamente a janela entre a saída do Google e a abertura da vaquinha?<br>
+    · Quais das 10 maiores agências de marketing político 2022 (Calia, FSB, Bracher, Nova/SB, Casa Caiada, Hands, Pepper, Bullseye, Mídia 50/50, Idearia) <strong>abriram divisão de "creator economy" ou "influencer relations"</strong> desde 2024?<br>
+    · Quantos contratos com criadores top-100 brasileiros têm cláusula de "exclusividade política" para o ciclo 2026 — assinada entre janeiro e maio deste ano?<br>
+    · No plano de contas eleitorais 2026 do TSE, existe rubrica específica <strong>"contrato com influenciador digital"</strong>, ou esse gasto é hoje absorvido em "publicidade digital" / "produção audiovisual" / "consultoria de comunicação"?<br>
+    · A Res. 23.732/2024 e a 23.755/2026 do TSE obrigam o influenciador a sinalizar conteúdo patrocinado eleitoralmente — mas <strong>quem fiscaliza, com qual ferramenta, em qual SLA?</strong> Existe um pipeline técnico no TSE para varrer reels e shorts em busca de menção a candidatos pago não-declarado?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / quantitativa</span>
+      <p><strong>"Para onde foi o dinheiro que o Google devolveu: o mapa do influencer marketing político brasileiro às vésperas das eleições 2026."</strong> Reportagem-investigação de 6–8 semanas. Combinar: <strong>(a)</strong> pedido formal (LAI + ofícios) a Squid, Celebryts, Mynd, Hype, GoAd, BrandLovers sobre crescimento de demanda político-eleitoral em mai/2026 vs. mai/2025; <strong>(b)</strong> análise de OpenCorporates / Serasa para identificar abertura de novos CNPJs de "agência de creators" desde jan/2024 com sócios egressos do marketing político; <strong>(c)</strong> LinkedIn Sales Navigator: mapear movimentação de profissionais sêniores entre Google Brasil, Meta Brasil e agências de creators desde out/2025; <strong>(d)</strong> investigar 50 micro e médios influenciadores políticos (50k-500k seguidores) e checar quantos publicaram conteúdo claramente favorável a um candidato/partido nos últimos 60 dias <em>sem rotular como patrocinado</em>; <strong>(e)</strong> ouvir TSE (AECC + STI), CDR, InternetLab, Idec, Influência Digital. <strong>Entregável:</strong> primeiro mapa público do mercado de influencer político brasileiro pré-2026 + estimativa de tamanho do "buraco regulatório" criado pela saída do Google.</p>
+      <p><strong>Por que importa:</strong> se a hipótese for verdadeira — e há razões empíricas robustas para crer que sim — então a saída do Google em 1º de maio é, paradoxalmente, <strong>uma desregulamentação prática da propaganda política digital no Brasil</strong>, porque tira do ar a infraestrutura mais transparente e empurra o dinheiro para o canal menos rastreável. <strong>Furo nacional + reportagem-modelo para BBC Mundo / BBC World comparativa.</strong></p>
+      <p><strong>Fonte essencial:</strong> plataformas de intermediação de influencer (Squid, Celebryts, Mynd, Hype, GoAd, BrandLovers); Idec (Igor Britto); InternetLab; CDR; TSE AECC; Influência Digital; Núcleo (Sérgio Spagnuolo); Manoel Galdino (Transparência Brasil).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta inédita · ninguém costurou saída do Google + influencer marketing + buraco regulatório</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #021 · gerado em 17.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · domingo do dinheiro que se reconfigurou</p>
+  </div>
+
+</div>
+</body>
+</html>
