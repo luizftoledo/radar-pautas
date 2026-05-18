@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de pautas #022 — 18.mai.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --panel: #141820;
+    --panel-2: #1a1f29;
+    --line: #252d38;
+    --text: #e8ecf1;
+    --muted: #8b96a5;
+    --dim: #5a6370;
+    --accent: #ffb547;
+    --anomaly: #60a5fa;
+    --connection: #c084fc;
+    --question: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 80% -5%, rgba(255,181,71,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 10%, rgba(96,165,250,0.06), transparent),
+      var(--bg);
+    min-height: 100vh;
+    padding: 36px 40px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .head-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .head-meta .live::before {
+    content: '●'; color: var(--accent); margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 80% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 62px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+  h1 .italic { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sources-strip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 36px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+  .sources-strip b { color: var(--muted); margin-right: 8px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .section-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .item:hover { border-color: var(--dim); }
+  .item.anomaly { border-left: 3px solid var(--anomaly); }
+  .item.connection { border-left: 3px solid var(--connection); }
+  .item.question { border-left: 3px solid var(--question); }
+
+  .item-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .item.anomaly .item-tag { background: rgba(96,165,250,0.12); color: var(--anomaly); }
+  .item.connection .item-tag { background: rgba(192,132,252,0.12); color: var(--connection); }
+  .item.question .item-tag { background: rgba(74,222,128,0.12); color: var(--question); }
+
+  .item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .item p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .item .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .pitch {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .pitch .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pitch p { font-size: 14px; margin-bottom: 4px; }
+  .pitch p:last-child { margin-bottom: 0; }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.cov-baixo { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .badge.cov-medio { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge.cov-zero { background: rgba(255,181,71,0.18); color: var(--accent); border: 1px solid rgba(255,181,71,0.3); }
+  .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+  .item a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--dim);
+  }
+  .item a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .links a { color: var(--muted); display: block; margin-bottom: 4px; }
+  .links a:hover { color: var(--accent); }
+
+  .foot {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .foot p { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 20px 60px; }
+    h1 { font-size: 42px; }
+    .section-num { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .item { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head-meta">
+    <span class="live">radar #022</span>
+    <span>segunda · 18.mai.2026</span>
+    <span>fontes primárias: 10</span>
+  </div>
+
+  <h1>Radar de pautas<br><span class="italic">desinformação · ia · eleições 2026</span></h1>
+  <div class="subtitle">Não é clipping. É só o que mudou, o que cruza e a pergunta que ninguém fez.</div>
+
+  <div class="sources-strip">
+    <b>fontes consultadas:</b>
+    Data Privacy Brasil · InternetLab · FGV DAPP · NetLab UFRJ · Coalizão Direitos na Rede · TSE · Câmara/PLs · STF · Stanford IO · arXiv
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div>
+      <span class="section-kicker">Anomalias</span>
+      <div class="section-title">O que mudou de verdade</div>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A1 · executivo entra no jogo</div>
+    <h3>Há 4 dias, Lula pediu a senadores baianos que apresentem PL para vetar IA na eleição — pulando por cima do TSE, do PL 212/26 e do PL 2338. Não saiu de manchete qual a função desse PL extra</h3>
+    <div class="meta">Lula em Camaçari (BA), 14 de maio de 2026 · evento de entrega do Minha Casa Minha Vida · Poder360, Metrópoles, Notícias ao Minuto, Jornal de Brasília</div>
+    <p>Na quinta, <strong>14 de maio</strong>, durante a entrega de 384 apartamentos do MCMV em Camaçari (BA), Lula <strong>"sugeriu a senadores aliados da Bahia que apresentem proposta legislativa para vetar o uso de inteligência artificial em eleições"</strong>. Disse ainda que não vai usar IA em sua própria campanha e cunhou a frase "IA vai servir aos mentirosos". A imprensa noticiou a declaração como gesto político — sem perguntar o que essa proposta legislativa seria, e <strong>por que ela é necessária se já existe a Res. 23.755 do TSE, o PL 212/26 da Câmara (deepfake como crime, radar #001) e o PL 2338/23 do Senado (marco da IA)</strong>.</p>
+    <p>Há quatro hipóteses, e cada uma é manchete própria: <strong>(a)</strong> Lula desconhece que as três peças regulatórias já existem — improvável, dado que minutos antes elogiou a decisão do TSE; <strong>(b)</strong> o Planalto quer um instrumento <em>de lei</em> (não infralegal) que sobreviva a uma eventual mudança de presidência do TSE — o subtexto seria a posse Nunes Marques de 12/mai (radar #021); <strong>(c)</strong> o pedido é cosmético, gesto pré-campanha para marcar posição contra Flávio Bolsonaro sem citar o áudio Vorcaro; <strong>(d)</strong> existe descontentamento do governo com a arquitetura proposta no PL 2338 (que CDR considera "protetiva de direitos" mas com aberturas para IA generativa eleitoral) e o novo PL seria mais duro. <strong>Os senadores baianos não foram nominalmente identificados em nenhuma matéria.</strong> Os candidatos óbvios — Otto Alencar (PSD), Jaques Wagner (PT) e Ângelo Coronel (PSD) — não confirmaram autoria publicamente até hoje.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O PL fantasma de Lula: o que ele veta que o TSE, o PL 212 e o PL 2338 já não vetam?"</strong> Reportagem de bastidor legislativo. Pedir confirmação a Otto Alencar, Jaques Wagner e Ângelo Coronel sobre conversas com o Planalto; pedir à SAG e ao gabinete da Casa Civil cópia do anteprojeto (provavelmente está rodando entre Estela Aranha, AGU e MJSP). Cruzar texto-base com a Res. 23.755 do TSE, com o substitutivo do PL 212/26 e com o título do PL 2338/23 que trata de aplicações eleitorais. <strong>Frame BBC:</strong> <em>"Lula has asked allied senators for a brand-new bill to ban AI in elections — but Brazil already has three overlapping AI election rules. The question no one asked is what this fourth instrument is for."</em></p>
+      <p><strong>Fonte essencial:</strong> Otto Alencar, Jaques Wagner, Ângelo Coronel (gabinetes); SAG/Planalto; Casa Civil; Estela Aranha; CDR (Bia Barbosa, Flávia Lefèvre); InternetLab; ABRAJI.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-baixo">coberto: baixo</span>
+      <span class="badge neutral">declaração foi noticiada como protocolo · ninguém perguntou o que o PL veta a mais</span>
+    </div>
+    <div class="links">
+      <a href="https://www.poder360.com.br/poder-governo/lula-elogia-veto-do-tse-e-diz-que-nao-usara-ia-para-fazer-politica/" target="_blank">→ Poder360 · Lula elogia veto do TSE e pede PL</a>
+      <a href="https://www.metropoles.com/brasil/lula-defende-proibicao-de-ia-nas-eleicoes-vai-servir-aos-mentirosos" target="_blank">→ Metrópoles · "vai servir aos mentirosos"</a>
+      <a href="https://www.noticiasaominuto.com.br/politica/2382405/lula-sugere-veto-a-ia-na-eleicao-e-sem-citar-flavio-bolsonaro-diz-que-verdade-nao-falha" target="_blank">→ Notícias ao Minuto · "verdade não falha"</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A2 · vetor invertido</div>
+    <h3>O maior evento de impacto da pré-campanha 2026 em maio foi um áudio AUTÊNTICO — não um deepfake. "BolsoMaster" rendeu 8,6 milhões de interações; toda a régua regulatória brasileira foi calibrada para o vetor oposto</h3>
+    <div class="meta">Vazamento Flávio Bolsonaro/Daniel Vorcaro · Intercept Brasil, 13 de maio de 2026 · CartaCapital ("BolsoMaster"), Gazeta do Povo, Metrópoles · áudio confirmado pelo próprio Flávio</div>
+    <p>No dia <strong>13 de maio</strong>, o Intercept Brasil publicou áudio do senador Flávio Bolsonaro pedindo R$ 134 milhões a Daniel Vorcaro (Banco Master) para financiar o filme biográfico "Dark Horse" sobre Jair Bolsonaro — repasses comprovados de cerca de <strong>R$ 61 milhões</strong> em seis transferências entre fev/2025 e mai/2025. <strong>O áudio é autêntico</strong>: a autenticidade foi confirmada por fontes da investigação e pelo próprio Flávio horas depois da publicação. A CartaCapital documenta que o caso gerou <strong>"mais de 8,6 milhões de interações nas redes"</strong> em poucos dias — provavelmente o maior evento singular de impacto digital da pré-campanha presidencial até agora. Quaest, Real Time, Datafolha já anunciaram que vão medir o efeito no recorte presidencial.</p>
+    <p><strong>A anomalia que ninguém formulou:</strong> a infraestrutura regulatória brasileira de 2026 contra desinformação eleitoral — Res. 23.755 do TSE, PL 212/26 (deepfake como crime), PL 2338 (marco da IA), agora o PL fantasma de Lula (A1) — está <strong>quase inteiramente calibrada para conteúdo sintético produzido por IA</strong>. Mas o evento que efetivamente moveu a corrida presidencial em maio foi <strong>voz humana real, gravação autêntica, vazamento clássico</strong>. A escala (8,6M) é uma ordem de grandeza maior do que os 137 deepfakes documentados pela Data Privacy Brasil entre dez/25 e fev/26 (radar #001), e o canal de propagação (Telegram + WhatsApp + clipes em short video) é o mesmo. <strong>O Brasil construiu o arsenal anti-deepfake mais sofisticado do hemisfério para um inimigo que, neste ciclo, ainda não é o vetor dominante.</strong> O vetor dominante de maio foi <em>kompromat</em> tradicional, amplificado por algoritmo.</p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"O Brasil regulou o deepfake; o que moveu a eleição em maio foi áudio de verdade."</strong> Reportagem-balanço de meio de ciclo. <strong>(1)</strong> Pedir a Aláfia Lab / Observatório IA nas Eleições, NetLab UFRJ, Aos Fatos e Lupa o ranking de <em>impacto</em> (não só circulação) dos principais eventos de desinformação ou dano reputacional da pré-campanha 2026 até hoje — separando conteúdo sintético vs. conteúdo autêntico vazado vs. desinformação não-IA; <strong>(2)</strong> cruzar com pesquisas Quaest, Real Time, Datafolha para medir o gradiente de impacto eleitoral por tipo de evento; <strong>(3)</strong> ouvir CDR, InternetLab, Data Privacy Brasil sobre o paradoxo: a régua atual ignora o <em>kompromat</em>; <strong>(4)</strong> verificar se o PL 212/26 (deepfake) e o PL fantasma de Lula têm alguma referência ao tratamento de áudio autêntico de origem ilegal — se não têm, há vácuo. <strong>Frame BBC:</strong> <em>"Brazil built one of the world's most ambitious anti-deepfake election rulebooks. In May 2026, the single event that moved the presidential race was a real audio leak — not synthetic. The rulebook is pointed at a threat that, so far, isn't the one doing the damage."</em></p>
+      <p><strong>Fonte essencial:</strong> Aláfia Lab (Yasodara Córdova, Rafael Evangelista); Data Privacy Brasil; NetLab UFRJ (Rose Marie Santini); Quaest; Real Time Big Data; Datafolha; Intercept Brasil (autor da reportagem original); ABRAJI; CDR.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-medio">coberto: médio para o áudio · zero para o paradoxo da régua</span>
+      <span class="badge neutral">áudio foi noticiado · ninguém comparou impacto vs. arsenal anti-deepfake</span>
+    </div>
+    <div class="links">
+      <a href="https://www.intercept.com.br/2026/05/13/audio-flavio-negociou-vorcaro-milhoes/" target="_blank">→ Intercept · áudio Flávio/Vorcaro (13 mai)</a>
+      <a href="https://www.cartacapital.com.br/politica/bolsomaster-vazamento-de-audio-de-flavio-provoca-a-maior-repercussao-digital-do-caso-vorcaro/" target="_blank">→ CartaCapital · "BolsoMaster" maior repercussão digital</a>
+      <a href="https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/as-pesquisas-que-vao-medir-impacto-eleitoral-apos-audio-entre-flavio-bolsonaro-e-daniel-vorcaro/" target="_blank">→ Gazeta do Povo · pesquisas vão medir impacto</a>
+    </div>
+  </div>
+
+  <div class="item anomaly">
+    <div class="item-tag">A3 · efeito colateral</div>
+    <h3>O Brasil acaba de entrar no espaço em que qualquer áudio comprometedor pode ser declarado deepfake pelo próprio alvo — e o sistema de checagem técnica para refutar ou confirmar em horas ainda não foi tornado público</h3>
+    <div class="meta">"Liar's dividend" no Brasil · paradigma documentado em Trump 2024, Modi 2024 · primeiro teste real brasileiro: caso Vorcaro · 13–18 maio 2026</div>
+    <p>Quando Flávio Bolsonaro confirmou a autenticidade do áudio com Vorcaro <strong>horas depois</strong> do vazamento, fechou a porta para a única linha de defesa que, na arquitetura informacional de 2026, ainda funciona universalmente: <strong>alegar deepfake</strong>. A literatura acadêmica internacional batizou esse mecanismo de <em>liar's dividend</em> ("dividendo do mentiroso") — efeito colateral de qualquer regulação anti-deepfake bem-sucedida, em que o público passa a duvidar inclusive de conteúdo autêntico, e qualquer figura pública pode rebaixar evidências reais ao status de "provavelmente sintético". O paradigma está documentado em Trump 2024 (alegou que vídeo da Kamala era IA), Modi 2024 (alegou que áudios de Adani eram clonados) e Macron 2022 (alegou que vídeo no Mar do Norte era deepfake). <strong>O caso Vorcaro é o primeiro teste real brasileiro do paradoxo.</strong> Flávio cedeu na hora, mas <strong>se tivesse negado, qual era o protocolo técnico público para o eleitorado obter veredito em horas?</strong></p>
+    <p>O que falta na conversa: <strong>nenhum dos atores do ecossistema regulatório brasileiro tornou público</strong>, até hoje, <strong>(i)</strong> qual o laboratório forense designado para análise técnica de áudio/vídeo suspeito de IA em caso eleitoral (TSE? Polícia Federal? Recod/Unicamp? laboratório terceirizado?); <strong>(ii)</strong> qual o SLA — tempo máximo entre denúncia e veredicto técnico publicado; <strong>(iii)</strong> quem audita o auditor — quem responde se o laboratório dá falso negativo (chama autêntico de sintético) ou falso positivo (chama sintético de autêntico); <strong>(iv)</strong> qual a base de dados de referência (banco de vozes de candidatos, banco de modelos generativos brasileiros) e se ela existe. <strong>Sem esses quatro pontos públicos, a alegação "isso é deepfake" tem custo zero de credibilidade.</strong></p>
+    <div class="pitch">
+      <span class="k">pauta</span>
+      <p><strong>"E se Flávio tivesse dito que o áudio Vorcaro era IA? O Brasil entrou na era do <em>liar's dividend</em> sem laboratório forense público."</strong> Reportagem-investigação institucional. <strong>(1)</strong> Perguntar ao TSE (STI + AECC) qual o protocolo formal de checagem técnica acionável durante o período eleitoral, sob a Res. 23.755 — existe contrato com laboratório forense? Qual? SLA?; <strong>(2)</strong> Perguntar à Polícia Federal (DICOR / Diretoria de Investigação e Combate ao Crime Organizado) se há protocolo análogo; <strong>(3)</strong> Procurar Anderson Rocha (Recod/Unicamp), Esther Anaya (Mackenzie) e o grupo do CNPq sobre detecção de deepfake brasileiro — quem tem o melhor detector hoje, com qual taxa documentada para áudio em português? <strong>(4)</strong> Buscar arquivamentos análogos (alegações públicas de deepfake feitas por políticos brasileiros em 2024 e 2025 — quantos casos? quantos chegaram a veredicto técnico independente? em quanto tempo?). <strong>Frame BBC:</strong> <em>"Brazil has just entered the era in which any compromising recording can be dismissed as AI by its subject — and the public technical infrastructure to refute that claim in hours, not weeks, is still not in place."</em></p>
+      <p><strong>Fonte essencial:</strong> TSE (STI + AECC); PF (DICOR); Anderson Rocha (Recod/Unicamp); Esther Anaya (Mackenzie); SBC/CNPq grupo de mídia forense; Aos Fatos e Lupa (operações de verificação); Article 19; Data Privacy Brasil.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">conceito acadêmico · nenhum veículo brasileiro mapeou o protocolo técnico nacional</span>
+    </div>
+    <div class="links">
+      <a href="https://www.cnnbrasil.com.br/politica/ouca-o-audio-de-flavio-bolsonaro-pedindo-dinheiro-a-vorcaro/" target="_blank">→ CNN Brasil · áudio publicado</a>
+      <a href="https://www.gazetadopovo.com.br/eleicoes/2026/me-subestimaram-nao-vou-desistir-do-meu-brasil-diz-flavio-apos-audio-com-vorcaro/" target="_blank">→ Gazeta do Povo · Flávio confirma e responde</a>
+      <a href="https://temasselecionados.tse.jus.br/temas-selecionados/repositorio-decisoes-sobre-enfrentamento-desinformacao-eleitoral/desinformacao-ia" target="_blank">→ TSE · repositório de decisões sobre IA eleitoral</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div>
+      <span class="section-kicker">Conexão cruzada</span>
+      <div class="section-title">Dois pontos que ninguém ligou</div>
+    </div>
+  </div>
+
+  <div class="item connection">
+    <div class="item-tag">C1 · síntese</div>
+    <h3>13–17 maio: três eventos consecutivos mostraram que o sistema brasileiro de defesa eleitoral está mirando o vetor errado — e o impacto real do ciclo entrou por três brechas que o arsenal regulatório não cobre</h3>
+    <p><strong>13 mai —</strong> áudio AUTÊNTICO de Flávio Bolsonaro com Vorcaro gera 8,6 milhões de interações em redes (Intercept, CartaCapital).<br>
+    <strong>14 mai —</strong> Lula pede PL para vetar IA na eleição (Poder360, Metrópoles) — quarta camada regulatória anti-IA, todas mirando conteúdo sintético.<br>
+    <strong>17 mai —</strong> Aos Fatos publica que candidatos declaram gastos em Google e TikTok — plataformas que oficialmente não vendem propaganda eleitoral no país (radar #021).</p>
+    <p><strong>Síntese:</strong> em 96 horas, três eventos demonstraram empiricamente <strong>três falhas de cobertura</strong> do sistema brasileiro de combate à desinformação eleitoral, e o Estado respondeu reforçando o eixo regulatório que <em>não</em> está sendo testado: <strong>(a)</strong> o vetor de impacto eleitoral em maio foi <em>kompromat</em> tradicional (áudio real vazado), não conteúdo sintético — mas a única reação institucional foi pedir mais lei anti-IA; <strong>(b)</strong> o vetor de gasto digital de campanha já está fora do funil de plataforma rastreável (gasto declarado em Google/TikTok mesmo após estes saírem do mercado político) — mas o arsenal regulatório está construído sobre transparência <em>de plataforma</em>; <strong>(c)</strong> o vetor de defesa política contra escândalo passa a incluir, daqui pra frente, a alegação reflexa de "é deepfake" (A3, <em>liar's dividend</em>) — mas nenhum protocolo técnico público brasileiro foi acionado para refutar em horas. <strong>Os três eventos juntos sugerem que o sistema regulatório de 2026 foi desenhado para a eleição anterior, não para a próxima.</strong></p>
+    <p><strong>Por que importa agora:</strong> o calendário eleitoral entra em fase ativa em julho (convenções partidárias, registro de candidaturas em 15/ago). Cada nova lei, cada nova resolução, cada nova plataforma autorizada que entrar nas próximas seis semanas vai cristalizar uma régua que <strong>já está olhando para o lugar errado</strong>. A janela para reorientar o debate público é <em>esta</em>.</p>
+    <div class="pitch">
+      <span class="k">pauta — grande, conceitual + reportagem</span>
+      <p><strong>"O Brasil regulamentou a eleição passada — não a próxima: por que três eventos de maio mostraram que o arsenal anti-IA mira o vetor errado."</strong> Reportagem analítica de fôlego, com matriz de cobertura. Cruzar: <strong>(1)</strong> os 137 conteúdos sintéticos do Observatório IA nas Eleições (dez/25–fev/26) e seu alcance estimado; <strong>(2)</strong> a base do Aos Fatos sobre gastos digitais não-rastreáveis; <strong>(3)</strong> o impacto medido (Quaest, Real Time, Datafolha pós-Vorcaro); <strong>(4)</strong> entrevista com pesquisadores que ajudaram a desenhar a Res. 23.755 (Estela Aranha, Bruno Bioni, Yasmin Curzi) — eles próprios reconhecem o descasamento entre o arsenal e o vetor real?; <strong>(5)</strong> análise comparativa: como EUA 2024, Índia 2024 e Argentina 2023 lidaram com a mesma assimetria. <strong>Entregável:</strong> primeira matriz pública brasileira que mapeia, lado a lado, o que a régua regulatória cobre vs. o que está efetivamente movendo a eleição. <strong>Frame BBC:</strong> <em>"In a single 96-hour stretch in May, three separate events demonstrated that Brazil's 2026 election defence system is aimed at last cycle's threat. Real-audio leaks, untraceable digital spending, and the reflex 'it's a deepfake' defence are this cycle's reality — and none of them is at the centre of the rulebook."</em></p>
+      <p><strong>Por que é furo:</strong> nenhum veículo brasileiro alinhou os três eventos como sintomas do mesmo descasamento. Cada um foi tratado em silo (jurídico-legislativo, escândalo, transparência de gastos). <strong>O diagnóstico unificado não existe em PT-BR — e provavelmente também não em EN.</strong></p>
+      <p><strong>Fontes essenciais:</strong> Estela Aranha; Bruno Bioni e Yasmin Curzi (Data Privacy Brasil); Francisco Brito Cruz (InternetLab); Bia Barbosa, Flávia Lefèvre (CDR); Aláfia Lab; Aos Fatos (Tai Nalon); Quaest; Real Time Big Data; Datafolha; AECC/TSE.</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">3 eventos em silo · ninguém formulou o descasamento estrutural</span>
+    </div>
+    <div class="links">
+      <a href="https://www.intercept.com.br/2026/05/13/audio-flavio-negociou-vorcaro-milhoes/" target="_blank">→ Intercept · áudio Vorcaro</a>
+      <a href="https://www.poder360.com.br/poder-governo/lula-elogia-veto-do-tse-e-diz-que-nao-usara-ia-para-fazer-politica/" target="_blank">→ Poder360 · Lula pede PL anti-IA</a>
+      <a href="https://www.aosfatos.org/noticias/anuncios-google-tiktok-campanha-eleitoral/" target="_blank">→ Aos Fatos · gastos declarados em plataformas que proíbem</a>
+      <a href="https://www.dataprivacybr.org/dois-em-cada-tres-conteudos-politicos-gerados-por-ia-circulam-sem-sinalizacao-aponta-observatorio-ia-nas-eleicoes/" target="_blank">→ Data Privacy Brasil · 137 conteúdos sintéticos monitorados</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div>
+      <span class="section-kicker">Pergunta inédita</span>
+      <div class="section-title">O que ninguém está perguntando</div>
+    </div>
+  </div>
+
+  <div class="item question">
+    <div class="item-tag">Q1 · infraestrutura forense</div>
+    <h3>Se Flávio Bolsonaro tivesse alegado, no dia 13 de maio, que o áudio com Vorcaro era deepfake, em quantas horas o público brasileiro teria um veredicto técnico independente — e quem, por contrato, era responsável por entregá-lo?</h3>
+    <p>A pergunta é simples e brutal: <strong>o Brasil possui hoje, formalmente, uma infraestrutura forense pública de detecção de conteúdo sintético em escala eleitoral?</strong> Em quase todos os outros países com regulação anti-deepfake equivalente — França, Reino Unido, Coreia do Sul, Cingapura — existe um <em>designated authority</em> com contrato público, SLA divulgado e cadeia de custódia auditável. <strong>No Brasil, em maio de 2026, não há resposta pública disponível para essa pergunta.</strong> A Res. 23.755 obriga as plataformas a remover conteúdo, mas não nomeia o laboratório que <em>determina</em> se o conteúdo é sintético. O PL 212/26 criminaliza o ato sem definir o método de prova. O PL fantasma de Lula (A1) ainda não tem texto.</p>
+    <p><strong>Sub-perguntas:</strong></p>
+    <p>· Existe contrato vigente entre TSE e algum laboratório brasileiro (Recod/Unicamp, IFG, GERIS-UFC, NCA-UnB, SAMS-UFRJ) para análise técnica de conteúdo audiovisual durante o período eleitoral 2026? Se sim, em que termos?<br>
+    · A Polícia Federal tem competência paralela ou subsidiária? Há acordo de cooperação técnica com o TSE para casos eleitorais?<br>
+    · No tema selecionado "desinformação-ia" do repositório do TSE, quantas decisões já citaram laudo técnico de detecção de IA — e qual laboratório produziu o laudo em cada caso? Em quantas houve divergência de laudos?<br>
+    · Quais detectores de deepfake em português brasileiro têm benchmark público publicado em 2024–2026 (paper revisado, dataset aberto, taxa documentada)? Anderson Rocha (Recod), Esther Anaya (Mackenzie), Lyndon Da Silva (UFMG), Sandra Avila (Unicamp)?<br>
+    · Quem responde se, durante a janela de 96h do "silêncio sintético" (radar #001), um laboratório dá veredicto errado e uma peça autêntica é removida — ou uma peça sintética sobrevive?<br>
+    · Plataformas (Meta, Google, TikTok) têm capacidade interna de detecção que excede a do laboratório nacional? Em caso afirmativo, o veredicto da plataforma se sobrepõe ao do laboratório oficial?</p>
+    <div class="pitch">
+      <span class="k">pauta — investigativa / institucional</span>
+      <p><strong>"O laboratório que não existe: o vácuo forense por trás da regulação anti-deepfake brasileira para 2026."</strong> Reportagem-investigação institucional, 4–6 semanas. <strong>(a)</strong> LAI ao TSE pedindo: contratos vigentes de análise técnica de conteúdo audiovisual para fins eleitorais; SLA contratado; cadeia de custódia; lista de laboratórios qualificados; pareceres técnicos arquivados nos últimos 12 meses; <strong>(b)</strong> LAI à Polícia Federal (Coordenação Geral de Polícia Eleitoral); <strong>(c)</strong> entrevistas com Anderson Rocha (Recod/Unicamp), Sandra Avila (Unicamp), Esther Anaya (Mackenzie), grupo de mídia forense da SBC: existe sequer um detector com benchmark público para áudio em PT-BR de qualidade telefônica/WhatsApp em 2026?; <strong>(d)</strong> comparação internacional: como funciona em França (ARCOM + DGSI), UK (Ofcom + NCA), Coreia do Sul (KCC + KISA), Cingapura (IMDA); <strong>(e)</strong> ouvir AGU, Estela Aranha e a Procuradoria-Geral Eleitoral sobre o passivo jurídico de remoção sem laudo técnico. <strong>Entregável:</strong> primeiro mapa público da arquitetura forense (ou da sua ausência) por trás da regulação anti-deepfake brasileira + matriz comparativa internacional + estimativa do tempo real médio para uma alegação "é deepfake" ser refutada hoje (semanas, não horas).</p>
+      <p><strong>Por que é furo:</strong> a régua regulatória foi noticiada como vitória técnica em março/abril; a ausência da infraestrutura que executa essa régua não foi noticiada por <em>ninguém</em>. Se o tempo médio para refutação técnica for "semanas", isso significa que toda a regulação anti-deepfake brasileira de 2026 opera, na prática, com <strong>presunção da alegação política, não da verificação técnica</strong> — exatamente o que o <em>liar's dividend</em> precisa para se instalar. <strong>É furo nacional, com impacto internacional óbvio para BBC World.</strong></p>
+      <p><strong>Fonte essencial:</strong> TSE (STI, AECC, Assessoria de Combate à Desinformação); PF (Coordenação Geral de Polícia Eleitoral); Anderson Rocha (Recod/Unicamp); Sandra Avila (Unicamp); Esther Anaya (Mackenzie); SBC mídia forense; Procuradoria-Geral Eleitoral; AGU; Estela Aranha; CDR; Data Privacy Brasil; ABRAJI; comparativos: ARCOM (FR), Ofcom (UK), KCC (KR), IMDA (SG).</p>
+    </div>
+    <div class="badges">
+      <span class="badge cov-zero">coberto: zero</span>
+      <span class="badge neutral">pergunta inédita · ninguém perguntou ao TSE qual laboratório, qual SLA, qual contrato</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>radar #022 · gerado em 18.mai.2026 · fontes primárias · 10 consultas</p>
+    <p>cron diário · ~10 min/manhã · segunda do vetor invertido</p>
+  </div>
+
+</div>
+</body>
+</html>
